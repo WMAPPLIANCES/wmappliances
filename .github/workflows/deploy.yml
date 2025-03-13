@@ -1,0 +1,40 @@
+name: Build and Deploy Flutter Web
+
+on:
+  push:
+    branches:
+      - main  # ou a branch que você deseja monitorar
+
+jobs:
+  build-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1) Baixa o código do repositório
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      # 2) Configura o Flutter (usando a action subosito/flutter-action)
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'  # ou outro canal se precisar
+
+      # 3) Instala as dependências
+      - name: Install dependencies
+        run: flutter pub get
+
+      # 4) Build para Web
+      - name: Build Flutter Web
+        run: flutter build web --release
+
+      # 5) Deploy via FTP/SFTP
+      - name: Deploy via FTP
+        uses: SamKirkland/FTP-Deploy-Action@4.3.3
+        with:
+          server: ${{ secrets.FTP_HOST }}       # Configure em Settings > Secrets and variables > Actions
+          username: ${{ secrets.FTP_USERNAME }} # Configure em Settings > Secrets and variables > Actions
+          password: ${{ secrets.FTP_PASSWORD }} # Configure em Settings > Secrets and variables > Actions
+          protocol: 'ftp'                       # ou 'sftp' se preferir
+          local-dir: build/web
+          server-dir: /var/www/html            # Ajuste para a pasta pública do seu EasyPanel
