@@ -466,7 +466,7 @@ class _DashboardDispatchWidgetState extends State<DashboardDispatchWidget> {
                                                                                   ),
                                                                             ),
                                                                             Text(
-                                                                              '234',
+                                                                              '369',
                                                                               style: FlutterFlowTheme.of(context).headlineMedium.override(
                                                                                     fontFamily: 'Outfit',
                                                                                     color: FlutterFlowTheme.of(context).primary,
