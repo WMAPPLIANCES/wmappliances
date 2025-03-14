@@ -1,7 +1,7 @@
 # ------------------------------
 # Fase 1: Construir o Flutter Web
 # ------------------------------
-FROM cirrusci/flutter:3.10.0 AS build
+FROM cirrusci/flutter:stable AS build
 # ^ Ajuste aqui para uma versão >= 3.10 (ou stable)
 
 WORKDIR /app
