@@ -7,7 +7,7 @@ FROM ubuntu:22.04
 RUN apt-get update && apt-get install -y wget unzip git xz-utils libglu-dev
 
 # Baixa e instala Flutter Beta (que tenha Dart >= 3.2)
-RUN wget https://storage.googleapis.com/flutter_infra_release/releases/beta/linux/flutter_linux_3.14.0-2.0.pre-beta.tar.xz -O flutter.tar.xz \
+RUN wget https://storage.googleapis.com/flutter_infra_release/releases/beta/linux/flutter_linux_3.14.0-2.0.pre-beta.tar.xz \
     && tar xf flutter.tar.xz \
     && mv flutter /usr/local/flutter
 
