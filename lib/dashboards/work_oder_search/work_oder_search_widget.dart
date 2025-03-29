@@ -1,4 +1,4 @@
-import '';
+import '/appointment/pages/nav_bar1/nav_bar1_widget.dart';
 import '/backend/supabase/supabase.dart';
 import '/components/side_menu_view_widget.dart';
 import '/flutter_flow/flutter_flow_data_table.dart';
@@ -6,7 +6,6 @@ import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
-import '/pages/nav_bar1/nav_bar1_widget.dart';
 import '/index.dart';
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
@@ -1166,45 +1165,33 @@ class _WorkOderSearchWidgetState extends State<WorkOderSearchWidget> {
                                                                                               ),
                                                                                             ),
                                                                                           ),
-                                                                                          Padding(
-                                                                                            padding: EdgeInsets.all(4.0),
-                                                                                            child: FFButtonWidget(
-                                                                                              onPressed: () async {
-                                                                                                context.pushNamed(
-                                                                                                  WorkOrderWidget.routeName,
-                                                                                                  queryParameters: {
-                                                                                                    'workOrderRow': serializeParam(
-                                                                                                      workOrderSearchItem,
-                                                                                                      ParamType.SupabaseRow,
-                                                                                                    ),
-                                                                                                  }.withoutNulls,
-                                                                                                  extra: <String, dynamic>{
-                                                                                                    kTransitionInfoKey: TransitionInfo(
-                                                                                                      hasTransition: true,
-                                                                                                      transitionType: PageTransitionType.fade,
-                                                                                                      duration: Duration(milliseconds: 0),
-                                                                                                    ),
-                                                                                                  },
-                                                                                                );
-                                                                                              },
-                                                                                              text: 'View Details',
-                                                                                              options: FFButtonOptions(
-                                                                                                height: 40.0,
-                                                                                                padding: EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
-                                                                                                iconPadding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-                                                                                                color: FlutterFlowTheme.of(context).secondaryBackground,
-                                                                                                textStyle: FlutterFlowTheme.of(context).titleSmall.override(
-                                                                                                      fontFamily: 'Manrope',
-                                                                                                      color: FlutterFlowTheme.of(context).primary,
-                                                                                                      letterSpacing: 0.0,
-                                                                                                    ),
-                                                                                                elevation: 0.0,
-                                                                                                borderSide: BorderSide(
-                                                                                                  color: FlutterFlowTheme.of(context).primary,
-                                                                                                ),
-                                                                                                borderRadius: BorderRadius.circular(8.0),
-                                                                                              ),
+                                                                                          FlutterFlowIconButton(
+                                                                                            borderRadius: 8.0,
+                                                                                            buttonSize: 48.0,
+                                                                                            fillColor: FlutterFlowTheme.of(context).secondary,
+                                                                                            icon: Icon(
+                                                                                              Icons.work_history,
+                                                                                              color: FlutterFlowTheme.of(context).info,
+                                                                                              size: 24.0,
                                                                                             ),
+                                                                                            onPressed: () async {
+                                                                                              context.pushNamed(
+                                                                                                WorkOrderWidget.routeName,
+                                                                                                queryParameters: {
+                                                                                                  'workOrderRow': serializeParam(
+                                                                                                    workOrderSearchItem,
+                                                                                                    ParamType.SupabaseRow,
+                                                                                                  ),
+                                                                                                }.withoutNulls,
+                                                                                                extra: <String, dynamic>{
+                                                                                                  kTransitionInfoKey: TransitionInfo(
+                                                                                                    hasTransition: true,
+                                                                                                    transitionType: PageTransitionType.fade,
+                                                                                                    duration: Duration(milliseconds: 0),
+                                                                                                  ),
+                                                                                                },
+                                                                                              );
+                                                                                            },
                                                                                           ),
                                                                                         ],
                                                                                       ),

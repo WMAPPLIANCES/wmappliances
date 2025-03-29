@@ -1,9 +1,11 @@
-import '';
 import '/backend/supabase/supabase.dart';
+import '/flutter_flow/flutter_flow_google_map.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
+import '/flutter_flow/custom_functions.dart' as functions;
 import '/index.dart';
 import 'package:flutter/material.dart';
+import 'package:webviewx_plus/webviewx_plus.dart';
 import 'list_appointment_view_model.dart';
 export 'list_appointment_view_model.dart';
 
@@ -13,7 +15,7 @@ class ListAppointmentViewWidget extends StatefulWidget {
     required this.scheduleParamt,
   });
 
-  final SchedulesRow? scheduleParamt;
+  final AppointmentsRow? scheduleParamt;
 
   @override
   State<ListAppointmentViewWidget> createState() =>
@@ -22,6 +24,8 @@ class ListAppointmentViewWidget extends StatefulWidget {
 
 class _ListAppointmentViewWidgetState extends State<ListAppointmentViewWidget> {
   late ListAppointmentViewModel _model;
+
+  LatLng? currentUserLocationValue;
 
   @override
   void setState(VoidCallback callback) {
@@ -34,6 +38,8 @@ class _ListAppointmentViewWidgetState extends State<ListAppointmentViewWidget> {
     super.initState();
     _model = createModel(context, () => ListAppointmentViewModel());
 
+    getCurrentUserLocation(defaultLocation: LatLng(0.0, 0.0), cached: true)
+        .then((loc) => safeSetState(() => currentUserLocationValue = loc));
     WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
@@ -46,6 +52,23 @@ class _ListAppointmentViewWidgetState extends State<ListAppointmentViewWidget> {
 
   @override
   Widget build(BuildContext context) {
+    if (currentUserLocationValue == null) {
+      return Container(
+        color: FlutterFlowTheme.of(context).primaryBackground,
+        child: Center(
+          child: SizedBox(
+            width: 50.0,
+            height: 50.0,
+            child: CircularProgressIndicator(
+              valueColor: AlwaysStoppedAnimation<Color>(
+                FlutterFlowTheme.of(context).primary,
+              ),
+            ),
+          ),
+        ),
+      );
+    }
+
     return Padding(
       padding: EdgeInsetsDirectional.fromSTEB(12.0, 4.0, 12.0, 4.0),
       child: Container(
@@ -166,7 +189,7 @@ class _ListAppointmentViewWidgetState extends State<ListAppointmentViewWidget> {
                                                       widget.scheduleParamt
                                                           ?.stopNumber
                                                           ?.toString(),
-                                                      '1',
+                                                      '0',
                                                     ),
                                                     style: FlutterFlowTheme.of(
                                                             context)
@@ -200,7 +223,7 @@ class _ListAppointmentViewWidgetState extends State<ListAppointmentViewWidget> {
                                           child: Text(
                                             valueOrDefault<String>(
                                               widget
-                                                  .scheduleParamt?.customerName,
+                                                  .scheduleParamt?.clientName,
                                               'Willian Marciano',
                                             ).maybeHandleOverflow(
                                               maxChars: 13,
@@ -259,34 +282,50 @@ class _ListAppointmentViewWidgetState extends State<ListAppointmentViewWidget> {
                                           await showDialog<bool>(
                                                 context: context,
                                                 builder: (alertDialogContext) {
-                                                  return AlertDialog(
-                                                    title: Text(
-                                                        '🚀 Start Service Confirmation'),
-                                                    content: Text(
-                                                        'Are you ready to start the service for the following job?'),
-                                                    actions: [
-                                                      TextButton(
-                                                        onPressed: () =>
-                                                            Navigator.pop(
-                                                                alertDialogContext,
-                                                                false),
-                                                        child: Text(
-                                                            '❌ Not Ready Yet'),
-                                                      ),
-                                                      TextButton(
-                                                        onPressed: () =>
-                                                            Navigator.pop(
-                                                                alertDialogContext,
-                                                                true),
-                                                        child: Text(
-                                                            '✅ Start Service'),
-                                                      ),
-                                                    ],
+                                                  return WebViewAware(
+                                                    child: AlertDialog(
+                                                      title: Text(
+                                                          '🚀 Start Service Confirmation'),
+                                                      content: Text(
+                                                          'Are you ready to start the service for the following job?'),
+                                                      actions: [
+                                                        TextButton(
+                                                          onPressed: () =>
+                                                              Navigator.pop(
+                                                                  alertDialogContext,
+                                                                  false),
+                                                          child: Text(
+                                                              '❌ Not Ready Yet'),
+                                                        ),
+                                                        TextButton(
+                                                          onPressed: () =>
+                                                              Navigator.pop(
+                                                                  alertDialogContext,
+                                                                  true),
+                                                          child: Text(
+                                                              '✅ Start Service'),
+                                                        ),
+                                                      ],
+                                                    ),
                                                   );
                                                 },
                                               ) ??
                                               false;
                                       if (confirmDialogResponse) {
+                                        await AppointmentsTable().update(
+                                          data: {
+                                            'technician_color': '#FC964D',
+                                            'appointment_status': 'In Progress',
+                                          },
+                                          matchingRows: (rows) => rows.eqOrNull(
+                                            'appointment_id',
+                                            valueOrDefault<String>(
+                                              widget.scheduleParamt
+                                                  ?.appointmentId,
+                                              '1323',
+                                            ),
+                                          ),
+                                        );
                                         await SchedulesTable().update(
                                           data: {
                                             'appointment_status': 'In Progress',
@@ -296,7 +335,7 @@ class _ListAppointmentViewWidgetState extends State<ListAppointmentViewWidget> {
                                             valueOrDefault<String>(
                                               widget
                                                   .scheduleParamt?.scheduleId,
-                                              '51',
+                                              '214',
                                             ),
                                           ),
                                         );
@@ -316,8 +355,7 @@ class _ListAppointmentViewWidgetState extends State<ListAppointmentViewWidget> {
                                         );
                                         await launchURL(
                                             'https://www.google.com/maps/search/?api=1&query=${valueOrDefault<String>(
-                                          widget
-                                              .scheduleParamt?.customerAddress,
+                                          widget.scheduleParamt?.address,
                                           '15178 Discory Rd San Leandro',
                                         )}');
 
@@ -401,8 +439,7 @@ class _ListAppointmentViewWidgetState extends State<ListAppointmentViewWidget> {
                                       alignment: AlignmentDirectional(0.0, 0.0),
                                       child: Text(
                                         valueOrDefault<String>(
-                                          widget
-                                              .scheduleParamt?.appointmentType,
+                                          widget.scheduleParamt?.status,
                                           'Not Confirmed',
                                         ),
                                         style: FlutterFlowTheme.of(context)
@@ -429,8 +466,7 @@ class _ListAppointmentViewWidgetState extends State<ListAppointmentViewWidget> {
                                     Expanded(
                                       child: Text(
                                         valueOrDefault<String>(
-                                          widget
-                                              .scheduleParamt?.customerAddress,
+                                          widget.scheduleParamt?.address,
                                           '15178 Discovery Rd San Francisco 94575',
                                         ),
                                         style: FlutterFlowTheme.of(context)
@@ -454,7 +490,7 @@ class _ListAppointmentViewWidgetState extends State<ListAppointmentViewWidget> {
                                     ),
                                     Text(
                                       valueOrDefault<String>(
-                                        '${dateTimeFormat("Hm", widget.scheduleParamt?.startTime)}  To  ${dateTimeFormat("Hm", widget.scheduleParamt?.endTime)}',
+                                        '${dateTimeFormat("Hm", widget.scheduleParamt?.scheduledStart)}  To  ${dateTimeFormat("Hm", widget.scheduleParamt?.scheduledEnd)}',
                                         'StartEndTime',
                                       ),
                                       style: FlutterFlowTheme.of(context)
@@ -533,8 +569,8 @@ class _ListAppointmentViewWidgetState extends State<ListAppointmentViewWidget> {
                                     ),
                                     Builder(
                                       builder: (context) {
-                                        final itens = widget
-                                                .scheduleParamt?.itens
+                                        final items = widget
+                                                .scheduleParamt?.items
                                                 .toList() ??
                                             [];
 
@@ -542,15 +578,15 @@ class _ListAppointmentViewWidgetState extends State<ListAppointmentViewWidget> {
                                           mainAxisSize: MainAxisSize.max,
                                           crossAxisAlignment:
                                               CrossAxisAlignment.start,
-                                          children: List.generate(itens.length,
-                                              (itensIndex) {
-                                            final itensItem = itens[itensIndex];
+                                          children: List.generate(items.length,
+                                              (itemsIndex) {
+                                            final itemsItem = items[itemsIndex];
                                             return Padding(
                                               padding: EdgeInsetsDirectional
                                                   .fromSTEB(0.0, 0.0, 0.0, 1.0),
                                               child: Text(
                                                 valueOrDefault<String>(
-                                                  itensItem,
+                                                  itemsItem,
                                                   'itens',
                                                 ),
                                                 style:
@@ -609,7 +645,7 @@ class _ListAppointmentViewWidgetState extends State<ListAppointmentViewWidget> {
                                                   Text(
                                                     valueOrDefault<String>(
                                                       widget.scheduleParamt
-                                                          ?.customerPhone,
+                                                          ?.clientPhone,
                                                       '5109003030',
                                                     ),
                                                     style: FlutterFlowTheme.of(
@@ -653,8 +689,8 @@ class _ListAppointmentViewWidgetState extends State<ListAppointmentViewWidget> {
                                                       ),
                                                     ),
                                                   if (widget.scheduleParamt
-                                                          ?.appointmentType ==
-                                                      'Follow Up')
+                                                          ?.followUp ==
+                                                      true)
                                                     Align(
                                                       alignment:
                                                           AlignmentDirectional(
@@ -679,6 +715,95 @@ class _ListAppointmentViewWidgetState extends State<ListAppointmentViewWidget> {
                                                 ],
                                               ),
                                             ],
+                                          ),
+                                          Expanded(
+                                            child: Column(
+                                              mainAxisSize: MainAxisSize.max,
+                                              children: [
+                                                Expanded(
+                                                  child: Card(
+                                                    clipBehavior: Clip
+                                                        .antiAliasWithSaveLayer,
+                                                    color: FlutterFlowTheme.of(
+                                                            context)
+                                                        .secondaryBackground,
+                                                    elevation: 0.0,
+                                                    shape:
+                                                        RoundedRectangleBorder(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              8.0),
+                                                    ),
+                                                    child: Container(
+                                                      height: 200.0,
+                                                      child: Builder(
+                                                          builder: (context) {
+                                                        final _googleMapMarker = functions
+                                                            .convertlanLngStringToLatLng(
+                                                                valueOrDefault<
+                                                                    double>(
+                                                                  widget
+                                                                      .scheduleParamt
+                                                                      ?.lat,
+                                                                  32232412.0,
+                                                                ),
+                                                                valueOrDefault<
+                                                                    double>(
+                                                                  widget
+                                                                      .scheduleParamt
+                                                                      ?.lng,
+                                                                  -122322.0,
+                                                                ));
+                                                        return FlutterFlowGoogleMap(
+                                                          controller: _model
+                                                              .googleMapsController,
+                                                          onCameraIdle:
+                                                              (latLng) => _model
+                                                                      .googleMapsCenter =
+                                                                  latLng,
+                                                          initialLocation: _model
+                                                                  .googleMapsCenter ??=
+                                                              currentUserLocationValue!,
+                                                          markers: [
+                                                            FlutterFlowMarker(
+                                                              _googleMapMarker
+                                                                  .serialize(),
+                                                              _googleMapMarker,
+                                                            ),
+                                                          ],
+                                                          markerColor:
+                                                              GoogleMarkerColor
+                                                                  .azure,
+                                                          markerImage:
+                                                              MarkerImage(
+                                                            imagePath:
+                                                                'assets/images/pinlocation100x100.png',
+                                                            isAssetImage: true,
+                                                            size: 60.0 ?? 20,
+                                                          ),
+                                                          mapType:
+                                                              MapType.normal,
+                                                          style: GoogleMapStyle
+                                                              .night,
+                                                          initialZoom: 11.0,
+                                                          allowInteraction:
+                                                              true,
+                                                          allowZoom: true,
+                                                          showZoomControls:
+                                                              true,
+                                                          showLocation: true,
+                                                          showCompass: false,
+                                                          showMapToolbar: false,
+                                                          showTraffic: true,
+                                                          centerMapOnMarkerTap:
+                                                              true,
+                                                        );
+                                                      }),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
                                           ),
                                         ].divide(SizedBox(height: 2.0)),
                                       ),

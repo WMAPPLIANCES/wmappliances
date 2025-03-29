@@ -64,32 +64,23 @@ class _NavbarBottonWidgetState extends State<NavbarBottonWidget> {
             mainAxisSize: MainAxisSize.max,
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              InkWell(
-                splashColor: Colors.transparent,
-                focusColor: Colors.transparent,
-                hoverColor: Colors.transparent,
-                highlightColor: Colors.transparent,
-                onTap: () async {
-                  context.pushNamed(JobDisplayTodayWidget.routeName);
-                },
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(
-                      Icons.home,
-                      color: FlutterFlowTheme.of(context).primary,
-                      size: 24.0,
-                    ),
-                    Text(
-                      'Home',
-                      style: FlutterFlowTheme.of(context).labelSmall.override(
-                            fontFamily: 'Manrope',
-                            letterSpacing: 0.0,
-                          ),
-                    ),
-                  ].divide(SizedBox(height: 4.0)),
-                ),
+              Column(
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(
+                    Icons.home,
+                    color: FlutterFlowTheme.of(context).primary,
+                    size: 24.0,
+                  ),
+                  Text(
+                    'Home',
+                    style: FlutterFlowTheme.of(context).labelSmall.override(
+                          fontFamily: 'Manrope',
+                          letterSpacing: 0.0,
+                        ),
+                  ),
+                ].divide(SizedBox(height: 4.0)),
               ),
               Column(
                 mainAxisSize: MainAxisSize.min,

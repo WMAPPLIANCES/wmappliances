@@ -6,6 +6,7 @@ import '/flutter_flow/flutter_flow_util.dart';
 import '/stock_page/print_stock_parts/print_stock_parts_widget.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:webviewx_plus/webviewx_plus.dart';
 import 'part_stock_view_model.dart';
 export 'part_stock_view_model.dart';
 
@@ -90,21 +91,24 @@ class _PartStockViewWidgetState extends State<PartStockViewWidget> {
                     var confirmDialogResponse = await showDialog<bool>(
                           context: context,
                           builder: (alertDialogContext) {
-                            return AlertDialog(
-                              title: Text('Are you sure?'),
-                              content: Text('Do you want to delete this part?'),
-                              actions: [
-                                TextButton(
-                                  onPressed: () =>
-                                      Navigator.pop(alertDialogContext, false),
-                                  child: Text('Cancel'),
-                                ),
-                                TextButton(
-                                  onPressed: () =>
-                                      Navigator.pop(alertDialogContext, true),
-                                  child: Text('Confirm'),
-                                ),
-                              ],
+                            return WebViewAware(
+                              child: AlertDialog(
+                                title: Text('Are you sure?'),
+                                content:
+                                    Text('Do you want to delete this part?'),
+                                actions: [
+                                  TextButton(
+                                    onPressed: () => Navigator.pop(
+                                        alertDialogContext, false),
+                                    child: Text('Cancel'),
+                                  ),
+                                  TextButton(
+                                    onPressed: () =>
+                                        Navigator.pop(alertDialogContext, true),
+                                    child: Text('Confirm'),
+                                  ),
+                                ],
+                              ),
                             );
                           },
                         ) ??
@@ -309,16 +313,18 @@ class _PartStockViewWidgetState extends State<PartStockViewWidget> {
                                       enableDrag: false,
                                       context: context,
                                       builder: (context) {
-                                        return Padding(
-                                          padding:
-                                              MediaQuery.viewInsetsOf(context),
-                                          child: Container(
-                                            height: MediaQuery.sizeOf(context)
-                                                    .height *
-                                                1.0,
-                                            child: PrintStockPartsWidget(
-                                              printTockPartsParam:
-                                                  widget.stockPartParam!,
+                                        return WebViewAware(
+                                          child: Padding(
+                                            padding: MediaQuery.viewInsetsOf(
+                                                context),
+                                            child: Container(
+                                              height: MediaQuery.sizeOf(context)
+                                                      .height *
+                                                  1.0,
+                                              child: PrintStockPartsWidget(
+                                                printTockPartsParam:
+                                                    widget.stockPartParam!,
+                                              ),
                                             ),
                                           ),
                                         );

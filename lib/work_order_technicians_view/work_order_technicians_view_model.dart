@@ -1,7 +1,7 @@
+import '/appointment/pages/nav_bar1/nav_bar1_widget.dart';
 import '/backend/supabase/supabase.dart';
 import '/components/no_internet_widget.dart';
 import '/flutter_flow/flutter_flow_util.dart';
-import '/pages/nav_bar1/nav_bar1_widget.dart';
 import '/index.dart';
 import 'work_order_technicians_view_widget.dart'
     show WorkOrderTechniciansViewWidget;

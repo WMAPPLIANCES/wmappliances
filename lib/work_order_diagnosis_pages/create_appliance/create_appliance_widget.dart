@@ -1,4 +1,3 @@
-import '';
 import '/auth/supabase_auth/auth_util.dart';
 import '/backend/gemini/gemini.dart';
 import '/backend/supabase/supabase.dart';
@@ -13,6 +12,7 @@ import '/flutter_flow/upload_data.dart';
 import '/custom_code/actions/index.dart' as actions;
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:webviewx_plus/webviewx_plus.dart';
 import 'create_appliance_model.dart';
 export 'create_appliance_model.dart';
 
@@ -261,18 +261,21 @@ class _CreateApplianceWidgetState extends State<CreateApplianceWidget> {
                                       await showDialog(
                                         context: context,
                                         builder: (alertDialogContext) {
-                                          return AlertDialog(
-                                            title: Text(
-                                                '🌐 No Internet Connection'),
-                                            content: Text(
-                                                'It looks like you\'re offline! This feature requires an internet connection to work properly. Please check your connection and try again. '),
-                                            actions: [
-                                              TextButton(
-                                                onPressed: () => Navigator.pop(
-                                                    alertDialogContext),
-                                                child: Text(' 🚀 Ok'),
-                                              ),
-                                            ],
+                                          return WebViewAware(
+                                            child: AlertDialog(
+                                              title: Text(
+                                                  '🌐 No Internet Connection'),
+                                              content: Text(
+                                                  'It looks like you\'re offline! This feature requires an internet connection to work properly. Please check your connection and try again. '),
+                                              actions: [
+                                                TextButton(
+                                                  onPressed: () =>
+                                                      Navigator.pop(
+                                                          alertDialogContext),
+                                                  child: Text(' 🚀 Ok'),
+                                                ),
+                                              ],
+                                            ),
                                           );
                                         },
                                       );
@@ -452,18 +455,20 @@ class _CreateApplianceWidgetState extends State<CreateApplianceWidget> {
                                     await showDialog(
                                       context: context,
                                       builder: (alertDialogContext) {
-                                        return AlertDialog(
-                                          title:
-                                              Text('🌐 No Internet Connection'),
-                                          content: Text(
-                                              'It looks like you\'re offline! This feature requires an internet connection to work properly. Please check your connection and try again. '),
-                                          actions: [
-                                            TextButton(
-                                              onPressed: () => Navigator.pop(
-                                                  alertDialogContext),
-                                              child: Text('🚀 Ok'),
-                                            ),
-                                          ],
+                                        return WebViewAware(
+                                          child: AlertDialog(
+                                            title: Text(
+                                                '🌐 No Internet Connection'),
+                                            content: Text(
+                                                'It looks like you\'re offline! This feature requires an internet connection to work properly. Please check your connection and try again. '),
+                                            actions: [
+                                              TextButton(
+                                                onPressed: () => Navigator.pop(
+                                                    alertDialogContext),
+                                                child: Text('🚀 Ok'),
+                                              ),
+                                            ],
+                                          ),
                                         );
                                       },
                                     );
@@ -699,40 +704,83 @@ class _CreateApplianceWidgetState extends State<CreateApplianceWidget> {
                               onPressed: () async {
                                 _model.diagnosisID =
                                     await DiagnosesTable().insert({
-                                  'work_order_id':
-                                      widget.workOrderDiagnosis?.workOrderId,
+                                  'work_order_id': valueOrDefault<String>(
+                                    widget.workOrderDiagnosis?.workOrderId,
+                                    '123',
+                                  ),
                                   'ai_notes': valueOrDefault<String>(
                                     _model.responseAppliances,
                                     'ai_response',
                                   ),
-                                  'create_by': currentUserUid,
+                                  'create_by': valueOrDefault<String>(
+                                    currentUserUid,
+                                    '13223',
+                                  ),
                                   'photo_url': _model.updaloadModel,
-                                  'item': _model.dropDownValue,
-                                  'failure_part': _model.responseModelNumber,
-                                  'diagnosis_voice': _model.responseAppliances,
-                                  'technician_name': FFAppState().userName,
-                                  'create_by_image': FFAppState().userPhoto,
-                                  'ocr_model_number':
-                                      _model.responseModelNumber,
-                                  'status': _model.choiceChipsValue,
-                                  'technician_uuid': currentUserUid,
+                                  'item': valueOrDefault<String>(
+                                    _model.dropDownValue,
+                                    'https://api.wmappliances.cloud/storage/v1/object/public/photos/users/LOGO%20WM%20APPLIANCE%20NOVA%20casa%20alta%20reso.png',
+                                  ),
+                                  'failure_part': valueOrDefault<String>(
+                                    _model.responseModelNumber,
+                                    'test',
+                                  ),
+                                  'diagnosis_voice': valueOrDefault<String>(
+                                    _model.responseAppliances,
+                                    'test',
+                                  ),
+                                  'technician_name': valueOrDefault<String>(
+                                    FFAppState().userName,
+                                    'wukk',
+                                  ),
+                                  'create_by_image': valueOrDefault<String>(
+                                    FFAppState().userPhoto,
+                                    'https://api.wmappliances.cloud/storage/v1/object/public/photos/users/LOGO%20WM%20APPLIANCE%20NOVA%20casa%20alta%20reso.png',
+                                  ),
+                                  'ocr_model_number': valueOrDefault<String>(
+                                    _model.responseModelNumber,
+                                    '123',
+                                  ),
+                                  'status': valueOrDefault<String>(
+                                    _model.choiceChipsValue,
+                                    '123',
+                                  ),
+                                  'technician_uuid': valueOrDefault<String>(
+                                    currentUserUid,
+                                    '123232',
+                                  ),
                                   'created_at': supaSerialize<DateTime>(
                                       getCurrentTimestamp),
                                   'pending': false,
                                 });
                                 await actions.n8nApiCallDiagnosis(
                                   'https://webhook.wmappliances.cloud/webhook/addAppliance',
-                                  _model.dropDownValue,
+                                  valueOrDefault<String>(
+                                    _model.dropDownValue,
+                                    'tesdt',
+                                  ),
                                   valueOrDefault<String>(
                                     widget.workOrderDiagnosis?.workOrderId,
                                     'workOderID',
                                   ),
-                                  _model.responseAppliances,
-                                  _model.responseModelNumber,
-                                  FFAppState().userName,
-                                  _model.uploadedFileUrl2,
-                                  '',
-                                  '',
+                                  valueOrDefault<String>(
+                                    _model.responseAppliances,
+                                    'test',
+                                  ),
+                                  valueOrDefault<String>(
+                                    _model.responseModelNumber,
+                                    'test',
+                                  ),
+                                  valueOrDefault<String>(
+                                    FFAppState().userName,
+                                    'test',
+                                  ),
+                                  valueOrDefault<String>(
+                                    _model.uploadedFileUrl2,
+                                    'https://api.wmappliances.cloud/storage/v1/object/public/photos/users/LOGO%20WM%20APPLIANCE%20NOVA%20casa%20alta%20reso.png',
+                                  ),
+                                  'test',
+                                  'test',
                                   valueOrDefault<String>(
                                     _model.diagnosisID?.diagnosisId,
                                     'idDiagnosis',

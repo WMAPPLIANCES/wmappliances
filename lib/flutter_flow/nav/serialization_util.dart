@@ -220,6 +220,8 @@ dynamic deserializeParam<T>(
             return ExamplePhotosRow(data);
           case SuggestedAppointmentsRow:
             return SuggestedAppointmentsRow(data);
+          case ExecutionDataRow:
+            return ExecutionDataRow(data);
           case PartsTotalPriceRow:
             return PartsTotalPriceRow(data);
           case StockPartsRow:
@@ -228,6 +230,8 @@ dynamic deserializeParam<T>(
             return AiActionLogsRow(data);
           case PartsInstalledRow:
             return PartsInstalledRow(data);
+          case TechniciansSchedulesRow:
+            return TechniciansSchedulesRow(data);
           case TicketsRow:
             return TicketsRow(data);
           case WorkOrdersRow:
@@ -236,10 +240,16 @@ dynamic deserializeParam<T>(
             return DiagnosesRow(data);
           case SchedulesRow:
             return SchedulesRow(data);
+          case AppointmentsRow:
+            return AppointmentsRow(data);
+          case WorkflowHistoryRow:
+            return WorkflowHistoryRow(data);
           case JobTrackingRow:
             return JobTrackingRow(data);
           case NotesDispatchRow:
             return NotesDispatchRow(data);
+          case StopNumbersRow:
+            return StopNumbersRow(data);
           case TechnicianRoutesRow:
             return TechnicianRoutesRow(data);
           case DeliveryRow:
@@ -252,6 +262,10 @@ dynamic deserializeParam<T>(
             return PartInsertionsRow(data);
           case UserRolesRow:
             return UserRolesRow(data);
+          case TechnicianLocationsRow:
+            return TechnicianLocationsRow(data);
+          case RoleRow:
+            return RoleRow(data);
           case NotesRow:
             return NotesRow(data);
           case TechniciansRow:

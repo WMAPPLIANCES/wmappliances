@@ -69,7 +69,7 @@ class AddPartStockDiagnosisCall {
   }) async {
     return ApiManager.instance.makeApiCall(
       callName: 'addPartStockDiagnosis',
-      apiUrl: 'https://webhook.wmappliances.cloud/webhook/stock',
+      apiUrl: 'https://webhook.wmappliances.cloud/webhook/addPartStock',
       callType: ApiCallType.POST,
       headers: {},
       params: {
@@ -124,6 +124,146 @@ class GroqAudioTranscriptionCall {
       alwaysAllowBody: false,
     );
   }
+}
+
+class GetTechniciansSchedulesByDateCall {
+  static Future<ApiCallResponse> call({
+    String? appointmentDate = 'eq.2025-03-20',
+    String? apiKey =
+        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imh4amxxb3ZtZW51c2NwYWVldGxsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Mjc5ODA5MzUsImV4cCI6MjA0MzU1NjkzNX0.oZDlUq2ZYfECUwcCzaqXcokhNw-96nJn25WtVh2KK2Q',
+    String? selectedDate = '2025-03-20',
+  }) async {
+    return ApiManager.instance.makeApiCall(
+      callName: 'getTechniciansSchedulesByDate',
+      apiUrl: 'https://api.wmappliances.cloud/rest/v1/technicians_schedules',
+      callType: ApiCallType.GET,
+      headers: {
+        'apikey': '${apiKey}',
+        'Authorization': 'Bearer ${apiKey}',
+      },
+      params: {
+        'appointment_date': appointmentDate,
+      },
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+}
+
+class GetTechniciansSchedulesByDateMapsCall {
+  static Future<ApiCallResponse> call({
+    String? appointmentDate,
+    String? apiKey =
+        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imh4amxxb3ZtZW51c2NwYWVldGxsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Mjc5ODA5MzUsImV4cCI6MjA0MzU1NjkzNX0.oZDlUq2ZYfECUwcCzaqXcokhNw-96nJn25WtVh2KK2Q',
+    String? selectedDate = '',
+  }) async {
+    appointmentDate ??= 'eq.[selectedDate]';
+
+    return ApiManager.instance.makeApiCall(
+      callName: 'getTechniciansSchedulesByDateMaps',
+      apiUrl: 'https://api.wmappliances.cloud/rest/v1/schedules',
+      callType: ApiCallType.GET,
+      headers: {
+        'apikey': '${apiKey}',
+        'Authorization': 'Bearer ${apiKey}',
+      },
+      params: {
+        'appointment_date': appointmentDate,
+      },
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+
+  static List<String>? latLng(dynamic response) => (getJsonField(
+        response,
+        r'''$[:].lat_lng''',
+        true,
+      ) as List?)
+          ?.withoutNulls
+          .map((x) => castToType<String>(x))
+          .withoutNulls
+          .toList();
+  static List<String>? scheduleId(dynamic response) => (getJsonField(
+        response,
+        r'''$[:].schedule_id''',
+        true,
+      ) as List?)
+          ?.withoutNulls
+          .map((x) => castToType<String>(x))
+          .withoutNulls
+          .toList();
+  static List<String>? techniciansUuid(dynamic response) => (getJsonField(
+        response,
+        r'''$[:].technicians_uuid''',
+        true,
+      ) as List?)
+          ?.withoutNulls
+          .map((x) => castToType<String>(x))
+          .withoutNulls
+          .toList();
+  static List<String>? techniciansName(dynamic response) => (getJsonField(
+        response,
+        r'''$[:].technicians_name''',
+        true,
+      ) as List?)
+          ?.withoutNulls
+          .map((x) => castToType<String>(x))
+          .withoutNulls
+          .toList();
+  static List<String>? techniciansPhoto(dynamic response) => (getJsonField(
+        response,
+        r'''$[:].technicians_photo''',
+        true,
+      ) as List?)
+          ?.withoutNulls
+          .map((x) => castToType<String>(x))
+          .withoutNulls
+          .toList();
+  static List<String>? technicianColor(dynamic response) => (getJsonField(
+        response,
+        r'''$[:].technician_color''',
+        true,
+      ) as List?)
+          ?.withoutNulls
+          .map((x) => castToType<String>(x))
+          .withoutNulls
+          .toList();
+  static List<String>? customerName(dynamic response) => (getJsonField(
+        response,
+        r'''$[:].customer_name''',
+        true,
+      ) as List?)
+          ?.withoutNulls
+          .map((x) => castToType<String>(x))
+          .withoutNulls
+          .toList();
+  static List<String>? appointmentDate(dynamic response) => (getJsonField(
+        response,
+        r'''$[:].appointment_date''',
+        true,
+      ) as List?)
+          ?.withoutNulls
+          .map((x) => castToType<String>(x))
+          .withoutNulls
+          .toList();
+  static List<String>? customerAddress(dynamic response) => (getJsonField(
+        response,
+        r'''$[:].customer_address''',
+        true,
+      ) as List?)
+          ?.withoutNulls
+          .map((x) => castToType<String>(x))
+          .withoutNulls
+          .toList();
 }
 
 class ApiPagingParams {

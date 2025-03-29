@@ -1,4 +1,3 @@
-import '';
 import '/backend/supabase/supabase.dart';
 import '/dashboards/voice_diagnosis/voice_diagnosis_widget.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
@@ -6,6 +5,7 @@ import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:webviewx_plus/webviewx_plus.dart';
 import 'check_list_oven_model.dart';
 export 'check_list_oven_model.dart';
 
@@ -1149,16 +1149,18 @@ class _CheckListOvenWidgetState extends State<CheckListOvenWidget> {
                                     enableDrag: false,
                                     context: context,
                                     builder: (context) {
-                                      return Padding(
-                                        padding:
-                                            MediaQuery.viewInsetsOf(context),
-                                        child: Container(
-                                          height: MediaQuery.sizeOf(context)
-                                                  .height *
-                                              1.0,
-                                          child: VoiceDiagnosisWidget(
-                                            diagnosisVoice:
-                                                widget.diagnosisCheckList!,
+                                      return WebViewAware(
+                                        child: Padding(
+                                          padding:
+                                              MediaQuery.viewInsetsOf(context),
+                                          child: Container(
+                                            height: MediaQuery.sizeOf(context)
+                                                    .height *
+                                                1.0,
+                                            child: VoiceDiagnosisWidget(
+                                              diagnosisVoice:
+                                                  widget.diagnosisCheckList!,
+                                            ),
                                           ),
                                         ),
                                       );

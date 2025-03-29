@@ -129,31 +129,31 @@ class _WelcomeWidgetState extends State<WelcomeWidget> {
                                         elevation: 4.0,
                                         shape: RoundedRectangleBorder(
                                           borderRadius:
-                                              BorderRadius.circular(60.0),
+                                              BorderRadius.circular(24.0),
                                         ),
                                         child: Container(
-                                          width: 140.0,
-                                          height: 140.0,
+                                          width: 160.0,
+                                          height: 160.0,
                                           decoration: BoxDecoration(
                                             color: FlutterFlowTheme.of(context)
                                                 .info,
                                             borderRadius:
-                                                BorderRadius.circular(60.0),
+                                                BorderRadius.circular(24.0),
                                           ),
                                           child: Padding(
                                             padding: EdgeInsets.all(8.0),
                                             child: ClipRRect(
                                               borderRadius:
-                                                  BorderRadius.circular(0.0),
+                                                  BorderRadius.circular(8.0),
                                               child: CachedNetworkImage(
                                                 fadeInDuration:
-                                                    Duration(milliseconds: 0),
+                                                    Duration(milliseconds: 500),
                                                 fadeOutDuration:
-                                                    Duration(milliseconds: 0),
+                                                    Duration(milliseconds: 500),
                                                 imageUrl:
-                                                    'https://api.wmappliances.cloud/storage/v1/object/public/photos/users/LOGO%20WM%20APPLIANCE%20NOVA%20casa%20alta%20reso.png',
-                                                width: 100.0,
-                                                height: 100.0,
+                                                    'https://api.wmappliances.cloud/storage/v1/object/public/photos/users/wmlogoSupabase.png',
+                                                width: 140.0,
+                                                height: 140.0,
                                                 fit: BoxFit.contain,
                                               ),
                                             ),

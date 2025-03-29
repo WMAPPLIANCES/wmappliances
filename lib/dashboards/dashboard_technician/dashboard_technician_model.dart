@@ -1,7 +1,7 @@
+import '/appointment/pages/nav_bar1/nav_bar1_widget.dart';
 import '/backend/supabase/supabase.dart';
 import '/components/side_menu_view_widget.dart';
 import '/flutter_flow/flutter_flow_util.dart';
-import '/pages/nav_bar1/nav_bar1_widget.dart';
 import 'dashboard_technician_widget.dart' show DashboardTechnicianWidget;
 import 'package:flutter/material.dart';
 
@@ -13,10 +13,18 @@ class DashboardTechnicianModel
 
   bool viewNotes = false;
 
+  DateTime? dateTime;
+
   ///  State fields for stateful widgets in this page.
 
   // Stores action output result for [Backend Call - Query Rows] action in dashboardTechnician widget.
   List<StockPartsRow>? queryStock;
+  // Stores action output result for [Backend Call - Query Rows] action in dashboardTechnician widget.
+  List<DiagnosesRow>? queryDiagnosis;
+  // Stores action output result for [Backend Call - Query Rows] action in dashboardTechnician widget.
+  List<DiagnosesRow>? queryDiagnosisPArts;
+  // Stores action output result for [Backend Call - Query Rows] action in dashboardTechnician widget.
+  List<SchedulesRow>? followUp;
   // Model for sideMenuView component.
   late SideMenuViewModel sideMenuViewModel;
   // Model for NavBar1 component.

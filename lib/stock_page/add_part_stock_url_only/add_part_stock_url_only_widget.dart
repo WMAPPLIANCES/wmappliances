@@ -325,11 +325,23 @@ class _AddPartStockUrlOnlyWidgetState extends State<AddPartStockUrlOnlyWidget> {
                           : () async {
                               _model.apiAddPart =
                                   await AddPartStockDiagnosisCall.call(
-                                partUrl: _model.textController.text,
-                                createBy: currentUserUid,
+                                partUrl: valueOrDefault<String>(
+                                  _model.textController.text,
+                                  'NotNull',
+                                ),
+                                createBy: valueOrDefault<String>(
+                                  currentUserUid,
+                                  '13412',
+                                ),
                                 diagnosisStockPart: 'stock',
-                                typePart: _model.choiceChipsValue,
-                                iten: _model.dropDownValue,
+                                typePart: valueOrDefault<String>(
+                                  _model.choiceChipsValue,
+                                  '12323',
+                                ),
+                                iten: valueOrDefault<String>(
+                                  _model.dropDownValue,
+                                  '1232132',
+                                ),
                               );
 
                               Navigator.pop(context);

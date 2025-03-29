@@ -67,17 +67,14 @@ class WorkOrderModel extends FlutterFlowModel<WorkOrderWidget> {
 
   bool isFollowUp = false;
 
-  List<String> partToPickUp = [];
-  void addToPartToPickUp(String item) => partToPickUp.add(item);
-  void removeFromPartToPickUp(String item) => partToPickUp.remove(item);
-  void removeAtIndexFromPartToPickUp(int index) => partToPickUp.removeAt(index);
-  void insertAtIndexInPartToPickUp(int index, String item) =>
-      partToPickUp.insert(index, item);
-  void updatePartToPickUpAtIndex(int index, Function(String) updateFn) =>
-      partToPickUp[index] = updateFn(partToPickUp[index]);
+  String partToPickUp = 'Not Autorized';
+
+  String technicianColor = '#2797FF';
 
   ///  State fields for stateful widgets in this page.
 
+  // Stores action output result for [Backend Call - Query Rows] action in workOrder widget.
+  List<WorkOrdersRow>? queryPreviusJob;
   // Model for sideMenuView component.
   late SideMenuViewModel sideMenuViewModel;
   // State field(s) for Switch widget.
@@ -105,6 +102,14 @@ class WorkOrderModel extends FlutterFlowModel<WorkOrderWidget> {
       serviceTypeValueController?.value?.firstOrNull;
   set serviceTypeValue(String? val) =>
       serviceTypeValueController?.value = val != null ? [val] : [];
+  // Stores action output result for [Backend Call - Query Rows] action in Button widget.
+  List<PartsRow>? queryPartDiagnosis;
+  // Stores action output result for [Backend Call - Insert Row] action in Button widget.
+  DiagnosesRow? pa;
+  // Stores action output result for [Backend Call - Insert Row] action in Button widget.
+  SchedulesRow? scheuduleId1;
+  // Stores action output result for [Backend Call - Insert Row] action in Button widget.
+  SchedulesRow? scheduleID;
   // State field(s) for TextField widget.
   FocusNode? textFieldFocusNode;
   TextEditingController? textController1;

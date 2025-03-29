@@ -1,7 +1,6 @@
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/form_field_controller.dart';
 import 'edit_part_in_stock_widget.dart' show EditPartInStockWidget;
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 
 class EditPartInStockModel extends FlutterFlowModel<EditPartInStockWidget> {
@@ -22,15 +21,6 @@ class EditPartInStockModel extends FlutterFlowModel<EditPartInStockWidget> {
       'https://api.wmappliances.cloud/storage/v1/object/public/photos/users/LOGO%20WM%20APPLIANCE%20NOVA%20casa%20alta%20reso.png';
 
   ///  State fields for stateful widgets in this component.
-
-  bool isDataUploading = false;
-  FFUploadedFile uploadedLocalFile =
-      FFUploadedFile(bytes: Uint8List.fromList([]));
-  String uploadedFileUrl = '';
-
-  // State field(s) for Carousel widget.
-  CarouselSliderController? carouselController;
-  int carouselCurrentIndex = 1;
 
   // State field(s) for TextField widget.
   FocusNode? textFieldFocusNode1;

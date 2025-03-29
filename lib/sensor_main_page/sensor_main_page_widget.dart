@@ -1,11 +1,10 @@
-import '';
+import '/appointment/pages/nav_bar1/nav_bar1_widget.dart';
 import '/backend/supabase/supabase.dart';
 import '/components/side_menu_view_widget.dart';
 import '/flutter_flow/flutter_flow_audio_player.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
-import '/pages/nav_bar1/nav_bar1_widget.dart';
 import '/custom_code/widgets/index.dart' as custom_widgets;
 import 'package:flutter/material.dart';
 import 'sensor_main_page_model.dart';

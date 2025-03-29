@@ -1,4 +1,3 @@
-import '';
 import '/backend/supabase/supabase.dart';
 import '/components/update_modelnumber_serial_widget.dart';
 import '/flutter_flow/flutter_flow_drop_down.dart';
@@ -16,6 +15,7 @@ import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:provider/provider.dart';
+import 'package:webviewx_plus/webviewx_plus.dart';
 import 'diagnosis_view_b_s_model.dart';
 export 'diagnosis_view_b_s_model.dart';
 
@@ -47,15 +47,24 @@ class _DiagnosisViewBSWidgetState extends State<DiagnosisViewBSWidget> {
 
     // On component load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
-      _model.queryDiagnosis = await DiagnosesTable().queryRows(
-        queryFn: (q) => q.eqOrNull(
-          'diagnosis_id',
-          valueOrDefault<String>(
-            widget.diagnosisParameterWorkId?.diagnosisId,
-            '123124',
-          ),
-        ),
-      );
+      await Future.wait([
+        Future(() async {
+          _model.queryDiagnosis = await DiagnosesTable().queryRows(
+            queryFn: (q) => q.eqOrNull(
+              'diagnosis_id',
+              valueOrDefault<String>(
+                widget.diagnosisParameterWorkId?.diagnosisId,
+                '123124',
+              ),
+            ),
+          );
+        }),
+        Future(() async {
+          _model.queryStockParts = await StockPartsTable().queryRows(
+            queryFn: (q) => q,
+          );
+        }),
+      ]);
     });
 
     WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
@@ -1279,20 +1288,22 @@ class _DiagnosisViewBSWidgetState extends State<DiagnosisViewBSWidget> {
                                                               context: context,
                                                               builder:
                                                                   (context) {
-                                                                return Padding(
-                                                                  padding: MediaQuery
-                                                                      .viewInsetsOf(
-                                                                          context),
+                                                                return WebViewAware(
                                                                   child:
-                                                                      Container(
-                                                                    height:
-                                                                        MediaQuery.sizeOf(context).height *
-                                                                            1.0,
+                                                                      Padding(
+                                                                    padding: MediaQuery
+                                                                        .viewInsetsOf(
+                                                                            context),
                                                                     child:
-                                                                        UpdateModelnumberSerialWidget(
-                                                                      diagnosisIDParam:
-                                                                          widget
-                                                                              .diagnosisParameterWorkId!,
+                                                                        Container(
+                                                                      height:
+                                                                          MediaQuery.sizeOf(context).height *
+                                                                              1.0,
+                                                                      child:
+                                                                          UpdateModelnumberSerialWidget(
+                                                                        diagnosisIDParam:
+                                                                            widget.diagnosisParameterWorkId!,
+                                                                      ),
                                                                     ),
                                                                   ),
                                                                 );
@@ -1365,7 +1376,7 @@ class _DiagnosisViewBSWidgetState extends State<DiagnosisViewBSWidget> {
                                                           onPressed: () async {
                                                             await actions
                                                                 .n8nApiCallDiagnosis(
-                                                              'https://webhook.wmappliances.cloud/webhook/addAppliance',
+                                                              'https://webhook.wmappliances.cloud/webhook/findschematic',
                                                               'query',
                                                               valueOrDefault<
                                                                   String>(
@@ -2972,28 +2983,33 @@ class _DiagnosisViewBSWidgetState extends State<DiagnosisViewBSWidget> {
                                                                                       ),
                                                                                     ),
                                                                                   ),
-                                                                                  InkWell(
-                                                                                    splashColor: Colors.transparent,
-                                                                                    focusColor: Colors.transparent,
-                                                                                    hoverColor: Colors.transparent,
-                                                                                    highlightColor: Colors.transparent,
-                                                                                    onTap: () async {
-                                                                                      await PartsTable().update(
-                                                                                        data: {
-                                                                                          'part_taken': FFAppState().userName,
-                                                                                        },
-                                                                                        matchingRows: (rows) => rows.eqOrNull(
-                                                                                          'part_id',
-                                                                                          listViewPartsRow.partId,
-                                                                                        ),
-                                                                                      );
-                                                                                    },
-                                                                                    child: Icon(
-                                                                                      Icons.shelves,
-                                                                                      color: FlutterFlowTheme.of(context).primaryText,
-                                                                                      size: 24.0,
+                                                                                  if (listViewPartsRow.partNumber ==
+                                                                                      valueOrDefault<String>(
+                                                                                        _model.queryStockParts?.firstOrNull?.partNumber,
+                                                                                        'partAvalible',
+                                                                                      ))
+                                                                                    InkWell(
+                                                                                      splashColor: Colors.transparent,
+                                                                                      focusColor: Colors.transparent,
+                                                                                      hoverColor: Colors.transparent,
+                                                                                      highlightColor: Colors.transparent,
+                                                                                      onTap: () async {
+                                                                                        await PartsTable().update(
+                                                                                          data: {
+                                                                                            'part_taken': FFAppState().userName,
+                                                                                          },
+                                                                                          matchingRows: (rows) => rows.eqOrNull(
+                                                                                            'part_id',
+                                                                                            listViewPartsRow.partId,
+                                                                                          ),
+                                                                                        );
+                                                                                      },
+                                                                                      child: Icon(
+                                                                                        Icons.shelves,
+                                                                                        color: FlutterFlowTheme.of(context).primaryText,
+                                                                                        size: 24.0,
+                                                                                      ),
                                                                                     ),
-                                                                                  ),
                                                                                 ],
                                                                               ),
                                                                             ),
@@ -3453,7 +3469,7 @@ class _DiagnosisViewBSWidgetState extends State<DiagnosisViewBSWidget> {
                                                                       FFButtonOptions(
                                                                     width: 60.0,
                                                                     height:
-                                                                        36.0,
+                                                                        48.0,
                                                                     padding:
                                                                         EdgeInsets.all(
                                                                             8.0),
@@ -3523,7 +3539,7 @@ class _DiagnosisViewBSWidgetState extends State<DiagnosisViewBSWidget> {
                                                                 options:
                                                                     FFButtonOptions(
                                                                   width: 60.0,
-                                                                  height: 36.0,
+                                                                  height: 48.0,
                                                                   padding:
                                                                       EdgeInsets
                                                                           .all(

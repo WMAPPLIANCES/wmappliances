@@ -90,6 +90,107 @@ class FFAppState extends ChangeNotifier {
               .toList() ??
           _diagnoses;
     });
+    await _safeInitAsync(() async {
+      _elevenlabsApiKey =
+          await secureStorage.getString('ff_elevenlabsApiKey') ??
+              _elevenlabsApiKey;
+    });
+    await _safeInitAsync(() async {
+      _allSchedules = (await secureStorage.getStringList('ff_allSchedules'))
+              ?.map((x) {
+                try {
+                  return AllSchedulesStruct.fromSerializableMap(jsonDecode(x));
+                } catch (e) {
+                  print("Can't decode persisted data type. Error: $e.");
+                  return null;
+                }
+              })
+              .withoutNulls
+              .toList() ??
+          _allSchedules;
+    });
+    await _safeInitAsync(() async {
+      _suppabaseApiKey = await secureStorage.getString('ff_suppabaseApiKey') ??
+          _suppabaseApiKey;
+    });
+    await _safeInitAsync(() async {
+      _googleMapsApiKey =
+          await secureStorage.getString('ff_googleMapsApiKey') ??
+              _googleMapsApiKey;
+    });
+    await _safeInitAsync(() async {
+      _googleMapsApiDirectionsApi =
+          await secureStorage.getString('ff_googleMapsApiDirectionsApi') ??
+              _googleMapsApiDirectionsApi;
+    });
+    await _safeInitAsync(() async {
+      _pointsOnMap =
+          (await secureStorage.getStringList('ff_pointsOnMap'))?.map((x) {
+                try {
+                  return jsonDecode(x);
+                } catch (e) {
+                  print("Can't decode persisted json. Error: $e.");
+                  return {};
+                }
+              }).toList() ??
+              _pointsOnMap;
+    });
+    await _safeInitAsync(() async {
+      _locationTrackingState =
+          await secureStorage.getBool('ff_locationTrackingState') ??
+              _locationTrackingState;
+    });
+    await _safeInitAsync(() async {
+      if (await secureStorage.read(key: 'ff_currentLocation') != null) {
+        try {
+          _currentLocation = jsonDecode(
+              await secureStorage.getString('ff_currentLocation') ?? '');
+        } catch (e) {
+          print("Can't decode persisted json. Error: $e.");
+        }
+      }
+    });
+    await _safeInitAsync(() async {
+      _showNewWorkOrders =
+          await secureStorage.getBool('ff_showNewWorkOrders') ??
+              _showNewWorkOrders;
+    });
+    await _safeInitAsync(() async {
+      _newWorkOrderOnMap =
+          (await secureStorage.getStringList('ff_newWorkOrderOnMap'))?.map((x) {
+                try {
+                  return jsonDecode(x);
+                } catch (e) {
+                  print("Can't decode persisted json. Error: $e.");
+                  return {};
+                }
+              }).toList() ??
+              _newWorkOrderOnMap;
+    });
+    await _safeInitAsync(() async {
+      _newWorkOrderOnMaP =
+          (await secureStorage.getStringList('ff_newWorkOrderOnMaP'))?.map((x) {
+                try {
+                  return jsonDecode(x);
+                } catch (e) {
+                  print("Can't decode persisted json. Error: $e.");
+                  return {};
+                }
+              }).toList() ??
+              _newWorkOrderOnMaP;
+    });
+    await _safeInitAsync(() async {
+      _newWorkOrdersList =
+          (await secureStorage.getStringList('ff_newWorkOrdersList'))?.map((x) {
+                try {
+                  return jsonDecode(x);
+                } catch (e) {
+                  print("Can't decode persisted json. Error: $e.");
+                  return {};
+                }
+              }).toList() ??
+              _newWorkOrdersList;
+    });
   }
 
   void update(VoidCallback callback) {
@@ -302,13 +403,13 @@ class FFAppState extends ChangeNotifier {
     newTicket.insert(index, value);
   }
 
-  DateTime? _startTime;
+  DateTime? _startTime = DateTime.fromMillisecondsSinceEpoch(1742350080000);
   DateTime? get startTime => _startTime;
   set startTime(DateTime? value) {
     _startTime = value;
   }
 
-  DateTime? _endTime;
+  DateTime? _endTime = DateTime.fromMillisecondsSinceEpoch(1742350080000);
   DateTime? get endTime => _endTime;
   set endTime(DateTime? value) {
     _endTime = value;
@@ -326,7 +427,7 @@ class FFAppState extends ChangeNotifier {
     _priorityNote = value;
   }
 
-  String _dispatch = 'user';
+  String _dispatch = 'dispatch';
   String get dispatch => _dispatch;
   set dispatch(String value) {
     _dispatch = value;
@@ -528,6 +629,410 @@ class FFAppState extends ChangeNotifier {
   String get checkView3 => _checkView3;
   set checkView3(String value) {
     _checkView3 = value;
+  }
+
+  String _elevenlabsApiKey =
+      'sk_6f0f8757883b9768227917b1fd204c51f83e77ff243175e5';
+  String get elevenlabsApiKey => _elevenlabsApiKey;
+  set elevenlabsApiKey(String value) {
+    _elevenlabsApiKey = value;
+    secureStorage.setString('ff_elevenlabsApiKey', value);
+  }
+
+  void deleteElevenlabsApiKey() {
+    secureStorage.delete(key: 'ff_elevenlabsApiKey');
+  }
+
+  String _technicianColor = '#2797FF';
+  String get technicianColor => _technicianColor;
+  set technicianColor(String value) {
+    _technicianColor = value;
+  }
+
+  List<AllSchedulesStruct> _allSchedules = [];
+  List<AllSchedulesStruct> get allSchedules => _allSchedules;
+  set allSchedules(List<AllSchedulesStruct> value) {
+    _allSchedules = value;
+    secureStorage.setStringList(
+        'ff_allSchedules', value.map((x) => x.serialize()).toList());
+  }
+
+  void deleteAllSchedules() {
+    secureStorage.delete(key: 'ff_allSchedules');
+  }
+
+  void addToAllSchedules(AllSchedulesStruct value) {
+    allSchedules.add(value);
+    secureStorage.setStringList(
+        'ff_allSchedules', _allSchedules.map((x) => x.serialize()).toList());
+  }
+
+  void removeFromAllSchedules(AllSchedulesStruct value) {
+    allSchedules.remove(value);
+    secureStorage.setStringList(
+        'ff_allSchedules', _allSchedules.map((x) => x.serialize()).toList());
+  }
+
+  void removeAtIndexFromAllSchedules(int index) {
+    allSchedules.removeAt(index);
+    secureStorage.setStringList(
+        'ff_allSchedules', _allSchedules.map((x) => x.serialize()).toList());
+  }
+
+  void updateAllSchedulesAtIndex(
+    int index,
+    AllSchedulesStruct Function(AllSchedulesStruct) updateFn,
+  ) {
+    allSchedules[index] = updateFn(_allSchedules[index]);
+    secureStorage.setStringList(
+        'ff_allSchedules', _allSchedules.map((x) => x.serialize()).toList());
+  }
+
+  void insertAtIndexInAllSchedules(int index, AllSchedulesStruct value) {
+    allSchedules.insert(index, value);
+    secureStorage.setStringList(
+        'ff_allSchedules', _allSchedules.map((x) => x.serialize()).toList());
+  }
+
+  String _suppabaseApiKey =
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imh4amxxb3ZtZW51c2NwYWVldGxsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Mjc5ODA5MzUsImV4cCI6MjA0MzU1NjkzNX0.oZDlUq2ZYfECUwcCzaqXcokhNw-96nJn25WtVh2KK2Q';
+  String get suppabaseApiKey => _suppabaseApiKey;
+  set suppabaseApiKey(String value) {
+    _suppabaseApiKey = value;
+    secureStorage.setString('ff_suppabaseApiKey', value);
+  }
+
+  void deleteSuppabaseApiKey() {
+    secureStorage.delete(key: 'ff_suppabaseApiKey');
+  }
+
+  String _appointmentDateStringDate = '';
+  String get appointmentDateStringDate => _appointmentDateStringDate;
+  set appointmentDateStringDate(String value) {
+    _appointmentDateStringDate = value;
+  }
+
+  String _googleMapsApiKey = 'AIzaSyCuqqoWPxGABaTonuRaL4bgMq32KbI4GoQ';
+  String get googleMapsApiKey => _googleMapsApiKey;
+  set googleMapsApiKey(String value) {
+    _googleMapsApiKey = value;
+    secureStorage.setString('ff_googleMapsApiKey', value);
+  }
+
+  void deleteGoogleMapsApiKey() {
+    secureStorage.delete(key: 'ff_googleMapsApiKey');
+  }
+
+  List<dynamic> _formattedSchedules = [];
+  List<dynamic> get formattedSchedules => _formattedSchedules;
+  set formattedSchedules(List<dynamic> value) {
+    _formattedSchedules = value;
+  }
+
+  void addToFormattedSchedules(dynamic value) {
+    formattedSchedules.add(value);
+  }
+
+  void removeFromFormattedSchedules(dynamic value) {
+    formattedSchedules.remove(value);
+  }
+
+  void removeAtIndexFromFormattedSchedules(int index) {
+    formattedSchedules.removeAt(index);
+  }
+
+  void updateFormattedSchedulesAtIndex(
+    int index,
+    dynamic Function(dynamic) updateFn,
+  ) {
+    formattedSchedules[index] = updateFn(_formattedSchedules[index]);
+  }
+
+  void insertAtIndexInFormattedSchedules(int index, dynamic value) {
+    formattedSchedules.insert(index, value);
+  }
+
+  List<dynamic> _appointmentsList = [];
+  List<dynamic> get appointmentsList => _appointmentsList;
+  set appointmentsList(List<dynamic> value) {
+    _appointmentsList = value;
+  }
+
+  void addToAppointmentsList(dynamic value) {
+    appointmentsList.add(value);
+  }
+
+  void removeFromAppointmentsList(dynamic value) {
+    appointmentsList.remove(value);
+  }
+
+  void removeAtIndexFromAppointmentsList(int index) {
+    appointmentsList.removeAt(index);
+  }
+
+  void updateAppointmentsListAtIndex(
+    int index,
+    dynamic Function(dynamic) updateFn,
+  ) {
+    appointmentsList[index] = updateFn(_appointmentsList[index]);
+  }
+
+  void insertAtIndexInAppointmentsList(int index, dynamic value) {
+    appointmentsList.insert(index, value);
+  }
+
+  List<dynamic> _techniciansList = [];
+  List<dynamic> get techniciansList => _techniciansList;
+  set techniciansList(List<dynamic> value) {
+    _techniciansList = value;
+  }
+
+  void addToTechniciansList(dynamic value) {
+    techniciansList.add(value);
+  }
+
+  void removeFromTechniciansList(dynamic value) {
+    techniciansList.remove(value);
+  }
+
+  void removeAtIndexFromTechniciansList(int index) {
+    techniciansList.removeAt(index);
+  }
+
+  void updateTechniciansListAtIndex(
+    int index,
+    dynamic Function(dynamic) updateFn,
+  ) {
+    techniciansList[index] = updateFn(_techniciansList[index]);
+  }
+
+  void insertAtIndexInTechniciansList(int index, dynamic value) {
+    techniciansList.insert(index, value);
+  }
+
+  String _googleMapsApiDirectionsApi =
+      'AIzaSyB3J0Keewnq9l05Ys-93EYfLC5u29PbtWg';
+  String get googleMapsApiDirectionsApi => _googleMapsApiDirectionsApi;
+  set googleMapsApiDirectionsApi(String value) {
+    _googleMapsApiDirectionsApi = value;
+    secureStorage.setString('ff_googleMapsApiDirectionsApi', value);
+  }
+
+  void deleteGoogleMapsApiDirectionsApi() {
+    secureStorage.delete(key: 'ff_googleMapsApiDirectionsApi');
+  }
+
+  List<dynamic> _pointsOnMap = [];
+  List<dynamic> get pointsOnMap => _pointsOnMap;
+  set pointsOnMap(List<dynamic> value) {
+    _pointsOnMap = value;
+    secureStorage.setStringList(
+        'ff_pointsOnMap', value.map((x) => jsonEncode(x)).toList());
+  }
+
+  void deletePointsOnMap() {
+    secureStorage.delete(key: 'ff_pointsOnMap');
+  }
+
+  void addToPointsOnMap(dynamic value) {
+    pointsOnMap.add(value);
+    secureStorage.setStringList(
+        'ff_pointsOnMap', _pointsOnMap.map((x) => jsonEncode(x)).toList());
+  }
+
+  void removeFromPointsOnMap(dynamic value) {
+    pointsOnMap.remove(value);
+    secureStorage.setStringList(
+        'ff_pointsOnMap', _pointsOnMap.map((x) => jsonEncode(x)).toList());
+  }
+
+  void removeAtIndexFromPointsOnMap(int index) {
+    pointsOnMap.removeAt(index);
+    secureStorage.setStringList(
+        'ff_pointsOnMap', _pointsOnMap.map((x) => jsonEncode(x)).toList());
+  }
+
+  void updatePointsOnMapAtIndex(
+    int index,
+    dynamic Function(dynamic) updateFn,
+  ) {
+    pointsOnMap[index] = updateFn(_pointsOnMap[index]);
+    secureStorage.setStringList(
+        'ff_pointsOnMap', _pointsOnMap.map((x) => jsonEncode(x)).toList());
+  }
+
+  void insertAtIndexInPointsOnMap(int index, dynamic value) {
+    pointsOnMap.insert(index, value);
+    secureStorage.setStringList(
+        'ff_pointsOnMap', _pointsOnMap.map((x) => jsonEncode(x)).toList());
+  }
+
+  bool _locationTrackingState = false;
+  bool get locationTrackingState => _locationTrackingState;
+  set locationTrackingState(bool value) {
+    _locationTrackingState = value;
+    secureStorage.setBool('ff_locationTrackingState', value);
+  }
+
+  void deleteLocationTrackingState() {
+    secureStorage.delete(key: 'ff_locationTrackingState');
+  }
+
+  dynamic _currentLocation;
+  dynamic get currentLocation => _currentLocation;
+  set currentLocation(dynamic value) {
+    _currentLocation = value;
+    secureStorage.setString('ff_currentLocation', jsonEncode(value));
+  }
+
+  void deleteCurrentLocation() {
+    secureStorage.delete(key: 'ff_currentLocation');
+  }
+
+  bool _showNewWorkOrders = true;
+  bool get showNewWorkOrders => _showNewWorkOrders;
+  set showNewWorkOrders(bool value) {
+    _showNewWorkOrders = value;
+    secureStorage.setBool('ff_showNewWorkOrders', value);
+  }
+
+  void deleteShowNewWorkOrders() {
+    secureStorage.delete(key: 'ff_showNewWorkOrders');
+  }
+
+  List<dynamic> _newWorkOrderOnMap = [];
+  List<dynamic> get newWorkOrderOnMap => _newWorkOrderOnMap;
+  set newWorkOrderOnMap(List<dynamic> value) {
+    _newWorkOrderOnMap = value;
+    secureStorage.setStringList(
+        'ff_newWorkOrderOnMap', value.map((x) => jsonEncode(x)).toList());
+  }
+
+  void deleteNewWorkOrderOnMap() {
+    secureStorage.delete(key: 'ff_newWorkOrderOnMap');
+  }
+
+  void addToNewWorkOrderOnMap(dynamic value) {
+    newWorkOrderOnMap.add(value);
+    secureStorage.setStringList('ff_newWorkOrderOnMap',
+        _newWorkOrderOnMap.map((x) => jsonEncode(x)).toList());
+  }
+
+  void removeFromNewWorkOrderOnMap(dynamic value) {
+    newWorkOrderOnMap.remove(value);
+    secureStorage.setStringList('ff_newWorkOrderOnMap',
+        _newWorkOrderOnMap.map((x) => jsonEncode(x)).toList());
+  }
+
+  void removeAtIndexFromNewWorkOrderOnMap(int index) {
+    newWorkOrderOnMap.removeAt(index);
+    secureStorage.setStringList('ff_newWorkOrderOnMap',
+        _newWorkOrderOnMap.map((x) => jsonEncode(x)).toList());
+  }
+
+  void updateNewWorkOrderOnMapAtIndex(
+    int index,
+    dynamic Function(dynamic) updateFn,
+  ) {
+    newWorkOrderOnMap[index] = updateFn(_newWorkOrderOnMap[index]);
+    secureStorage.setStringList('ff_newWorkOrderOnMap',
+        _newWorkOrderOnMap.map((x) => jsonEncode(x)).toList());
+  }
+
+  void insertAtIndexInNewWorkOrderOnMap(int index, dynamic value) {
+    newWorkOrderOnMap.insert(index, value);
+    secureStorage.setStringList('ff_newWorkOrderOnMap',
+        _newWorkOrderOnMap.map((x) => jsonEncode(x)).toList());
+  }
+
+  List<dynamic> _newWorkOrderOnMaP = [];
+  List<dynamic> get newWorkOrderOnMaP => _newWorkOrderOnMaP;
+  set newWorkOrderOnMaP(List<dynamic> value) {
+    _newWorkOrderOnMaP = value;
+    secureStorage.setStringList(
+        'ff_newWorkOrderOnMaP', value.map((x) => jsonEncode(x)).toList());
+  }
+
+  void deleteNewWorkOrderOnMaP() {
+    secureStorage.delete(key: 'ff_newWorkOrderOnMaP');
+  }
+
+  void addToNewWorkOrderOnMaP(dynamic value) {
+    newWorkOrderOnMaP.add(value);
+    secureStorage.setStringList('ff_newWorkOrderOnMaP',
+        _newWorkOrderOnMaP.map((x) => jsonEncode(x)).toList());
+  }
+
+  void removeFromNewWorkOrderOnMaP(dynamic value) {
+    newWorkOrderOnMaP.remove(value);
+    secureStorage.setStringList('ff_newWorkOrderOnMaP',
+        _newWorkOrderOnMaP.map((x) => jsonEncode(x)).toList());
+  }
+
+  void removeAtIndexFromNewWorkOrderOnMaP(int index) {
+    newWorkOrderOnMaP.removeAt(index);
+    secureStorage.setStringList('ff_newWorkOrderOnMaP',
+        _newWorkOrderOnMaP.map((x) => jsonEncode(x)).toList());
+  }
+
+  void updateNewWorkOrderOnMaPAtIndex(
+    int index,
+    dynamic Function(dynamic) updateFn,
+  ) {
+    newWorkOrderOnMaP[index] = updateFn(_newWorkOrderOnMaP[index]);
+    secureStorage.setStringList('ff_newWorkOrderOnMaP',
+        _newWorkOrderOnMaP.map((x) => jsonEncode(x)).toList());
+  }
+
+  void insertAtIndexInNewWorkOrderOnMaP(int index, dynamic value) {
+    newWorkOrderOnMaP.insert(index, value);
+    secureStorage.setStringList('ff_newWorkOrderOnMaP',
+        _newWorkOrderOnMaP.map((x) => jsonEncode(x)).toList());
+  }
+
+  List<dynamic> _newWorkOrdersList = [];
+  List<dynamic> get newWorkOrdersList => _newWorkOrdersList;
+  set newWorkOrdersList(List<dynamic> value) {
+    _newWorkOrdersList = value;
+    secureStorage.setStringList(
+        'ff_newWorkOrdersList', value.map((x) => jsonEncode(x)).toList());
+  }
+
+  void deleteNewWorkOrdersList() {
+    secureStorage.delete(key: 'ff_newWorkOrdersList');
+  }
+
+  void addToNewWorkOrdersList(dynamic value) {
+    newWorkOrdersList.add(value);
+    secureStorage.setStringList('ff_newWorkOrdersList',
+        _newWorkOrdersList.map((x) => jsonEncode(x)).toList());
+  }
+
+  void removeFromNewWorkOrdersList(dynamic value) {
+    newWorkOrdersList.remove(value);
+    secureStorage.setStringList('ff_newWorkOrdersList',
+        _newWorkOrdersList.map((x) => jsonEncode(x)).toList());
+  }
+
+  void removeAtIndexFromNewWorkOrdersList(int index) {
+    newWorkOrdersList.removeAt(index);
+    secureStorage.setStringList('ff_newWorkOrdersList',
+        _newWorkOrdersList.map((x) => jsonEncode(x)).toList());
+  }
+
+  void updateNewWorkOrdersListAtIndex(
+    int index,
+    dynamic Function(dynamic) updateFn,
+  ) {
+    newWorkOrdersList[index] = updateFn(_newWorkOrdersList[index]);
+    secureStorage.setStringList('ff_newWorkOrdersList',
+        _newWorkOrdersList.map((x) => jsonEncode(x)).toList());
+  }
+
+  void insertAtIndexInNewWorkOrdersList(int index, dynamic value) {
+    newWorkOrdersList.insert(index, value);
+    secureStorage.setStringList('ff_newWorkOrdersList',
+        _newWorkOrdersList.map((x) => jsonEncode(x)).toList());
   }
 }
 

@@ -1,4 +1,3 @@
-import '';
 import '/appointment/schedule/schedule_widget.dart';
 import '/backend/supabase/supabase.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
@@ -11,6 +10,7 @@ import '/index.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
+import 'package:webviewx_plus/webviewx_plus.dart';
 import 'fab_model.dart';
 export 'fab_model.dart';
 
@@ -192,13 +192,15 @@ class _FabWidgetState extends State<FabWidget> {
                               backgroundColor: Colors.transparent,
                               context: context,
                               builder: (context) {
-                                return Padding(
-                                  padding: MediaQuery.viewInsetsOf(context),
-                                  child: Container(
-                                    height: 600.0,
-                                    child: ScheduleWidget(
-                                      workOrderParamSchedule:
-                                          widget.fabWorkOrder!,
+                                return WebViewAware(
+                                  child: Padding(
+                                    padding: MediaQuery.viewInsetsOf(context),
+                                    child: Container(
+                                      height: 600.0,
+                                      child: ScheduleWidget(
+                                        workOrderParamSchedule:
+                                            widget.fabWorkOrder!,
+                                      ),
                                     ),
                                   ),
                                 );
@@ -259,13 +261,16 @@ class _FabWidgetState extends State<FabWidget> {
                               backgroundColor: Colors.transparent,
                               context: context,
                               builder: (context) {
-                                return Padding(
-                                  padding: MediaQuery.viewInsetsOf(context),
-                                  child: Container(
-                                    height:
-                                        MediaQuery.sizeOf(context).height * 0.9,
-                                    child: NotesWoWidget(
-                                      notesWorkOrder: widget.fabWorkOrder!,
+                                return WebViewAware(
+                                  child: Padding(
+                                    padding: MediaQuery.viewInsetsOf(context),
+                                    child: Container(
+                                      height:
+                                          MediaQuery.sizeOf(context).height *
+                                              0.9,
+                                      child: NotesWoWidget(
+                                        notesWorkOrder: widget.fabWorkOrder!,
+                                      ),
                                     ),
                                   ),
                                 );
@@ -315,13 +320,16 @@ class _FabWidgetState extends State<FabWidget> {
                               backgroundColor: Colors.transparent,
                               context: context,
                               builder: (context) {
-                                return Padding(
-                                  padding: MediaQuery.viewInsetsOf(context),
-                                  child: Container(
-                                    height:
-                                        MediaQuery.sizeOf(context).height * 0.9,
-                                    child: NotesWoWidget(
-                                      notesWorkOrder: widget.fabWorkOrder!,
+                                return WebViewAware(
+                                  child: Padding(
+                                    padding: MediaQuery.viewInsetsOf(context),
+                                    child: Container(
+                                      height:
+                                          MediaQuery.sizeOf(context).height *
+                                              0.9,
+                                      child: NotesWoWidget(
+                                        notesWorkOrder: widget.fabWorkOrder!,
+                                      ),
                                     ),
                                   ),
                                 );
@@ -453,15 +461,17 @@ class _FabWidgetState extends State<FabWidget> {
                                 backgroundColor: Colors.transparent,
                                 context: context,
                                 builder: (context) {
-                                  return Padding(
-                                    padding: MediaQuery.viewInsetsOf(context),
-                                    child: Container(
-                                      height:
-                                          MediaQuery.sizeOf(context).height *
-                                              0.6,
-                                      child: CreateApplianceWidget(
-                                        workOrderDiagnosis:
-                                            widget.fabWorkOrder!,
+                                  return WebViewAware(
+                                    child: Padding(
+                                      padding: MediaQuery.viewInsetsOf(context),
+                                      child: Container(
+                                        height:
+                                            MediaQuery.sizeOf(context).height *
+                                                0.6,
+                                        child: CreateApplianceWidget(
+                                          workOrderDiagnosis:
+                                              widget.fabWorkOrder!,
+                                        ),
                                       ),
                                     ),
                                   );
@@ -511,15 +521,17 @@ class _FabWidgetState extends State<FabWidget> {
                                 backgroundColor: Colors.transparent,
                                 context: context,
                                 builder: (context) {
-                                  return Padding(
-                                    padding: MediaQuery.viewInsetsOf(context),
-                                    child: Container(
-                                      height:
-                                          MediaQuery.sizeOf(context).height *
-                                              0.6,
-                                      child: CreateApplianceWidget(
-                                        workOrderDiagnosis:
-                                            widget.fabWorkOrder!,
+                                  return WebViewAware(
+                                    child: Padding(
+                                      padding: MediaQuery.viewInsetsOf(context),
+                                      child: Container(
+                                        height:
+                                            MediaQuery.sizeOf(context).height *
+                                                0.6,
+                                        child: CreateApplianceWidget(
+                                          workOrderDiagnosis:
+                                              widget.fabWorkOrder!,
+                                        ),
                                       ),
                                     ),
                                   );

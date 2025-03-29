@@ -110,4 +110,7 @@ class PartsRow extends SupabaseDataRow {
 
   String? get progressColor => getField<String>('progress_color');
   set progressColor(String? value) => setField<String>('progress_color', value);
+
+  bool? get secondReview => getField<bool>('second_review');
+  set secondReview(bool? value) => setField<bool>('second_review', value);
 }

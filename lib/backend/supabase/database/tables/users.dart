@@ -70,4 +70,15 @@ class UsersRow extends SupabaseDataRow {
 
   bool? get officeComputer => getField<bool>('office_computer');
   set officeComputer(bool? value) => setField<bool>('office_computer', value);
+
+  String? get technicianColor => getField<String>('technician_color');
+  set technicianColor(String? value) =>
+      setField<String>('technician_color', value);
+
+  String? get officeLocation => getField<String>('office_location');
+  set officeLocation(String? value) =>
+      setField<String>('office_location', value);
+
+  String? get colorCode => getField<String>('color_code');
+  set colorCode(String? value) => setField<String>('color_code', value);
 }

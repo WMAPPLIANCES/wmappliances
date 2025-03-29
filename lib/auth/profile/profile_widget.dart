@@ -1,3 +1,4 @@
+import '/appointment/pages/nav_bar1/nav_bar1_widget.dart';
 import '/auth/supabase_auth/auth_util.dart';
 import '/backend/supabase/supabase.dart';
 import '/components/reset_pin_widget.dart';
@@ -6,9 +7,9 @@ import '/computer_office/qr_i_d_loguin/qr_i_d_loguin_widget.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
-import '/pages/nav_bar1/nav_bar1_widget.dart';
 import '/index.dart';
 import 'package:flutter/material.dart';
+import 'package:webviewx_plus/webviewx_plus.dart';
 import 'profile_model.dart';
 export 'profile_model.dart';
 
@@ -489,19 +490,20 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                                                                             context,
                                                                         builder:
                                                                             (context) {
-                                                                          return GestureDetector(
-                                                                            onTap:
-                                                                                () {
-                                                                              FocusScope.of(context).unfocus();
-                                                                              FocusManager.instance.primaryFocus?.unfocus();
-                                                                            },
+                                                                          return WebViewAware(
                                                                             child:
-                                                                                Padding(
-                                                                              padding: MediaQuery.viewInsetsOf(context),
-                                                                              child: Container(
-                                                                                height: MediaQuery.sizeOf(context).height * 1.0,
-                                                                                child: QrIDLoguinWidget(
-                                                                                  qrLogID: profileUsersRow!.userId,
+                                                                                GestureDetector(
+                                                                              onTap: () {
+                                                                                FocusScope.of(context).unfocus();
+                                                                                FocusManager.instance.primaryFocus?.unfocus();
+                                                                              },
+                                                                              child: Padding(
+                                                                                padding: MediaQuery.viewInsetsOf(context),
+                                                                                child: Container(
+                                                                                  height: MediaQuery.sizeOf(context).height * 1.0,
+                                                                                  child: QrIDLoguinWidget(
+                                                                                    qrLogID: profileUsersRow!.userId,
+                                                                                  ),
                                                                                 ),
                                                                               ),
                                                                             ),
@@ -567,19 +569,20 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                                                                             context,
                                                                         builder:
                                                                             (context) {
-                                                                          return GestureDetector(
-                                                                            onTap:
-                                                                                () {
-                                                                              FocusScope.of(context).unfocus();
-                                                                              FocusManager.instance.primaryFocus?.unfocus();
-                                                                            },
+                                                                          return WebViewAware(
                                                                             child:
-                                                                                Padding(
-                                                                              padding: MediaQuery.viewInsetsOf(context),
-                                                                              child: Container(
-                                                                                height: MediaQuery.sizeOf(context).height * 0.6,
-                                                                                child: ResetPinWidget(
-                                                                                  resetPin: profileUsersRow!,
+                                                                                GestureDetector(
+                                                                              onTap: () {
+                                                                                FocusScope.of(context).unfocus();
+                                                                                FocusManager.instance.primaryFocus?.unfocus();
+                                                                              },
+                                                                              child: Padding(
+                                                                                padding: MediaQuery.viewInsetsOf(context),
+                                                                                child: Container(
+                                                                                  height: MediaQuery.sizeOf(context).height * 0.6,
+                                                                                  child: ResetPinWidget(
+                                                                                    resetPin: profileUsersRow!,
+                                                                                  ),
                                                                                 ),
                                                                               ),
                                                                             ),

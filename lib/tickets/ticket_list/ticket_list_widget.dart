@@ -1,4 +1,3 @@
-import '';
 import '/backend/supabase/supabase.dart';
 import '/components/side_menu_view_widget.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
@@ -8,6 +7,7 @@ import '/tickets/new_ticket_create/new_ticket_create_widget.dart';
 import '/index.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:webviewx_plus/webviewx_plus.dart';
 import 'ticket_list_model.dart';
 export 'ticket_list_model.dart';
 
@@ -164,28 +164,30 @@ class _TicketListWidgetState extends State<TicketListWidget> {
                                                           enableDrag: false,
                                                           context: context,
                                                           builder: (context) {
-                                                            return GestureDetector(
-                                                              onTap: () {
-                                                                FocusScope.of(
-                                                                        context)
-                                                                    .unfocus();
-                                                                FocusManager
-                                                                    .instance
-                                                                    .primaryFocus
-                                                                    ?.unfocus();
-                                                              },
-                                                              child: Padding(
-                                                                padding: MediaQuery
-                                                                    .viewInsetsOf(
-                                                                        context),
-                                                                child:
-                                                                    Container(
-                                                                  height: MediaQuery.sizeOf(
-                                                                              context)
-                                                                          .height *
-                                                                      0.6,
+                                                            return WebViewAware(
+                                                              child:
+                                                                  GestureDetector(
+                                                                onTap: () {
+                                                                  FocusScope.of(
+                                                                          context)
+                                                                      .unfocus();
+                                                                  FocusManager
+                                                                      .instance
+                                                                      .primaryFocus
+                                                                      ?.unfocus();
+                                                                },
+                                                                child: Padding(
+                                                                  padding: MediaQuery
+                                                                      .viewInsetsOf(
+                                                                          context),
                                                                   child:
-                                                                      NewTicketCreateWidget(),
+                                                                      Container(
+                                                                    height:
+                                                                        MediaQuery.sizeOf(context).height *
+                                                                            0.6,
+                                                                    child:
+                                                                        NewTicketCreateWidget(),
+                                                                  ),
                                                                 ),
                                                               ),
                                                             );

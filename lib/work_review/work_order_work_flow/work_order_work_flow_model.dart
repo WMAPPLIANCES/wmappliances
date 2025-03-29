@@ -3,6 +3,7 @@ import '/backend/supabase/supabase.dart';
 import '/components/side_menu_view_widget.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/form_field_controller.dart';
+import '/index.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'work_order_work_flow_widget.dart' show WorkOrderWorkFlowWidget;
 import 'package:flutter/material.dart';
@@ -115,6 +116,8 @@ class WorkOrderWorkFlowModel extends FlutterFlowModel<WorkOrderWorkFlowWidget> {
 
   String colorString = '#0b67bc';
 
+  String scheduleID = '12025';
+
   ///  State fields for stateful widgets in this page.
 
   // Model for sideMenuView component.
@@ -133,6 +136,20 @@ class WorkOrderWorkFlowModel extends FlutterFlowModel<WorkOrderWorkFlowWidget> {
   List<NotesRow>? notesQueryMain;
   // Stores action output result for [Backend Call - Query Rows] action in Button widget.
   List<PartsRow>? partsMainQuery;
+  // Stores action output result for [Backend Call - Query Rows] action in Button widget.
+  List<DiagnosesRow>? diagnosisQueryDispa;
+  // Stores action output result for [Backend Call - Query Rows] action in Button widget.
+  List<WorkOrdersRow>? workOderQuery1;
+  // Stores action output result for [Backend Call - Query Rows] action in Button widget.
+  List<PartsTotalPriceRow>? totalPartPrice1;
+  // Stores action output result for [Backend Call - Query Rows] action in Button widget.
+  List<PartSummaryAggregatedRow>? partsRequestedQuery1;
+  // Stores action output result for [Backend Call - Query Rows] action in Button widget.
+  List<NotesDispatchRow>? notesDispatchQueryMain1;
+  // Stores action output result for [Backend Call - Query Rows] action in Button widget.
+  List<NotesRow>? notesQueryMain1;
+  // Stores action output result for [Backend Call - Query Rows] action in Button widget.
+  List<PartsRow>? partsMainQuery1;
   // State field(s) for Switch widget.
   bool? switchValue1;
   // State field(s) for Switch widget.

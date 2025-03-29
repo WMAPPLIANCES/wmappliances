@@ -27,6 +27,8 @@ class DiagnosisViewBSModel extends FlutterFlowModel<DiagnosisViewBSWidget> {
 
   // Stores action output result for [Backend Call - Query Rows] action in diagnosisViewBS widget.
   List<DiagnosesRow>? queryDiagnosis;
+  // Stores action output result for [Backend Call - Query Rows] action in diagnosisViewBS widget.
+  List<StockPartsRow>? queryStockParts;
   // State field(s) for DropDown widget.
   String? dropDownValue;
   FormFieldController<String>? dropDownValueController;

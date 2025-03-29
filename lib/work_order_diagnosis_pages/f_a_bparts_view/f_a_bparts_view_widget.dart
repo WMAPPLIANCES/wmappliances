@@ -1,4 +1,3 @@
-import '';
 import '/backend/supabase/supabase.dart';
 import '/components/diagnosis_notes_widget.dart';
 import '/components/sensor_id_create_widget.dart';
@@ -10,6 +9,7 @@ import '/work_order_diagnosis_pages/add_part_botton_sheet/add_part_botton_sheet_
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
+import 'package:webviewx_plus/webviewx_plus.dart';
 import 'f_a_bparts_view_model.dart';
 export 'f_a_bparts_view_model.dart';
 
@@ -176,12 +176,15 @@ class _FABpartsViewWidgetState extends State<FABpartsViewWidget> {
                           backgroundColor: Colors.transparent,
                           context: context,
                           builder: (context) {
-                            return Padding(
-                              padding: MediaQuery.viewInsetsOf(context),
-                              child: Container(
-                                height: MediaQuery.sizeOf(context).height * 1.0,
-                                child: DiagnosisNotesWidget(
-                                  notesEditParameter: widget.fabDiagnoses!,
+                            return WebViewAware(
+                              child: Padding(
+                                padding: MediaQuery.viewInsetsOf(context),
+                                child: Container(
+                                  height:
+                                      MediaQuery.sizeOf(context).height * 1.0,
+                                  child: DiagnosisNotesWidget(
+                                    notesEditParameter: widget.fabDiagnoses!,
+                                  ),
                                 ),
                               ),
                             );
@@ -229,10 +232,12 @@ class _FABpartsViewWidgetState extends State<FABpartsViewWidget> {
                           enableDrag: false,
                           context: context,
                           builder: (context) {
-                            return Padding(
-                              padding: MediaQuery.viewInsetsOf(context),
-                              child: DiagnosisNotesWidget(
-                                notesEditParameter: widget.fabDiagnoses!,
+                            return WebViewAware(
+                              child: Padding(
+                                padding: MediaQuery.viewInsetsOf(context),
+                                child: DiagnosisNotesWidget(
+                                  notesEditParameter: widget.fabDiagnoses!,
+                                ),
                               ),
                             );
                           },
@@ -257,11 +262,13 @@ class _FABpartsViewWidgetState extends State<FABpartsViewWidget> {
                           enableDrag: false,
                           context: context,
                           builder: (context) {
-                            return Padding(
-                              padding: MediaQuery.viewInsetsOf(context),
-                              child: AddPartBottonSheetWidget(
-                                partFromDiagnosisParameter:
-                                    widget.fabDiagnoses!,
+                            return WebViewAware(
+                              child: Padding(
+                                padding: MediaQuery.viewInsetsOf(context),
+                                child: AddPartBottonSheetWidget(
+                                  partFromDiagnosisParameter:
+                                      widget.fabDiagnoses!,
+                                ),
                               ),
                             );
                           },
@@ -308,11 +315,13 @@ class _FABpartsViewWidgetState extends State<FABpartsViewWidget> {
                           enableDrag: false,
                           context: context,
                           builder: (context) {
-                            return Padding(
-                              padding: MediaQuery.viewInsetsOf(context),
-                              child: AddPartBottonSheetWidget(
-                                partFromDiagnosisParameter:
-                                    widget.fabDiagnoses!,
+                            return WebViewAware(
+                              child: Padding(
+                                padding: MediaQuery.viewInsetsOf(context),
+                                child: AddPartBottonSheetWidget(
+                                  partFromDiagnosisParameter:
+                                      widget.fabDiagnoses!,
+                                ),
                               ),
                             );
                           },
@@ -382,12 +391,15 @@ class _FABpartsViewWidgetState extends State<FABpartsViewWidget> {
                           backgroundColor: Colors.transparent,
                           context: context,
                           builder: (context) {
-                            return Padding(
-                              padding: MediaQuery.viewInsetsOf(context),
-                              child: Container(
-                                height: MediaQuery.sizeOf(context).height * 1.0,
-                                child: SensorIdCreateWidget(
-                                  sensorIdParameter: widget.fabDiagnoses!,
+                            return WebViewAware(
+                              child: Padding(
+                                padding: MediaQuery.viewInsetsOf(context),
+                                child: Container(
+                                  height:
+                                      MediaQuery.sizeOf(context).height * 1.0,
+                                  child: SensorIdCreateWidget(
+                                    sensorIdParameter: widget.fabDiagnoses!,
+                                  ),
                                 ),
                               ),
                             );
@@ -436,13 +448,15 @@ class _FABpartsViewWidgetState extends State<FABpartsViewWidget> {
                             backgroundColor: Colors.transparent,
                             context: context,
                             builder: (context) {
-                              return Padding(
-                                padding: MediaQuery.viewInsetsOf(context),
-                                child: Container(
-                                  height:
-                                      MediaQuery.sizeOf(context).height * 1.0,
-                                  child: SensorIdCreateWidget(
-                                    sensorIdParameter: widget.fabDiagnoses!,
+                              return WebViewAware(
+                                child: Padding(
+                                  padding: MediaQuery.viewInsetsOf(context),
+                                  child: Container(
+                                    height:
+                                        MediaQuery.sizeOf(context).height * 1.0,
+                                    child: SensorIdCreateWidget(
+                                      sensorIdParameter: widget.fabDiagnoses!,
+                                    ),
                                   ),
                                 ),
                               );

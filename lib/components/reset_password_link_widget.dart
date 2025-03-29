@@ -3,6 +3,7 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:webviewx_plus/webviewx_plus.dart';
 import 'reset_password_link_model.dart';
 export 'reset_password_link_model.dart';
 
@@ -166,17 +167,19 @@ class _ResetPasswordLinkWidgetState extends State<ResetPasswordLinkWidget> {
                       await showDialog(
                         context: context,
                         builder: (alertDialogContext) {
-                          return AlertDialog(
-                            title: Text('📩 Check Your Spam Folder'),
-                            content: Text(
-                                'We’ve sent an email with the password reset link. If you don’t see it in your inbox, please check your spam or junk folder.  If you need further assistance, feel free to contact our support team.'),
-                            actions: [
-                              TextButton(
-                                onPressed: () =>
-                                    Navigator.pop(alertDialogContext),
-                                child: Text('🔄 OK'),
-                              ),
-                            ],
+                          return WebViewAware(
+                            child: AlertDialog(
+                              title: Text('📩 Check Your Spam Folder'),
+                              content: Text(
+                                  'We’ve sent an email with the password reset link. If you don’t see it in your inbox, please check your spam or junk folder.  If you need further assistance, feel free to contact our support team.'),
+                              actions: [
+                                TextButton(
+                                  onPressed: () =>
+                                      Navigator.pop(alertDialogContext),
+                                  child: Text('🔄 OK'),
+                                ),
+                              ],
+                            ),
                           );
                         },
                       );

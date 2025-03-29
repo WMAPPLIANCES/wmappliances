@@ -11,7 +11,6 @@ import 'package:flutter/material.dart';
 // DO NOT REMOVE OR MODIFY THE CODE ABOVE!
 
 // Adicione esta importação para garantir o acesso correto ao AppState
-import '/flutter_flow/flutter_flow_model.dart';
 
 // Pacotes de scanner
 import 'package:ai_barcode_scanner/ai_barcode_scanner.dart';

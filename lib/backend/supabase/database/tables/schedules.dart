@@ -111,8 +111,9 @@ class SchedulesRow extends SupabaseDataRow {
   set appointmentType(String? value) =>
       setField<String>('appointment_type', value);
 
-  String? get technicians => getField<String>('technicians');
-  set technicians(String? value) => setField<String>('technicians', value);
+  String? get techniciansUuid => getField<String>('technicians_uuid');
+  set techniciansUuid(String? value) =>
+      setField<String>('technicians_uuid', value);
 
   bool? get completed => getField<bool>('completed');
   set completed(bool? value) => setField<bool>('completed', value);
@@ -125,4 +126,21 @@ class SchedulesRow extends SupabaseDataRow {
 
   String? get apt => getField<String>('apt');
   set apt(String? value) => setField<String>('apt', value);
+
+  bool? get managerReview => getField<bool>('manager_review');
+  set managerReview(bool? value) => setField<bool>('manager_review', value);
+
+  String? get latLng => getField<String>('lat_lng');
+  set latLng(String? value) => setField<String>('lat_lng', value);
+
+  String? get eventType => getField<String>('event_type');
+  set eventType(String? value) => setField<String>('event_type', value);
+
+  String? get technicianColor => getField<String>('technician_color');
+  set technicianColor(String? value) =>
+      setField<String>('technician_color', value);
+
+  String? get officeLocation => getField<String>('office_location');
+  set officeLocation(String? value) =>
+      setField<String>('office_location', value);
 }

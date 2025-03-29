@@ -1,5 +1,5 @@
+import '/appointment/pages/nav_bar1/nav_bar1_widget.dart';
 import '/flutter_flow/flutter_flow_util.dart';
-import '/pages/nav_bar1/nav_bar1_widget.dart';
 import 'pending_widget.dart' show PendingWidget;
 import 'package:flutter/material.dart';
 

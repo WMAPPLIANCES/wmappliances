@@ -1,4 +1,3 @@
-import '';
 import '/backend/supabase/supabase.dart';
 import '/flutter_flow/flutter_flow_choice_chips.dart';
 import '/flutter_flow/flutter_flow_drop_down.dart';
@@ -14,6 +13,7 @@ import 'package:flutter/scheduler.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:record/record.dart';
+import 'package:webviewx_plus/webviewx_plus.dart';
 import 'voice_diagnosis_model.dart';
 export 'voice_diagnosis_model.dart';
 
@@ -500,7 +500,7 @@ class _VoiceDiagnosisWidgetState extends State<VoiceDiagnosisWidget> {
                               : () async {
                                   await actions.n8nApiCallDiagnosis(
                                     'https://webhook.wmappliances.cloud/webhook/voiceDiagnosis',
-                                    '',
+                                    _model.choiceChipsValue,
                                     valueOrDefault<String>(
                                       widget.diagnosisVoice?.workOrderId,
                                       '02032',
@@ -509,8 +509,8 @@ class _VoiceDiagnosisWidgetState extends State<VoiceDiagnosisWidget> {
                                     '',
                                     '',
                                     '',
-                                    '',
-                                    'Estimate Time: ${_model.dropDownValue}Helper Needed: ${_model.choiceChipsValue}Diagnosis: ${_model.textController.text}',
+                                    _model.dropDownValue,
+                                    '${_model.textController.text}',
                                     valueOrDefault<String>(
                                       widget.diagnosisVoice?.diagnosisId,
                                       '124',
@@ -519,17 +519,19 @@ class _VoiceDiagnosisWidgetState extends State<VoiceDiagnosisWidget> {
                                   await showDialog(
                                     context: context,
                                     builder: (alertDialogContext) {
-                                      return AlertDialog(
-                                        title: Text('✅ Diagnostic Added!'),
-                                        content: Text(
-                                            '🔄 Please refresh or check back shortly for updated status.'),
-                                        actions: [
-                                          TextButton(
-                                            onPressed: () => Navigator.pop(
-                                                alertDialogContext),
-                                            child: Text('⏳ Ok'),
-                                          ),
-                                        ],
+                                      return WebViewAware(
+                                        child: AlertDialog(
+                                          title: Text('✅ Diagnostic Added!'),
+                                          content: Text(
+                                              '🔄 Please refresh or check back shortly for updated status.'),
+                                          actions: [
+                                            TextButton(
+                                              onPressed: () => Navigator.pop(
+                                                  alertDialogContext),
+                                              child: Text('⏳ Ok'),
+                                            ),
+                                          ],
+                                        ),
                                       );
                                     },
                                   );

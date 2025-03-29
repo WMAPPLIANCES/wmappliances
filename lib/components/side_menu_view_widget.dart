@@ -1,6 +1,4 @@
-import '';
 import '/auth/supabase_auth/auth_util.dart';
-import '/backend/supabase/supabase.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'dart:async';
@@ -185,16 +183,32 @@ class _SideMenuViewWidgetState extends State<SideMenuViewWidget> {
                           hoverColor: Colors.transparent,
                           highlightColor: Colors.transparent,
                           onTap: () async {
-                            context.pushNamed(
-                              DashboardDispatchWidget.routeName,
-                              extra: <String, dynamic>{
-                                kTransitionInfoKey: TransitionInfo(
-                                  hasTransition: true,
-                                  transitionType: PageTransitionType.fade,
-                                  duration: Duration(milliseconds: 0),
-                                ),
-                              },
-                            );
+                            if ((FFAppState().dispatch == 'dispatch') ||
+                                (FFAppState().officeManager ==
+                                    'officemanager') ||
+                                (FFAppState().userRole == 'admin')) {
+                              context.pushNamed(
+                                DashboardDispatchWidget.routeName,
+                                extra: <String, dynamic>{
+                                  kTransitionInfoKey: TransitionInfo(
+                                    hasTransition: true,
+                                    transitionType: PageTransitionType.fade,
+                                    duration: Duration(milliseconds: 0),
+                                  ),
+                                },
+                              );
+                            } else {
+                              context.pushNamed(
+                                DashboardTechnicianWidget.routeName,
+                                extra: <String, dynamic>{
+                                  kTransitionInfoKey: TransitionInfo(
+                                    hasTransition: true,
+                                    transitionType: PageTransitionType.fade,
+                                    duration: Duration(milliseconds: 0),
+                                  ),
+                                },
+                              );
+                            }
                           },
                           child: Container(
                             width: double.infinity,
@@ -259,71 +273,95 @@ class _SideMenuViewWidgetState extends State<SideMenuViewWidget> {
                           safeSetState(() => _model.itenHoverHovered1 = false);
                         }),
                       ),
-                      MouseRegion(
-                        opaque: false,
-                        cursor: MouseCursor.defer ?? MouseCursor.defer,
-                        child: Container(
-                          width: double.infinity,
-                          decoration: BoxDecoration(
-                            color: _model.itenHoverHovered2
-                                ? FlutterFlowTheme.of(context).alternate
-                                : Color(0x00000000),
-                            borderRadius: BorderRadius.circular(8.0),
-                          ),
-                          child: Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
-                                valueOrDefault<double>(
-                                  _model.paddingItem,
-                                  0.0,
-                                ),
-                                valueOrDefault<double>(
-                                  _model.paddingItem / 2,
-                                  0.0,
-                                ),
-                                valueOrDefault<double>(
-                                  _model.paddingItem,
-                                  0.0,
-                                ),
-                                valueOrDefault<double>(
-                                  _model.paddingItem / 2,
-                                  0.0,
-                                )),
-                            child: Row(
-                              mainAxisSize: MainAxisSize.min,
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                Icon(
-                                  Icons.calendar_month_outlined,
-                                  color: FlutterFlowTheme.of(context).primary,
-                                  size: 24.0,
-                                ),
-                                Expanded(
-                                  child: Row(
-                                    mainAxisSize: MainAxisSize.max,
-                                    children: [
-                                      Text(
-                                        'Appointment',
-                                        style: FlutterFlowTheme.of(context)
-                                            .bodyLarge
-                                            .override(
-                                              fontFamily: 'Manrope',
-                                              letterSpacing: 0.0,
-                                            ),
-                                      ),
-                                    ],
+                      if ((FFAppState().userRole == 'admin') ||
+                          (FFAppState().userRole == 'office_manager') ||
+                          (FFAppState().userRole == 'manager') ||
+                          (FFAppState().userRole == 'dispatch'))
+                        MouseRegion(
+                          opaque: false,
+                          cursor: MouseCursor.defer ?? MouseCursor.defer,
+                          child: InkWell(
+                            splashColor: Colors.transparent,
+                            focusColor: Colors.transparent,
+                            hoverColor: Colors.transparent,
+                            highlightColor: Colors.transparent,
+                            onTap: () async {
+                              context.pushNamed(
+                                DispatchTodayViewWidget.routeName,
+                                extra: <String, dynamic>{
+                                  kTransitionInfoKey: TransitionInfo(
+                                    hasTransition: true,
+                                    transitionType: PageTransitionType.fade,
+                                    duration: Duration(milliseconds: 0),
                                   ),
+                                },
+                              );
+                            },
+                            child: Container(
+                              width: double.infinity,
+                              decoration: BoxDecoration(
+                                color: _model.itenHoverHovered2
+                                    ? FlutterFlowTheme.of(context).alternate
+                                    : Color(0x00000000),
+                                borderRadius: BorderRadius.circular(8.0),
+                              ),
+                              child: Padding(
+                                padding: EdgeInsetsDirectional.fromSTEB(
+                                    valueOrDefault<double>(
+                                      _model.paddingItem,
+                                      0.0,
+                                    ),
+                                    valueOrDefault<double>(
+                                      _model.paddingItem / 2,
+                                      0.0,
+                                    ),
+                                    valueOrDefault<double>(
+                                      _model.paddingItem,
+                                      0.0,
+                                    ),
+                                    valueOrDefault<double>(
+                                      _model.paddingItem / 2,
+                                      0.0,
+                                    )),
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    Icon(
+                                      Icons.calendar_month_outlined,
+                                      color:
+                                          FlutterFlowTheme.of(context).primary,
+                                      size: 24.0,
+                                    ),
+                                    Expanded(
+                                      child: Row(
+                                        mainAxisSize: MainAxisSize.max,
+                                        children: [
+                                          Text(
+                                            'Appointment',
+                                            style: FlutterFlowTheme.of(context)
+                                                .bodyLarge
+                                                .override(
+                                                  fontFamily: 'Manrope',
+                                                  letterSpacing: 0.0,
+                                                ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ].divide(SizedBox(width: _model.paddingItem)),
                                 ),
-                              ].divide(SizedBox(width: _model.paddingItem)),
+                              ),
                             ),
                           ),
+                          onEnter: ((event) async {
+                            safeSetState(() => _model.itenHoverHovered2 = true);
+                          }),
+                          onExit: ((event) async {
+                            safeSetState(
+                                () => _model.itenHoverHovered2 = false);
+                          }),
                         ),
-                        onEnter: ((event) async {
-                          safeSetState(() => _model.itenHoverHovered2 = true);
-                        }),
-                        onExit: ((event) async {
-                          safeSetState(() => _model.itenHoverHovered2 = false);
-                        }),
-                      ),
                       Divider(
                         thickness: 2.0,
                         color: FlutterFlowTheme.of(context).alternate,
@@ -411,156 +449,176 @@ class _SideMenuViewWidgetState extends State<SideMenuViewWidget> {
                           safeSetState(() => _model.itenHoverHovered3 = false);
                         }),
                       ),
-                      MouseRegion(
-                        opaque: false,
-                        cursor: MouseCursor.defer ?? MouseCursor.defer,
-                        child: InkWell(
-                          splashColor: Colors.transparent,
-                          focusColor: Colors.transparent,
-                          hoverColor: Colors.transparent,
-                          highlightColor: Colors.transparent,
-                          onTap: () async {
-                            context
-                                .pushNamed(WorkOrderWorkFlowWidget.routeName);
-                          },
-                          child: Container(
-                            width: double.infinity,
-                            decoration: BoxDecoration(
-                              color: _model.itenHoverHovered4
-                                  ? FlutterFlowTheme.of(context).alternate
-                                  : Color(0x00000000),
-                              borderRadius: BorderRadius.circular(8.0),
-                            ),
-                            child: Padding(
-                              padding: EdgeInsetsDirectional.fromSTEB(
-                                  valueOrDefault<double>(
-                                    _model.paddingItem,
-                                    0.0,
-                                  ),
-                                  valueOrDefault<double>(
-                                    _model.paddingItem / 2,
-                                    0.0,
-                                  ),
-                                  valueOrDefault<double>(
-                                    _model.paddingItem,
-                                    0.0,
-                                  ),
-                                  valueOrDefault<double>(
-                                    _model.paddingItem / 2,
-                                    0.0,
-                                  )),
-                              child: Row(
-                                mainAxisSize: MainAxisSize.min,
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  Icon(
-                                    Icons.send_outlined,
-                                    color: FlutterFlowTheme.of(context).primary,
-                                    size: 24.0,
-                                  ),
-                                  Expanded(
-                                    child: Row(
-                                      mainAxisSize: MainAxisSize.max,
-                                      children: [
-                                        Text(
-                                          'Dispatch',
-                                          style: FlutterFlowTheme.of(context)
-                                              .bodyLarge
-                                              .override(
-                                                fontFamily: 'Manrope',
-                                                letterSpacing: 0.0,
-                                              ),
-                                        ),
-                                      ],
+                      if ((FFAppState().userRole == 'admin') ||
+                          (FFAppState().userRole == 'office_manager') ||
+                          (FFAppState().userRole == 'manager') ||
+                          (FFAppState().userRole == 'dispatch'))
+                        MouseRegion(
+                          opaque: false,
+                          cursor: MouseCursor.defer ?? MouseCursor.defer,
+                          child: InkWell(
+                            splashColor: Colors.transparent,
+                            focusColor: Colors.transparent,
+                            hoverColor: Colors.transparent,
+                            highlightColor: Colors.transparent,
+                            onTap: () async {
+                              context
+                                  .pushNamed(WorkOrderWorkFlowWidget.routeName);
+                            },
+                            child: Container(
+                              width: double.infinity,
+                              decoration: BoxDecoration(
+                                color: _model.itenHoverHovered4
+                                    ? FlutterFlowTheme.of(context).alternate
+                                    : Color(0x00000000),
+                                borderRadius: BorderRadius.circular(8.0),
+                              ),
+                              child: Padding(
+                                padding: EdgeInsetsDirectional.fromSTEB(
+                                    valueOrDefault<double>(
+                                      _model.paddingItem,
+                                      0.0,
                                     ),
-                                  ),
-                                ].divide(SizedBox(width: _model.paddingItem)),
+                                    valueOrDefault<double>(
+                                      _model.paddingItem / 2,
+                                      0.0,
+                                    ),
+                                    valueOrDefault<double>(
+                                      _model.paddingItem,
+                                      0.0,
+                                    ),
+                                    valueOrDefault<double>(
+                                      _model.paddingItem / 2,
+                                      0.0,
+                                    )),
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    Icon(
+                                      Icons.send_outlined,
+                                      color:
+                                          FlutterFlowTheme.of(context).primary,
+                                      size: 24.0,
+                                    ),
+                                    Expanded(
+                                      child: Row(
+                                        mainAxisSize: MainAxisSize.max,
+                                        children: [
+                                          Text(
+                                            'Dispatch',
+                                            style: FlutterFlowTheme.of(context)
+                                                .bodyLarge
+                                                .override(
+                                                  fontFamily: 'Manrope',
+                                                  letterSpacing: 0.0,
+                                                ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ].divide(SizedBox(width: _model.paddingItem)),
+                                ),
                               ),
                             ),
                           ),
+                          onEnter: ((event) async {
+                            safeSetState(() => _model.itenHoverHovered4 = true);
+                          }),
+                          onExit: ((event) async {
+                            safeSetState(
+                                () => _model.itenHoverHovered4 = false);
+                          }),
                         ),
-                        onEnter: ((event) async {
-                          safeSetState(() => _model.itenHoverHovered4 = true);
-                        }),
-                        onExit: ((event) async {
-                          safeSetState(() => _model.itenHoverHovered4 = false);
-                        }),
-                      ),
-                      MouseRegion(
-                        opaque: false,
-                        cursor: MouseCursor.defer ?? MouseCursor.defer,
-                        child: InkWell(
-                          splashColor: Colors.transparent,
-                          focusColor: Colors.transparent,
-                          hoverColor: Colors.transparent,
-                          highlightColor: Colors.transparent,
-                          onTap: () async {
-                            context
-                                .pushNamed(WorkOrderWorkFlowWidget.routeName);
-                          },
-                          child: Container(
-                            width: double.infinity,
-                            decoration: BoxDecoration(
-                              color: _model.itenHoverHovered5
-                                  ? FlutterFlowTheme.of(context).alternate
-                                  : Color(0x00000000),
-                              borderRadius: BorderRadius.circular(8.0),
-                            ),
-                            child: Padding(
-                              padding: EdgeInsetsDirectional.fromSTEB(
-                                  valueOrDefault<double>(
-                                    _model.paddingItem,
-                                    0.0,
+                      if ((FFAppState().userRole == 'admin') ||
+                          (FFAppState().userRole == 'office_manager') ||
+                          (FFAppState().userRole == 'manager') ||
+                          (FFAppState().userRole == 'dispatch'))
+                        MouseRegion(
+                          opaque: false,
+                          cursor: MouseCursor.defer ?? MouseCursor.defer,
+                          child: InkWell(
+                            splashColor: Colors.transparent,
+                            focusColor: Colors.transparent,
+                            hoverColor: Colors.transparent,
+                            highlightColor: Colors.transparent,
+                            onTap: () async {
+                              context.pushNamed(
+                                WorkOrderWorkFlowWidget.routeName,
+                                extra: <String, dynamic>{
+                                  kTransitionInfoKey: TransitionInfo(
+                                    hasTransition: true,
+                                    transitionType: PageTransitionType.fade,
+                                    duration: Duration(milliseconds: 0),
                                   ),
-                                  valueOrDefault<double>(
-                                    _model.paddingItem / 2,
-                                    0.0,
-                                  ),
-                                  valueOrDefault<double>(
-                                    _model.paddingItem,
-                                    0.0,
-                                  ),
-                                  valueOrDefault<double>(
-                                    _model.paddingItem / 2,
-                                    0.0,
-                                  )),
-                              child: Row(
-                                mainAxisSize: MainAxisSize.min,
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  FaIcon(
-                                    FontAwesomeIcons.tasks,
-                                    color: FlutterFlowTheme.of(context).primary,
-                                    size: 24.0,
-                                  ),
-                                  Expanded(
-                                    child: Row(
-                                      mainAxisSize: MainAxisSize.max,
-                                      children: [
-                                        Text(
-                                          'Work Manager',
-                                          style: FlutterFlowTheme.of(context)
-                                              .bodyLarge
-                                              .override(
-                                                fontFamily: 'Manrope',
-                                                letterSpacing: 0.0,
-                                              ),
-                                        ),
-                                      ],
+                                },
+                              );
+                            },
+                            child: Container(
+                              width: double.infinity,
+                              decoration: BoxDecoration(
+                                color: _model.itenHoverHovered5
+                                    ? FlutterFlowTheme.of(context).alternate
+                                    : Color(0x00000000),
+                                borderRadius: BorderRadius.circular(8.0),
+                              ),
+                              child: Padding(
+                                padding: EdgeInsetsDirectional.fromSTEB(
+                                    valueOrDefault<double>(
+                                      _model.paddingItem,
+                                      0.0,
                                     ),
-                                  ),
-                                ].divide(SizedBox(width: _model.paddingItem)),
+                                    valueOrDefault<double>(
+                                      _model.paddingItem / 2,
+                                      0.0,
+                                    ),
+                                    valueOrDefault<double>(
+                                      _model.paddingItem,
+                                      0.0,
+                                    ),
+                                    valueOrDefault<double>(
+                                      _model.paddingItem / 2,
+                                      0.0,
+                                    )),
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    FaIcon(
+                                      FontAwesomeIcons.tasks,
+                                      color:
+                                          FlutterFlowTheme.of(context).primary,
+                                      size: 24.0,
+                                    ),
+                                    Expanded(
+                                      child: Row(
+                                        mainAxisSize: MainAxisSize.max,
+                                        children: [
+                                          Text(
+                                            'Work Manager',
+                                            style: FlutterFlowTheme.of(context)
+                                                .bodyLarge
+                                                .override(
+                                                  fontFamily: 'Manrope',
+                                                  letterSpacing: 0.0,
+                                                ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ].divide(SizedBox(width: _model.paddingItem)),
+                                ),
                               ),
                             ),
                           ),
+                          onEnter: ((event) async {
+                            safeSetState(() => _model.itenHoverHovered5 = true);
+                          }),
+                          onExit: ((event) async {
+                            safeSetState(
+                                () => _model.itenHoverHovered5 = false);
+                          }),
                         ),
-                        onEnter: ((event) async {
-                          safeSetState(() => _model.itenHoverHovered5 = true);
-                        }),
-                        onExit: ((event) async {
-                          safeSetState(() => _model.itenHoverHovered5 = false);
-                        }),
-                      ),
                       if ((FFAppState().userRole == 'admin') ||
                           (FFAppState().userRole == 'office_manager') ||
                           (FFAppState().userRole == 'manager'))
@@ -653,7 +711,8 @@ class _SideMenuViewWidgetState extends State<SideMenuViewWidget> {
                         ),
                       if ((FFAppState().userRole == 'admin') ||
                           (FFAppState().userRole == 'office_manager') ||
-                          (FFAppState().userRole == 'manager'))
+                          (FFAppState().userRole == 'manager') ||
+                          (FFAppState().userRole == 'dispatch'))
                         MouseRegion(
                           opaque: false,
                           cursor: MouseCursor.defer ?? MouseCursor.defer,
@@ -849,123 +908,101 @@ class _SideMenuViewWidgetState extends State<SideMenuViewWidget> {
                           safeSetState(() => _model.itenHoverHovered8 = false);
                         }),
                       ),
-                      Divider(
-                        thickness: 2.0,
-                        color: FlutterFlowTheme.of(context).alternate,
-                      ),
                       MouseRegion(
                         opaque: false,
                         cursor: MouseCursor.defer ?? MouseCursor.defer,
-                        child: FutureBuilder<List<TicketsRow>>(
-                          future: TicketsTable().queryRows(
-                            queryFn: (q) => q.eqOrNull(
-                              'status',
-                              'New',
-                            ),
-                          ),
-                          builder: (context, snapshot) {
-                            // Customize what your widget looks like when it's loading.
-                            if (!snapshot.hasData) {
-                              return Center(
-                                child: SizedBox(
-                                  width: 50.0,
-                                  height: 50.0,
-                                  child: CircularProgressIndicator(
-                                    valueColor: AlwaysStoppedAnimation<Color>(
-                                      FlutterFlowTheme.of(context).primary,
-                                    ),
-                                  ),
+                        child: InkWell(
+                          splashColor: Colors.transparent,
+                          focusColor: Colors.transparent,
+                          hoverColor: Colors.transparent,
+                          highlightColor: Colors.transparent,
+                          onTap: () async {
+                            context.pushNamed(
+                              WebSearchWidget.routeName,
+                              extra: <String, dynamic>{
+                                kTransitionInfoKey: TransitionInfo(
+                                  hasTransition: true,
+                                  transitionType: PageTransitionType.fade,
+                                  duration: Duration(milliseconds: 0),
                                 ),
-                              );
-                            }
-                            List<TicketsRow> containerTicketsRowList =
-                                snapshot.data!;
-
-                            return InkWell(
-                              splashColor: Colors.transparent,
-                              focusColor: Colors.transparent,
-                              hoverColor: Colors.transparent,
-                              highlightColor: Colors.transparent,
-                              onTap: () async {
-                                context.pushNamed(
-                                  TicketListWidget.routeName,
-                                  extra: <String, dynamic>{
-                                    kTransitionInfoKey: TransitionInfo(
-                                      hasTransition: true,
-                                      transitionType: PageTransitionType.fade,
-                                      duration: Duration(milliseconds: 0),
-                                    ),
-                                  },
-                                );
                               },
-                              child: Container(
-                                width: double.infinity,
-                                decoration: BoxDecoration(
-                                  color: _model.itenHoverHovered9
-                                      ? FlutterFlowTheme.of(context).alternate
-                                      : Color(0x00000000),
-                                  borderRadius: BorderRadius.circular(8.0),
-                                ),
-                                child: Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
-                                      valueOrDefault<double>(
-                                        _model.paddingItem,
-                                        0.0,
-                                      ),
-                                      valueOrDefault<double>(
-                                        _model.paddingItem / 2,
-                                        0.0,
-                                      ),
-                                      valueOrDefault<double>(
-                                        _model.paddingItem,
-                                        0.0,
-                                      ),
-                                      valueOrDefault<double>(
-                                        _model.paddingItem / 2,
-                                        0.0,
-                                      )),
-                                  child: Row(
-                                    mainAxisSize: MainAxisSize.min,
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    children: [
-                                      if (!(containerTicketsRowList.isNotEmpty))
-                                        Icon(
-                                          Icons.support_agent,
-                                          color: FlutterFlowTheme.of(context)
-                                              .primary,
-                                          size: 24.0,
-                                        ),
-                                      if (containerTicketsRowList.isNotEmpty)
-                                        Icon(
-                                          Icons.support_agent,
-                                          color: FlutterFlowTheme.of(context)
-                                              .success,
-                                          size: 24.0,
-                                        ),
-                                      Expanded(
-                                        child: Row(
-                                          mainAxisSize: MainAxisSize.max,
-                                          children: [
-                                            Text(
-                                              'Ticket',
-                                              style:
-                                                  FlutterFlowTheme.of(context)
-                                                      .bodyLarge
-                                                      .override(
-                                                        fontFamily: 'Manrope',
-                                                        letterSpacing: 0.0,
-                                                      ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ].divide(
-                                        SizedBox(width: _model.paddingItem)),
-                                  ),
-                                ),
-                              ),
                             );
                           },
+                          child: Container(
+                            width: double.infinity,
+                            decoration: BoxDecoration(
+                              color: _model.itenHoverHovered9
+                                  ? FlutterFlowTheme.of(context).alternate
+                                  : Color(0x00000000),
+                              borderRadius: BorderRadius.circular(8.0),
+                            ),
+                            child: Padding(
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  valueOrDefault<double>(
+                                    _model.paddingItem,
+                                    0.0,
+                                  ),
+                                  valueOrDefault<double>(
+                                    _model.paddingItem / 2,
+                                    0.0,
+                                  ),
+                                  valueOrDefault<double>(
+                                    _model.paddingItem,
+                                    0.0,
+                                  ),
+                                  valueOrDefault<double>(
+                                    _model.paddingItem / 2,
+                                    0.0,
+                                  )),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  FaIcon(
+                                    FontAwesomeIcons.internetExplorer,
+                                    color: FlutterFlowTheme.of(context).primary,
+                                    size: 24.0,
+                                  ),
+                                  Expanded(
+                                    child: InkWell(
+                                      splashColor: Colors.transparent,
+                                      focusColor: Colors.transparent,
+                                      hoverColor: Colors.transparent,
+                                      highlightColor: Colors.transparent,
+                                      onTap: () async {
+                                        context.pushNamed(
+                                          WebSearchWidget.routeName,
+                                          extra: <String, dynamic>{
+                                            kTransitionInfoKey: TransitionInfo(
+                                              hasTransition: true,
+                                              transitionType:
+                                                  PageTransitionType.fade,
+                                              duration:
+                                                  Duration(milliseconds: 0),
+                                            ),
+                                          },
+                                        );
+                                      },
+                                      child: Row(
+                                        mainAxisSize: MainAxisSize.max,
+                                        children: [
+                                          Text(
+                                            'Search',
+                                            style: FlutterFlowTheme.of(context)
+                                                .bodyLarge
+                                                .override(
+                                                  fontFamily: 'Manrope',
+                                                  letterSpacing: 0.0,
+                                                ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ].divide(SizedBox(width: _model.paddingItem)),
+                              ),
+                            ),
+                          ),
                         ),
                         onEnter: ((event) async {
                           safeSetState(() => _model.itenHoverHovered9 = true);
@@ -974,6 +1011,100 @@ class _SideMenuViewWidgetState extends State<SideMenuViewWidget> {
                           safeSetState(() => _model.itenHoverHovered9 = false);
                         }),
                       ),
+                      Divider(
+                        thickness: 2.0,
+                        color: FlutterFlowTheme.of(context).alternate,
+                      ),
+                      if ((FFAppState().userRole == 'admin') ||
+                          (FFAppState().userRole == 'office_manager') ||
+                          (FFAppState().userRole == 'manager') ||
+                          (FFAppState().userRole == 'dispatch'))
+                        MouseRegion(
+                          opaque: false,
+                          cursor: MouseCursor.defer ?? MouseCursor.defer,
+                          child: InkWell(
+                            splashColor: Colors.transparent,
+                            focusColor: Colors.transparent,
+                            hoverColor: Colors.transparent,
+                            highlightColor: Colors.transparent,
+                            onTap: () async {
+                              context.pushNamed(
+                                TicketListWidget.routeName,
+                                extra: <String, dynamic>{
+                                  kTransitionInfoKey: TransitionInfo(
+                                    hasTransition: true,
+                                    transitionType: PageTransitionType.fade,
+                                    duration: Duration(milliseconds: 0),
+                                  ),
+                                },
+                              );
+                            },
+                            child: Container(
+                              width: double.infinity,
+                              decoration: BoxDecoration(
+                                color: _model.itenHoverHovered10
+                                    ? FlutterFlowTheme.of(context).alternate
+                                    : Color(0x00000000),
+                                borderRadius: BorderRadius.circular(8.0),
+                              ),
+                              child: Padding(
+                                padding: EdgeInsetsDirectional.fromSTEB(
+                                    valueOrDefault<double>(
+                                      _model.paddingItem,
+                                      0.0,
+                                    ),
+                                    valueOrDefault<double>(
+                                      _model.paddingItem / 2,
+                                      0.0,
+                                    ),
+                                    valueOrDefault<double>(
+                                      _model.paddingItem,
+                                      0.0,
+                                    ),
+                                    valueOrDefault<double>(
+                                      _model.paddingItem / 2,
+                                      0.0,
+                                    )),
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    Icon(
+                                      Icons.support_agent,
+                                      color:
+                                          FlutterFlowTheme.of(context).primary,
+                                      size: 24.0,
+                                    ),
+                                    Expanded(
+                                      child: Row(
+                                        mainAxisSize: MainAxisSize.max,
+                                        children: [
+                                          Text(
+                                            'Tickets',
+                                            style: FlutterFlowTheme.of(context)
+                                                .bodyLarge
+                                                .override(
+                                                  fontFamily: 'Manrope',
+                                                  letterSpacing: 0.0,
+                                                ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ].divide(SizedBox(width: _model.paddingItem)),
+                                ),
+                              ),
+                            ),
+                          ),
+                          onEnter: ((event) async {
+                            safeSetState(
+                                () => _model.itenHoverHovered10 = true);
+                          }),
+                          onExit: ((event) async {
+                            safeSetState(
+                                () => _model.itenHoverHovered10 = false);
+                          }),
+                        ),
                       Divider(
                         thickness: 2.0,
                         color: FlutterFlowTheme.of(context).alternate,
@@ -1002,7 +1133,7 @@ class _SideMenuViewWidgetState extends State<SideMenuViewWidget> {
                             child: Container(
                               width: double.infinity,
                               decoration: BoxDecoration(
-                                color: _model.itenHoverHovered10
+                                color: _model.itenHoverHovered11
                                     ? FlutterFlowTheme.of(context).alternate
                                     : Color(0x00000000),
                                 borderRadius: BorderRadius.circular(8.0),
@@ -1058,11 +1189,11 @@ class _SideMenuViewWidgetState extends State<SideMenuViewWidget> {
                           ),
                           onEnter: ((event) async {
                             safeSetState(
-                                () => _model.itenHoverHovered10 = true);
+                                () => _model.itenHoverHovered11 = true);
                           }),
                           onExit: ((event) async {
                             safeSetState(
-                                () => _model.itenHoverHovered10 = false);
+                                () => _model.itenHoverHovered11 = false);
                           }),
                         ),
                       Stack(
@@ -1182,7 +1313,7 @@ class _SideMenuViewWidgetState extends State<SideMenuViewWidget> {
                                 child: Container(
                                   width: double.infinity,
                                   decoration: BoxDecoration(
-                                    color: _model.itenHoverHovered11
+                                    color: _model.itenHoverHovered12
                                         ? FlutterFlowTheme.of(context).alternate
                                         : Color(0x00000000),
                                     borderRadius: BorderRadius.circular(8.0),
@@ -1241,11 +1372,11 @@ class _SideMenuViewWidgetState extends State<SideMenuViewWidget> {
                               ),
                               onEnter: ((event) async {
                                 safeSetState(
-                                    () => _model.itenHoverHovered11 = true);
+                                    () => _model.itenHoverHovered12 = true);
                               }),
                               onExit: ((event) async {
                                 safeSetState(
-                                    () => _model.itenHoverHovered11 = false);
+                                    () => _model.itenHoverHovered12 = false);
                               }),
                             ),
                         ],
@@ -1282,7 +1413,7 @@ class _SideMenuViewWidgetState extends State<SideMenuViewWidget> {
                               FFAppState().manager = 'user';
                               FFAppState().technician = 'user';
                               FFAppState().deleteDispatch();
-                              FFAppState().dispatch = 'user';
+                              FFAppState().dispatch = 'dispatch';
 
                               FFAppState().officeManager = 'user';
                               safeSetState(() {});
@@ -1359,7 +1490,7 @@ class _SideMenuViewWidgetState extends State<SideMenuViewWidget> {
                                           FFAppState().manager = 'user';
                                           FFAppState().technician = 'user';
                                           FFAppState().deleteDispatch();
-                                          FFAppState().dispatch = 'user';
+                                          FFAppState().dispatch = 'dispatch';
 
                                           FFAppState().officeManager = 'user';
                                           safeSetState(() {});
@@ -1418,7 +1549,16 @@ class _SideMenuViewWidgetState extends State<SideMenuViewWidget> {
                             hoverColor: Colors.transparent,
                             highlightColor: Colors.transparent,
                             onTap: () async {
-                              setDarkModeSetting(context, ThemeMode.light);
+                              context.pushNamed(
+                                HomePageWidget.routeName,
+                                extra: <String, dynamic>{
+                                  kTransitionInfoKey: TransitionInfo(
+                                    hasTransition: true,
+                                    transitionType: PageTransitionType.fade,
+                                    duration: Duration(milliseconds: 0),
+                                  ),
+                                },
+                              );
                             },
                             child: Container(
                               width: double.infinity,

@@ -1,14 +1,15 @@
-import '';
+import '/appointment/pages/nav_bar1/nav_bar1_widget.dart';
 import '/auth/supabase_auth/auth_util.dart';
 import '/backend/supabase/supabase.dart';
-import '/components/check_list_dishwasher_widget.dart';
+import '/check_list/check_list_dishwasher/check_list_dishwasher_widget.dart';
+import '/check_list/check_list_microwave/check_list_microwave_widget.dart';
+import '/check_list/check_list_range_cooktop/check_list_range_cooktop_widget.dart';
+import '/check_list/check_list_refrigerator/check_list_refrigerator_widget.dart';
+import '/check_list/check_list_venthood/check_list_venthood_widget.dart';
+import '/check_list/check_list_washer_m/check_list_washer_m_widget.dart';
+import '/components/add_part_selector_url_or_part_number_widget.dart';
 import '/components/check_list_dryer_widget.dart';
-import '/components/check_list_microwave_widget.dart';
 import '/components/check_list_oven_widget.dart';
-import '/components/check_list_range_cooktop_widget.dart';
-import '/components/check_list_refrigerator_widget.dart';
-import '/components/check_list_venthood_widget.dart';
-import '/components/check_list_washer_m_widget.dart';
 import '/components/diagnosis_view_b_s_widget.dart';
 import '/components/no_internet_widget.dart';
 import '/dashboards/voice_diagnosis/voice_diagnosis_widget.dart';
@@ -16,18 +17,17 @@ import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
-import '/pages/nav_bar1/nav_bar1_widget.dart';
 import '/stock_page/add_part_in_stock_from_parts/add_part_in_stock_from_parts_widget.dart';
 import '/work_order/botton_photos/botton_photos_widget.dart';
 import '/work_order_diagnosis_pages/create_appliance/create_appliance_widget.dart';
 import '/index.dart';
-import 'package:map_launcher/map_launcher.dart' as $ml;
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:webviewx_plus/webviewx_plus.dart';
 import 'work_order_technicians_view_model.dart';
 export 'work_order_technicians_view_model.dart';
 
@@ -347,64 +347,69 @@ class _WorkOrderTechniciansViewWidgetState
                                                                     MainAxisAlignment
                                                                         .spaceEvenly,
                                                                 children: [
-                                                                  Flexible(
-                                                                    child:
-                                                                        Padding(
-                                                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                                                          12.0,
-                                                                          0.0,
-                                                                          12.0,
-                                                                          0.0),
+                                                                  if (responsiveVisibility(
+                                                                    context:
+                                                                        context,
+                                                                    tabletLandscape:
+                                                                        false,
+                                                                    desktop:
+                                                                        false,
+                                                                  ))
+                                                                    Flexible(
                                                                       child:
-                                                                          InkWell(
-                                                                        splashColor:
-                                                                            Colors.transparent,
-                                                                        focusColor:
-                                                                            Colors.transparent,
-                                                                        hoverColor:
-                                                                            Colors.transparent,
-                                                                        highlightColor:
-                                                                            Colors.transparent,
-                                                                        onTap:
-                                                                            () async {
-                                                                          await launchUrl(
-                                                                              Uri(
-                                                                            scheme:
-                                                                                'tel',
-                                                                            path:
-                                                                                valueOrDefault<String>(
-                                                                              widget.workOrderRow?.customerPhone,
-                                                                              '4157996123',
-                                                                            ),
-                                                                          ));
-                                                                        },
+                                                                          Padding(
+                                                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                                                            12.0,
+                                                                            0.0,
+                                                                            12.0,
+                                                                            0.0),
                                                                         child:
-                                                                            Row(
-                                                                          mainAxisSize:
-                                                                              MainAxisSize.max,
-                                                                          children:
-                                                                              [
-                                                                            Icon(
-                                                                              Icons.phone,
-                                                                              color: FlutterFlowTheme.of(context).primary,
-                                                                              size: 22.0,
-                                                                            ),
-                                                                            Text(
-                                                                              valueOrDefault<String>(
+                                                                            InkWell(
+                                                                          splashColor:
+                                                                              Colors.transparent,
+                                                                          focusColor:
+                                                                              Colors.transparent,
+                                                                          hoverColor:
+                                                                              Colors.transparent,
+                                                                          highlightColor:
+                                                                              Colors.transparent,
+                                                                          onTap:
+                                                                              () async {
+                                                                            await launchUrl(Uri(
+                                                                              scheme: 'tel',
+                                                                              path: valueOrDefault<String>(
                                                                                 widget.workOrderRow?.customerPhone,
-                                                                                'Phone',
+                                                                                '4157996123',
                                                                               ),
-                                                                              style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                    fontFamily: 'Manrope',
-                                                                                    fontSize: 14.0,
-                                                                                    letterSpacing: 0.0,
-                                                                                  ),
-                                                                            ),
-                                                                          ].divide(SizedBox(width: 8.0)),
+                                                                            ));
+                                                                          },
+                                                                          child:
+                                                                              Row(
+                                                                            mainAxisSize:
+                                                                                MainAxisSize.max,
+                                                                            children:
+                                                                                [
+                                                                              Icon(
+                                                                                Icons.phone,
+                                                                                color: FlutterFlowTheme.of(context).primary,
+                                                                                size: 22.0,
+                                                                              ),
+                                                                              Text(
+                                                                                valueOrDefault<String>(
+                                                                                  widget.workOrderRow?.customerPhone,
+                                                                                  'Phone',
+                                                                                ),
+                                                                                style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                      fontFamily: 'Manrope',
+                                                                                      fontSize: 14.0,
+                                                                                      letterSpacing: 0.0,
+                                                                                    ),
+                                                                              ),
+                                                                            ].divide(SizedBox(width: 8.0)),
+                                                                          ),
                                                                         ),
                                                                       ),
                                                                     ),
-                                                                  ),
                                                                 ],
                                                               ),
                                                             ),
@@ -521,26 +526,10 @@ class _WorkOrderTechniciansViewWidgetState
                                                                               MainAxisAlignment.start,
                                                                           children:
                                                                               [
-                                                                            InkWell(
-                                                                              splashColor: Colors.transparent,
-                                                                              focusColor: Colors.transparent,
-                                                                              hoverColor: Colors.transparent,
-                                                                              highlightColor: Colors.transparent,
-                                                                              onTap: () async {
-                                                                                await launchMap(
-                                                                                  mapType: $ml.MapType.google,
-                                                                                  address: valueOrDefault<String>(
-                                                                                    widget.workOrderRow?.address,
-                                                                                    '15178 Discovery Rd San Leandro',
-                                                                                  ),
-                                                                                  title: 'Navigate',
-                                                                                );
-                                                                              },
-                                                                              child: Icon(
-                                                                                Icons.navigation_sharp,
-                                                                                color: FlutterFlowTheme.of(context).primary,
-                                                                                size: 22.0,
-                                                                              ),
+                                                                            Icon(
+                                                                              Icons.navigation_sharp,
+                                                                              color: FlutterFlowTheme.of(context).primary,
+                                                                              size: 22.0,
                                                                             ),
                                                                             Row(
                                                                               mainAxisSize: MainAxisSize.max,
@@ -808,21 +797,22 @@ class _WorkOrderTechniciansViewWidgetState
                                                                           context,
                                                                       builder:
                                                                           (context) {
-                                                                        return GestureDetector(
-                                                                          onTap:
-                                                                              () {
-                                                                            FocusScope.of(context).unfocus();
-                                                                            FocusManager.instance.primaryFocus?.unfocus();
-                                                                          },
+                                                                        return WebViewAware(
                                                                           child:
-                                                                              Padding(
-                                                                            padding:
-                                                                                MediaQuery.viewInsetsOf(context),
+                                                                              GestureDetector(
+                                                                            onTap:
+                                                                                () {
+                                                                              FocusScope.of(context).unfocus();
+                                                                              FocusManager.instance.primaryFocus?.unfocus();
+                                                                            },
                                                                             child:
-                                                                                Container(
-                                                                              height: MediaQuery.sizeOf(context).height * 1.0,
-                                                                              child: CreateApplianceWidget(
-                                                                                workOrderDiagnosis: widget.workOrderRow!,
+                                                                                Padding(
+                                                                              padding: MediaQuery.viewInsetsOf(context),
+                                                                              child: Container(
+                                                                                height: MediaQuery.sizeOf(context).height * 1.0,
+                                                                                child: CreateApplianceWidget(
+                                                                                  workOrderDiagnosis: widget.workOrderRow!,
+                                                                                ),
                                                                               ),
                                                                             ),
                                                                           ),
@@ -1468,22 +1458,101 @@ class _WorkOrderTechniciansViewWidgetState
                                                         mainAxisSize:
                                                             MainAxisSize.max,
                                                         children: [
-                                                          Text(
-                                                            'View Status',
-                                                            style: FlutterFlowTheme
-                                                                    .of(context)
-                                                                .titleMedium
-                                                                .override(
-                                                                  fontFamily:
-                                                                      'Manrope',
-                                                                  fontSize:
-                                                                      22.0,
-                                                                  letterSpacing:
-                                                                      0.0,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .bold,
+                                                          Row(
+                                                            mainAxisSize:
+                                                                MainAxisSize
+                                                                    .max,
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .center,
+                                                            children: [
+                                                              Padding(
+                                                                padding:
+                                                                    EdgeInsetsDirectional
+                                                                        .fromSTEB(
+                                                                            85.0,
+                                                                            0.0,
+                                                                            0.0,
+                                                                            0.0),
+                                                                child: Text(
+                                                                  'View Status',
+                                                                  style: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .titleMedium
+                                                                      .override(
+                                                                        fontFamily:
+                                                                            'Manrope',
+                                                                        fontSize:
+                                                                            22.0,
+                                                                        letterSpacing:
+                                                                            0.0,
+                                                                        fontWeight:
+                                                                            FontWeight.bold,
+                                                                      ),
                                                                 ),
+                                                              ),
+                                                              Align(
+                                                                alignment:
+                                                                    AlignmentDirectional(
+                                                                        1.0,
+                                                                        0.0),
+                                                                child: Padding(
+                                                                  padding: EdgeInsetsDirectional
+                                                                      .fromSTEB(
+                                                                          40.0,
+                                                                          0.0,
+                                                                          0.0,
+                                                                          0.0),
+                                                                  child:
+                                                                      FlutterFlowIconButton(
+                                                                    borderColor:
+                                                                        FlutterFlowTheme.of(context)
+                                                                            .secondary,
+                                                                    borderRadius:
+                                                                        24.0,
+                                                                    borderWidth:
+                                                                        3.0,
+                                                                    buttonSize:
+                                                                        50.0,
+                                                                    hoverColor:
+                                                                        FlutterFlowTheme.of(context)
+                                                                            .accent1,
+                                                                    hoverIconColor:
+                                                                        FlutterFlowTheme.of(context)
+                                                                            .secondary,
+                                                                    icon: Icon(
+                                                                      Icons
+                                                                          .spatial_audio_off_rounded,
+                                                                      color: FlutterFlowTheme.of(
+                                                                              context)
+                                                                          .primary,
+                                                                      size:
+                                                                          28.0,
+                                                                    ),
+                                                                    onPressed:
+                                                                        () async {
+                                                                      context
+                                                                          .pushNamed(
+                                                                        TradutorWidget
+                                                                            .routeName,
+                                                                        extra: <String,
+                                                                            dynamic>{
+                                                                          kTransitionInfoKey:
+                                                                              TransitionInfo(
+                                                                            hasTransition:
+                                                                                true,
+                                                                            transitionType:
+                                                                                PageTransitionType.fade,
+                                                                            duration:
+                                                                                Duration(milliseconds: 0),
+                                                                          ),
+                                                                        },
+                                                                      );
+                                                                    },
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                            ],
                                                           ),
                                                           Row(
                                                             mainAxisSize:
@@ -2788,15 +2857,17 @@ class _WorkOrderTechniciansViewWidgetState
                                                                                                         await showDialog(
                                                                                                           context: context,
                                                                                                           builder: (alertDialogContext) {
-                                                                                                            return AlertDialog(
-                                                                                                              title: Text('Missing Photos'),
-                                                                                                              content: Text('Photos are missing. Please add the photos before proceeding with the diagnosis.'),
-                                                                                                              actions: [
-                                                                                                                TextButton(
-                                                                                                                  onPressed: () => Navigator.pop(alertDialogContext),
-                                                                                                                  child: Text('Ok'),
-                                                                                                                ),
-                                                                                                              ],
+                                                                                                            return WebViewAware(
+                                                                                                              child: AlertDialog(
+                                                                                                                title: Text('Missing Photos'),
+                                                                                                                content: Text('Photos are missing. Please add the photos before proceeding with the diagnosis.'),
+                                                                                                                actions: [
+                                                                                                                  TextButton(
+                                                                                                                    onPressed: () => Navigator.pop(alertDialogContext),
+                                                                                                                    child: Text('Ok'),
+                                                                                                                  ),
+                                                                                                                ],
+                                                                                                              ),
                                                                                                             );
                                                                                                           },
                                                                                                         );
@@ -2808,17 +2879,19 @@ class _WorkOrderTechniciansViewWidgetState
                                                                                                             enableDrag: false,
                                                                                                             context: context,
                                                                                                             builder: (context) {
-                                                                                                              return GestureDetector(
-                                                                                                                onTap: () {
-                                                                                                                  FocusScope.of(context).unfocus();
-                                                                                                                  FocusManager.instance.primaryFocus?.unfocus();
-                                                                                                                },
-                                                                                                                child: Padding(
-                                                                                                                  padding: MediaQuery.viewInsetsOf(context),
-                                                                                                                  child: Container(
-                                                                                                                    height: MediaQuery.sizeOf(context).height * 1.0,
-                                                                                                                    child: VoiceDiagnosisWidget(
-                                                                                                                      diagnosisVoice: appliancesListItem,
+                                                                                                              return WebViewAware(
+                                                                                                                child: GestureDetector(
+                                                                                                                  onTap: () {
+                                                                                                                    FocusScope.of(context).unfocus();
+                                                                                                                    FocusManager.instance.primaryFocus?.unfocus();
+                                                                                                                  },
+                                                                                                                  child: Padding(
+                                                                                                                    padding: MediaQuery.viewInsetsOf(context),
+                                                                                                                    child: Container(
+                                                                                                                      height: MediaQuery.sizeOf(context).height * 1.0,
+                                                                                                                      child: VoiceDiagnosisWidget(
+                                                                                                                        diagnosisVoice: appliancesListItem,
+                                                                                                                      ),
                                                                                                                     ),
                                                                                                                   ),
                                                                                                                 ),
@@ -2836,17 +2909,19 @@ class _WorkOrderTechniciansViewWidgetState
                                                                                                               enableDrag: false,
                                                                                                               context: context,
                                                                                                               builder: (context) {
-                                                                                                                return GestureDetector(
-                                                                                                                  onTap: () {
-                                                                                                                    FocusScope.of(context).unfocus();
-                                                                                                                    FocusManager.instance.primaryFocus?.unfocus();
-                                                                                                                  },
-                                                                                                                  child: Padding(
-                                                                                                                    padding: MediaQuery.viewInsetsOf(context),
-                                                                                                                    child: Container(
-                                                                                                                      height: MediaQuery.sizeOf(context).height * 1.0,
-                                                                                                                      child: CheckListRefrigeratorWidget(
-                                                                                                                        diagnosisCheckList: appliancesListItem,
+                                                                                                                return WebViewAware(
+                                                                                                                  child: GestureDetector(
+                                                                                                                    onTap: () {
+                                                                                                                      FocusScope.of(context).unfocus();
+                                                                                                                      FocusManager.instance.primaryFocus?.unfocus();
+                                                                                                                    },
+                                                                                                                    child: Padding(
+                                                                                                                      padding: MediaQuery.viewInsetsOf(context),
+                                                                                                                      child: Container(
+                                                                                                                        height: MediaQuery.sizeOf(context).height * 1.0,
+                                                                                                                        child: CheckListRefrigeratorWidget(
+                                                                                                                          diagnosisCheckList: appliancesListItem,
+                                                                                                                        ),
                                                                                                                       ),
                                                                                                                     ),
                                                                                                                   ),
@@ -2863,17 +2938,19 @@ class _WorkOrderTechniciansViewWidgetState
                                                                                                               enableDrag: false,
                                                                                                               context: context,
                                                                                                               builder: (context) {
-                                                                                                                return GestureDetector(
-                                                                                                                  onTap: () {
-                                                                                                                    FocusScope.of(context).unfocus();
-                                                                                                                    FocusManager.instance.primaryFocus?.unfocus();
-                                                                                                                  },
-                                                                                                                  child: Padding(
-                                                                                                                    padding: MediaQuery.viewInsetsOf(context),
-                                                                                                                    child: Container(
-                                                                                                                      height: MediaQuery.sizeOf(context).height * 1.0,
-                                                                                                                      child: CheckListDishwasherWidget(
-                                                                                                                        diagnosisCheckList: appliancesListItem,
+                                                                                                                return WebViewAware(
+                                                                                                                  child: GestureDetector(
+                                                                                                                    onTap: () {
+                                                                                                                      FocusScope.of(context).unfocus();
+                                                                                                                      FocusManager.instance.primaryFocus?.unfocus();
+                                                                                                                    },
+                                                                                                                    child: Padding(
+                                                                                                                      padding: MediaQuery.viewInsetsOf(context),
+                                                                                                                      child: Container(
+                                                                                                                        height: MediaQuery.sizeOf(context).height * 1.0,
+                                                                                                                        child: CheckListDishwasherWidget(
+                                                                                                                          diagnosisCheckList: appliancesListItem,
+                                                                                                                        ),
                                                                                                                       ),
                                                                                                                     ),
                                                                                                                   ),
@@ -2890,17 +2967,19 @@ class _WorkOrderTechniciansViewWidgetState
                                                                                                               enableDrag: false,
                                                                                                               context: context,
                                                                                                               builder: (context) {
-                                                                                                                return GestureDetector(
-                                                                                                                  onTap: () {
-                                                                                                                    FocusScope.of(context).unfocus();
-                                                                                                                    FocusManager.instance.primaryFocus?.unfocus();
-                                                                                                                  },
-                                                                                                                  child: Padding(
-                                                                                                                    padding: MediaQuery.viewInsetsOf(context),
-                                                                                                                    child: Container(
-                                                                                                                      height: MediaQuery.sizeOf(context).height * 1.0,
-                                                                                                                      child: CheckListWasherMWidget(
-                                                                                                                        diagnosisCheckList: appliancesListItem,
+                                                                                                                return WebViewAware(
+                                                                                                                  child: GestureDetector(
+                                                                                                                    onTap: () {
+                                                                                                                      FocusScope.of(context).unfocus();
+                                                                                                                      FocusManager.instance.primaryFocus?.unfocus();
+                                                                                                                    },
+                                                                                                                    child: Padding(
+                                                                                                                      padding: MediaQuery.viewInsetsOf(context),
+                                                                                                                      child: Container(
+                                                                                                                        height: MediaQuery.sizeOf(context).height * 1.0,
+                                                                                                                        child: CheckListWasherMWidget(
+                                                                                                                          diagnosisCheckList: appliancesListItem,
+                                                                                                                        ),
                                                                                                                       ),
                                                                                                                     ),
                                                                                                                   ),
@@ -2917,17 +2996,19 @@ class _WorkOrderTechniciansViewWidgetState
                                                                                                               enableDrag: false,
                                                                                                               context: context,
                                                                                                               builder: (context) {
-                                                                                                                return GestureDetector(
-                                                                                                                  onTap: () {
-                                                                                                                    FocusScope.of(context).unfocus();
-                                                                                                                    FocusManager.instance.primaryFocus?.unfocus();
-                                                                                                                  },
-                                                                                                                  child: Padding(
-                                                                                                                    padding: MediaQuery.viewInsetsOf(context),
-                                                                                                                    child: Container(
-                                                                                                                      height: MediaQuery.sizeOf(context).height * 1.0,
-                                                                                                                      child: CheckListDryerWidget(
-                                                                                                                        diagnosisCheckList: appliancesListItem,
+                                                                                                                return WebViewAware(
+                                                                                                                  child: GestureDetector(
+                                                                                                                    onTap: () {
+                                                                                                                      FocusScope.of(context).unfocus();
+                                                                                                                      FocusManager.instance.primaryFocus?.unfocus();
+                                                                                                                    },
+                                                                                                                    child: Padding(
+                                                                                                                      padding: MediaQuery.viewInsetsOf(context),
+                                                                                                                      child: Container(
+                                                                                                                        height: MediaQuery.sizeOf(context).height * 1.0,
+                                                                                                                        child: CheckListDryerWidget(
+                                                                                                                          diagnosisCheckList: appliancesListItem,
+                                                                                                                        ),
                                                                                                                       ),
                                                                                                                     ),
                                                                                                                   ),
@@ -2944,17 +3025,19 @@ class _WorkOrderTechniciansViewWidgetState
                                                                                                               enableDrag: false,
                                                                                                               context: context,
                                                                                                               builder: (context) {
-                                                                                                                return GestureDetector(
-                                                                                                                  onTap: () {
-                                                                                                                    FocusScope.of(context).unfocus();
-                                                                                                                    FocusManager.instance.primaryFocus?.unfocus();
-                                                                                                                  },
-                                                                                                                  child: Padding(
-                                                                                                                    padding: MediaQuery.viewInsetsOf(context),
-                                                                                                                    child: Container(
-                                                                                                                      height: MediaQuery.sizeOf(context).height * 1.0,
-                                                                                                                      child: CheckListRangeCooktopWidget(
-                                                                                                                        diagnosisCheckList: appliancesListItem,
+                                                                                                                return WebViewAware(
+                                                                                                                  child: GestureDetector(
+                                                                                                                    onTap: () {
+                                                                                                                      FocusScope.of(context).unfocus();
+                                                                                                                      FocusManager.instance.primaryFocus?.unfocus();
+                                                                                                                    },
+                                                                                                                    child: Padding(
+                                                                                                                      padding: MediaQuery.viewInsetsOf(context),
+                                                                                                                      child: Container(
+                                                                                                                        height: MediaQuery.sizeOf(context).height * 1.0,
+                                                                                                                        child: CheckListRangeCooktopWidget(
+                                                                                                                          diagnosisCheckList: appliancesListItem,
+                                                                                                                        ),
                                                                                                                       ),
                                                                                                                     ),
                                                                                                                   ),
@@ -2971,17 +3054,19 @@ class _WorkOrderTechniciansViewWidgetState
                                                                                                               enableDrag: false,
                                                                                                               context: context,
                                                                                                               builder: (context) {
-                                                                                                                return GestureDetector(
-                                                                                                                  onTap: () {
-                                                                                                                    FocusScope.of(context).unfocus();
-                                                                                                                    FocusManager.instance.primaryFocus?.unfocus();
-                                                                                                                  },
-                                                                                                                  child: Padding(
-                                                                                                                    padding: MediaQuery.viewInsetsOf(context),
-                                                                                                                    child: Container(
-                                                                                                                      height: MediaQuery.sizeOf(context).height * 1.0,
-                                                                                                                      child: CheckListOvenWidget(
-                                                                                                                        diagnosisCheckList: appliancesListItem,
+                                                                                                                return WebViewAware(
+                                                                                                                  child: GestureDetector(
+                                                                                                                    onTap: () {
+                                                                                                                      FocusScope.of(context).unfocus();
+                                                                                                                      FocusManager.instance.primaryFocus?.unfocus();
+                                                                                                                    },
+                                                                                                                    child: Padding(
+                                                                                                                      padding: MediaQuery.viewInsetsOf(context),
+                                                                                                                      child: Container(
+                                                                                                                        height: MediaQuery.sizeOf(context).height * 1.0,
+                                                                                                                        child: CheckListOvenWidget(
+                                                                                                                          diagnosisCheckList: appliancesListItem,
+                                                                                                                        ),
                                                                                                                       ),
                                                                                                                     ),
                                                                                                                   ),
@@ -2998,17 +3083,19 @@ class _WorkOrderTechniciansViewWidgetState
                                                                                                               enableDrag: false,
                                                                                                               context: context,
                                                                                                               builder: (context) {
-                                                                                                                return GestureDetector(
-                                                                                                                  onTap: () {
-                                                                                                                    FocusScope.of(context).unfocus();
-                                                                                                                    FocusManager.instance.primaryFocus?.unfocus();
-                                                                                                                  },
-                                                                                                                  child: Padding(
-                                                                                                                    padding: MediaQuery.viewInsetsOf(context),
-                                                                                                                    child: Container(
-                                                                                                                      height: MediaQuery.sizeOf(context).height * 1.0,
-                                                                                                                      child: CheckListVenthoodWidget(
-                                                                                                                        diagnosisCheckList: appliancesListItem,
+                                                                                                                return WebViewAware(
+                                                                                                                  child: GestureDetector(
+                                                                                                                    onTap: () {
+                                                                                                                      FocusScope.of(context).unfocus();
+                                                                                                                      FocusManager.instance.primaryFocus?.unfocus();
+                                                                                                                    },
+                                                                                                                    child: Padding(
+                                                                                                                      padding: MediaQuery.viewInsetsOf(context),
+                                                                                                                      child: Container(
+                                                                                                                        height: MediaQuery.sizeOf(context).height * 1.0,
+                                                                                                                        child: CheckListVenthoodWidget(
+                                                                                                                          diagnosisCheckList: appliancesListItem,
+                                                                                                                        ),
                                                                                                                       ),
                                                                                                                     ),
                                                                                                                   ),
@@ -3025,17 +3112,19 @@ class _WorkOrderTechniciansViewWidgetState
                                                                                                               enableDrag: false,
                                                                                                               context: context,
                                                                                                               builder: (context) {
-                                                                                                                return GestureDetector(
-                                                                                                                  onTap: () {
-                                                                                                                    FocusScope.of(context).unfocus();
-                                                                                                                    FocusManager.instance.primaryFocus?.unfocus();
-                                                                                                                  },
-                                                                                                                  child: Padding(
-                                                                                                                    padding: MediaQuery.viewInsetsOf(context),
-                                                                                                                    child: Container(
-                                                                                                                      height: MediaQuery.sizeOf(context).height * 1.0,
-                                                                                                                      child: CheckListRefrigeratorWidget(
-                                                                                                                        diagnosisCheckList: appliancesListItem,
+                                                                                                                return WebViewAware(
+                                                                                                                  child: GestureDetector(
+                                                                                                                    onTap: () {
+                                                                                                                      FocusScope.of(context).unfocus();
+                                                                                                                      FocusManager.instance.primaryFocus?.unfocus();
+                                                                                                                    },
+                                                                                                                    child: Padding(
+                                                                                                                      padding: MediaQuery.viewInsetsOf(context),
+                                                                                                                      child: Container(
+                                                                                                                        height: MediaQuery.sizeOf(context).height * 1.0,
+                                                                                                                        child: CheckListRefrigeratorWidget(
+                                                                                                                          diagnosisCheckList: appliancesListItem,
+                                                                                                                        ),
                                                                                                                       ),
                                                                                                                     ),
                                                                                                                   ),
@@ -3052,17 +3141,19 @@ class _WorkOrderTechniciansViewWidgetState
                                                                                                               enableDrag: false,
                                                                                                               context: context,
                                                                                                               builder: (context) {
-                                                                                                                return GestureDetector(
-                                                                                                                  onTap: () {
-                                                                                                                    FocusScope.of(context).unfocus();
-                                                                                                                    FocusManager.instance.primaryFocus?.unfocus();
-                                                                                                                  },
-                                                                                                                  child: Padding(
-                                                                                                                    padding: MediaQuery.viewInsetsOf(context),
-                                                                                                                    child: Container(
-                                                                                                                      height: MediaQuery.sizeOf(context).height * 1.0,
-                                                                                                                      child: CheckListMicrowaveWidget(
-                                                                                                                        diagnosisCheckList: appliancesListItem,
+                                                                                                                return WebViewAware(
+                                                                                                                  child: GestureDetector(
+                                                                                                                    onTap: () {
+                                                                                                                      FocusScope.of(context).unfocus();
+                                                                                                                      FocusManager.instance.primaryFocus?.unfocus();
+                                                                                                                    },
+                                                                                                                    child: Padding(
+                                                                                                                      padding: MediaQuery.viewInsetsOf(context),
+                                                                                                                      child: Container(
+                                                                                                                        height: MediaQuery.sizeOf(context).height * 1.0,
+                                                                                                                        child: CheckListMicrowaveWidget(
+                                                                                                                          diagnosisCheckList: appliancesListItem,
+                                                                                                                        ),
                                                                                                                       ),
                                                                                                                     ),
                                                                                                                   ),
@@ -3074,6 +3165,44 @@ class _WorkOrderTechniciansViewWidgetState
                                                                                                       }
                                                                                                     },
                                                                                                   ),
+                                                                                                ),
+                                                                                              ),
+                                                                                              Flexible(
+                                                                                                child: FlutterFlowIconButton(
+                                                                                                  borderRadius: 8.0,
+                                                                                                  buttonSize: 48.0,
+                                                                                                  fillColor: FlutterFlowTheme.of(context).accent4,
+                                                                                                  icon: FaIcon(
+                                                                                                    FontAwesomeIcons.tools,
+                                                                                                    color: FlutterFlowTheme.of(context).info,
+                                                                                                    size: 22.0,
+                                                                                                  ),
+                                                                                                  onPressed: () async {
+                                                                                                    await showModalBottomSheet(
+                                                                                                      isScrollControlled: true,
+                                                                                                      backgroundColor: Colors.transparent,
+                                                                                                      context: context,
+                                                                                                      builder: (context) {
+                                                                                                        return WebViewAware(
+                                                                                                          child: GestureDetector(
+                                                                                                            onTap: () {
+                                                                                                              FocusScope.of(context).unfocus();
+                                                                                                              FocusManager.instance.primaryFocus?.unfocus();
+                                                                                                            },
+                                                                                                            child: Padding(
+                                                                                                              padding: MediaQuery.viewInsetsOf(context),
+                                                                                                              child: Container(
+                                                                                                                height: MediaQuery.sizeOf(context).height * 1.0,
+                                                                                                                child: AddPartSelectorUrlOrPartNumberWidget(
+                                                                                                                  partSelectoDiagnosis: appliancesListItem,
+                                                                                                                ),
+                                                                                                              ),
+                                                                                                            ),
+                                                                                                          ),
+                                                                                                        );
+                                                                                                      },
+                                                                                                    ).then((value) => safeSetState(() {}));
+                                                                                                  },
                                                                                                 ),
                                                                                               ),
                                                                                               Flexible(
@@ -3093,23 +3222,25 @@ class _WorkOrderTechniciansViewWidgetState
                                                                                                       enableDrag: false,
                                                                                                       context: context,
                                                                                                       builder: (context) {
-                                                                                                        return GestureDetector(
-                                                                                                          onTap: () {
-                                                                                                            FocusScope.of(context).unfocus();
-                                                                                                            FocusManager.instance.primaryFocus?.unfocus();
-                                                                                                          },
-                                                                                                          child: Padding(
-                                                                                                            padding: MediaQuery.viewInsetsOf(context),
-                                                                                                            child: Container(
-                                                                                                              height: MediaQuery.sizeOf(context).height * 1.0,
-                                                                                                              child: BottonPhotosWidget(
-                                                                                                                workOrderPhoto: valueOrDefault<String>(
-                                                                                                                  appliancesListItem.workOrderId,
-                                                                                                                  '02',
-                                                                                                                ),
-                                                                                                                diagnosisParam: valueOrDefault<String>(
-                                                                                                                  appliancesListItem.diagnosisId,
-                                                                                                                  '01',
+                                                                                                        return WebViewAware(
+                                                                                                          child: GestureDetector(
+                                                                                                            onTap: () {
+                                                                                                              FocusScope.of(context).unfocus();
+                                                                                                              FocusManager.instance.primaryFocus?.unfocus();
+                                                                                                            },
+                                                                                                            child: Padding(
+                                                                                                              padding: MediaQuery.viewInsetsOf(context),
+                                                                                                              child: Container(
+                                                                                                                height: MediaQuery.sizeOf(context).height * 1.0,
+                                                                                                                child: BottonPhotosWidget(
+                                                                                                                  workOrderPhoto: valueOrDefault<String>(
+                                                                                                                    appliancesListItem.workOrderId,
+                                                                                                                    '02',
+                                                                                                                  ),
+                                                                                                                  diagnosisParam: valueOrDefault<String>(
+                                                                                                                    appliancesListItem.diagnosisId,
+                                                                                                                    '01',
+                                                                                                                  ),
                                                                                                                 ),
                                                                                                               ),
                                                                                                             ),
@@ -3168,17 +3299,19 @@ class _WorkOrderTechniciansViewWidgetState
                                                                                                       backgroundColor: Colors.transparent,
                                                                                                       context: context,
                                                                                                       builder: (context) {
-                                                                                                        return GestureDetector(
-                                                                                                          onTap: () {
-                                                                                                            FocusScope.of(context).unfocus();
-                                                                                                            FocusManager.instance.primaryFocus?.unfocus();
-                                                                                                          },
-                                                                                                          child: Padding(
-                                                                                                            padding: MediaQuery.viewInsetsOf(context),
-                                                                                                            child: Container(
-                                                                                                              height: MediaQuery.sizeOf(context).height * 1.0,
-                                                                                                              child: DiagnosisViewBSWidget(
-                                                                                                                diagnosisParameterWorkId: appliancesListItem,
+                                                                                                        return WebViewAware(
+                                                                                                          child: GestureDetector(
+                                                                                                            onTap: () {
+                                                                                                              FocusScope.of(context).unfocus();
+                                                                                                              FocusManager.instance.primaryFocus?.unfocus();
+                                                                                                            },
+                                                                                                            child: Padding(
+                                                                                                              padding: MediaQuery.viewInsetsOf(context),
+                                                                                                              child: Container(
+                                                                                                                height: MediaQuery.sizeOf(context).height * 1.0,
+                                                                                                                child: DiagnosisViewBSWidget(
+                                                                                                                  diagnosisParameterWorkId: appliancesListItem,
+                                                                                                                ),
                                                                                                               ),
                                                                                                             ),
                                                                                                           ),
@@ -3356,7 +3489,7 @@ class _WorkOrderTechniciansViewWidgetState
                                                                                                         child: Text(
                                                                                                           valueOrDefault<String>(
                                                                                                             requestedPartItem.iten,
-                                                                                                            'Appliance',
+                                                                                                            '123',
                                                                                                           ).maybeHandleOverflow(
                                                                                                             maxChars: 50,
                                                                                                             replacement: '…',
@@ -3425,17 +3558,19 @@ class _WorkOrderTechniciansViewWidgetState
                                                                                                               enableDrag: false,
                                                                                                               context: context,
                                                                                                               builder: (context) {
-                                                                                                                return GestureDetector(
-                                                                                                                  onTap: () {
-                                                                                                                    FocusScope.of(context).unfocus();
-                                                                                                                    FocusManager.instance.primaryFocus?.unfocus();
-                                                                                                                  },
-                                                                                                                  child: Padding(
-                                                                                                                    padding: MediaQuery.viewInsetsOf(context),
-                                                                                                                    child: Container(
-                                                                                                                      height: MediaQuery.sizeOf(context).height * 1.0,
-                                                                                                                      child: AddPartInStockFromPartsWidget(
-                                                                                                                        addPartInStockFromParts: requestedPartItem,
+                                                                                                                return WebViewAware(
+                                                                                                                  child: GestureDetector(
+                                                                                                                    onTap: () {
+                                                                                                                      FocusScope.of(context).unfocus();
+                                                                                                                      FocusManager.instance.primaryFocus?.unfocus();
+                                                                                                                    },
+                                                                                                                    child: Padding(
+                                                                                                                      padding: MediaQuery.viewInsetsOf(context),
+                                                                                                                      child: Container(
+                                                                                                                        height: MediaQuery.sizeOf(context).height * 1.0,
+                                                                                                                        child: AddPartInStockFromPartsWidget(
+                                                                                                                          addPartInStockFromParts: requestedPartItem,
+                                                                                                                        ),
                                                                                                                       ),
                                                                                                                     ),
                                                                                                                   ),
@@ -3460,25 +3595,27 @@ class _WorkOrderTechniciansViewWidgetState
                                                                                                             var confirmDialogResponse = await showDialog<bool>(
                                                                                                                   context: context,
                                                                                                                   builder: (alertDialogContext) {
-                                                                                                                    return AlertDialog(
-                                                                                                                      title: Text('Parts Pick-Up Confirmation'),
-                                                                                                                      content: Text('This is a confirmation request for the pick-up of the following part(s):Part Name: ${valueOrDefault<String>(
-                                                                                                                        requestedPartItem.partNumber,
-                                                                                                                        'Part Number',
-                                                                                                                      )}  ${valueOrDefault<String>(
-                                                                                                                        requestedPartItem.partName,
-                                                                                                                        'At Office',
-                                                                                                                      )}'),
-                                                                                                                      actions: [
-                                                                                                                        TextButton(
-                                                                                                                          onPressed: () => Navigator.pop(alertDialogContext, false),
-                                                                                                                          child: Text('🔴 Not Confirmed'),
-                                                                                                                        ),
-                                                                                                                        TextButton(
-                                                                                                                          onPressed: () => Navigator.pop(alertDialogContext, true),
-                                                                                                                          child: Text('🟢 Confirmedrm'),
-                                                                                                                        ),
-                                                                                                                      ],
+                                                                                                                    return WebViewAware(
+                                                                                                                      child: AlertDialog(
+                                                                                                                        title: Text('Parts Pick-Up Confirmation'),
+                                                                                                                        content: Text('This is a confirmation request for the pick-up of the following part(s):Part Name: ${valueOrDefault<String>(
+                                                                                                                          requestedPartItem.partNumber,
+                                                                                                                          'Part Number',
+                                                                                                                        )}  ${valueOrDefault<String>(
+                                                                                                                          requestedPartItem.partName,
+                                                                                                                          'At Office',
+                                                                                                                        )}'),
+                                                                                                                        actions: [
+                                                                                                                          TextButton(
+                                                                                                                            onPressed: () => Navigator.pop(alertDialogContext, false),
+                                                                                                                            child: Text('🔴 Not Confirmed'),
+                                                                                                                          ),
+                                                                                                                          TextButton(
+                                                                                                                            onPressed: () => Navigator.pop(alertDialogContext, true),
+                                                                                                                            child: Text('🟢 Confirmedrm'),
+                                                                                                                          ),
+                                                                                                                        ],
+                                                                                                                      ),
                                                                                                                     );
                                                                                                                   },
                                                                                                                 ) ??

@@ -1,8 +1,8 @@
+import '/appointment/pages/nav_bar1/nav_bar1_widget.dart';
 import '/backend/supabase/supabase.dart';
 import '/components/side_menu_view_widget.dart';
 import '/flutter_flow/flutter_flow_data_table.dart';
 import '/flutter_flow/flutter_flow_util.dart';
-import '/pages/nav_bar1/nav_bar1_widget.dart';
 import 'page_part_stock_widget.dart' show PagePartStockWidget;
 import 'package:flutter/material.dart';
 

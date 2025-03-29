@@ -1,11 +1,12 @@
+import '/appointment/pages/nav_bar1/nav_bar1_widget.dart';
 import '/auth/supabase_auth/auth_util.dart';
 import '/backend/supabase/supabase.dart';
 import '/components/diagnosis_view_b_s_widget.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
-import '/pages/nav_bar1/nav_bar1_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:webviewx_plus/webviewx_plus.dart';
 import 'pending_model.dart';
 export 'pending_model.dart';
 
@@ -341,21 +342,22 @@ class _PendingWidgetState extends State<PendingWidget> {
                                                                           context,
                                                                       builder:
                                                                           (context) {
-                                                                        return GestureDetector(
-                                                                          onTap:
-                                                                              () {
-                                                                            FocusScope.of(context).unfocus();
-                                                                            FocusManager.instance.primaryFocus?.unfocus();
-                                                                          },
+                                                                        return WebViewAware(
                                                                           child:
-                                                                              Padding(
-                                                                            padding:
-                                                                                MediaQuery.viewInsetsOf(context),
+                                                                              GestureDetector(
+                                                                            onTap:
+                                                                                () {
+                                                                              FocusScope.of(context).unfocus();
+                                                                              FocusManager.instance.primaryFocus?.unfocus();
+                                                                            },
                                                                             child:
-                                                                                Container(
-                                                                              height: MediaQuery.sizeOf(context).height * 1.0,
-                                                                              child: DiagnosisViewBSWidget(
-                                                                                diagnosisParameterWorkId: pendingItem,
+                                                                                Padding(
+                                                                              padding: MediaQuery.viewInsetsOf(context),
+                                                                              child: Container(
+                                                                                height: MediaQuery.sizeOf(context).height * 1.0,
+                                                                                child: DiagnosisViewBSWidget(
+                                                                                  diagnosisParameterWorkId: pendingItem,
+                                                                                ),
                                                                               ),
                                                                             ),
                                                                           ),

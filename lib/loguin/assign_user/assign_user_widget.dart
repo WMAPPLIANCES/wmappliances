@@ -230,11 +230,25 @@ class _AssignUserWidgetState extends State<AssignUserWidget> {
                                                                       8.0,
                                                                       0.0,
                                                                       8.0),
-                                                          child: UserListWidget(
-                                                            key: Key(
-                                                                'Keyd6e_${verifedIndex}_of_${verifed.length}'),
-                                                            userQuery:
-                                                                verifedItem,
+                                                          child: wrapWithModel(
+                                                            model: _model
+                                                                .userListModels
+                                                                .getModel(
+                                                              verifedItem
+                                                                  .userId,
+                                                              verifedIndex,
+                                                            ),
+                                                            updateCallback: () =>
+                                                                safeSetState(
+                                                                    () {}),
+                                                            child:
+                                                                UserListWidget(
+                                                              key: Key(
+                                                                'Keyd6e_${verifedItem.userId}',
+                                                              ),
+                                                              userQuery:
+                                                                  verifedItem,
+                                                            ),
                                                           ),
                                                         );
                                                       },

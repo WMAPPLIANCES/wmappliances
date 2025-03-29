@@ -1,4 +1,4 @@
-import '';
+import '/appointment/pages/nav_bar1/nav_bar1_widget.dart';
 import '/backend/supabase/supabase.dart';
 import '/components/side_menu_view_widget.dart';
 import '/delivery/tracking_detail/tracking_detail_widget.dart';
@@ -7,10 +7,10 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/flutter_flow/upload_data.dart';
-import '/pages/nav_bar1/nav_bar1_widget.dart';
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:webviewx_plus/webviewx_plus.dart';
 import 'delivery_parts_arrived_page_model.dart';
 export 'delivery_parts_arrived_page_model.dart';
 
@@ -598,17 +598,19 @@ class _DeliveryPartsArrivedPageWidgetState
                                                                                                         enableDrag: false,
                                                                                                         context: context,
                                                                                                         builder: (context) {
-                                                                                                          return GestureDetector(
-                                                                                                            onTap: () {
-                                                                                                              FocusScope.of(context).unfocus();
-                                                                                                              FocusManager.instance.primaryFocus?.unfocus();
-                                                                                                            },
-                                                                                                            child: Padding(
-                                                                                                              padding: MediaQuery.viewInsetsOf(context),
-                                                                                                              child: Container(
-                                                                                                                height: MediaQuery.sizeOf(context).height * 0.8,
-                                                                                                                child: TrackingDetailWidget(
-                                                                                                                  deliveryTraking: dateSearchItem,
+                                                                                                          return WebViewAware(
+                                                                                                            child: GestureDetector(
+                                                                                                              onTap: () {
+                                                                                                                FocusScope.of(context).unfocus();
+                                                                                                                FocusManager.instance.primaryFocus?.unfocus();
+                                                                                                              },
+                                                                                                              child: Padding(
+                                                                                                                padding: MediaQuery.viewInsetsOf(context),
+                                                                                                                child: Container(
+                                                                                                                  height: MediaQuery.sizeOf(context).height * 0.8,
+                                                                                                                  child: TrackingDetailWidget(
+                                                                                                                    deliveryTraking: dateSearchItem,
+                                                                                                                  ),
                                                                                                                 ),
                                                                                                               ),
                                                                                                             ),
@@ -849,17 +851,19 @@ class _DeliveryPartsArrivedPageWidgetState
                                                                                                         enableDrag: false,
                                                                                                         context: context,
                                                                                                         builder: (context) {
-                                                                                                          return GestureDetector(
-                                                                                                            onTap: () {
-                                                                                                              FocusScope.of(context).unfocus();
-                                                                                                              FocusManager.instance.primaryFocus?.unfocus();
-                                                                                                            },
-                                                                                                            child: Padding(
-                                                                                                              padding: MediaQuery.viewInsetsOf(context),
-                                                                                                              child: Container(
-                                                                                                                height: MediaQuery.sizeOf(context).height * 0.8,
-                                                                                                                child: TrackingDetailWidget(
-                                                                                                                  deliveryTraking: queryTracingNumberItem,
+                                                                                                          return WebViewAware(
+                                                                                                            child: GestureDetector(
+                                                                                                              onTap: () {
+                                                                                                                FocusScope.of(context).unfocus();
+                                                                                                                FocusManager.instance.primaryFocus?.unfocus();
+                                                                                                              },
+                                                                                                              child: Padding(
+                                                                                                                padding: MediaQuery.viewInsetsOf(context),
+                                                                                                                child: Container(
+                                                                                                                  height: MediaQuery.sizeOf(context).height * 0.8,
+                                                                                                                  child: TrackingDetailWidget(
+                                                                                                                    deliveryTraking: queryTracingNumberItem,
+                                                                                                                  ),
                                                                                                                 ),
                                                                                                               ),
                                                                                                             ),

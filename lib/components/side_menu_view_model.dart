@@ -62,10 +62,12 @@ class SideMenuViewModel extends FlutterFlowModel<SideMenuViewWidget> {
   bool itenHoverHovered9 = false;
   // State field(s) for ItenHover widget.
   bool itenHoverHovered10 = false;
+  // State field(s) for ItenHover widget.
+  bool itenHoverHovered11 = false;
   // State field(s) for newUser widget.
   bool newUserHovered = false;
   // State field(s) for ItenHover widget.
-  bool itenHoverHovered11 = false;
+  bool itenHoverHovered12 = false;
   // State field(s) for LogOut widget.
   bool logOutHovered = false;
   // State field(s) for LightMode widget.

@@ -1,10 +1,10 @@
-import '';
 import '/backend/supabase/supabase.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:webviewx_plus/webviewx_plus.dart';
 import 'work_order_status_model.dart';
 export 'work_order_status_model.dart';
 
@@ -127,27 +127,29 @@ class _WorkOrderStatusWidgetState extends State<WorkOrderStatusWidget> {
                                     await showDialog<bool>(
                                           context: context,
                                           builder: (alertDialogContext) {
-                                            return AlertDialog(
-                                              title: Text(
-                                                  'Update Status Confirmation'),
-                                              content: Text(
-                                                  'Are you sure you want to update the work order status? This action cannot be undone.'),
-                                              actions: [
-                                                TextButton(
-                                                  onPressed: () =>
-                                                      Navigator.pop(
-                                                          alertDialogContext,
-                                                          false),
-                                                  child: Text('❌ Cancel'),
-                                                ),
-                                                TextButton(
-                                                  onPressed: () =>
-                                                      Navigator.pop(
-                                                          alertDialogContext,
-                                                          true),
-                                                  child: Text('✅ Confirm'),
-                                                ),
-                                              ],
+                                            return WebViewAware(
+                                              child: AlertDialog(
+                                                title: Text(
+                                                    'Update Status Confirmation'),
+                                                content: Text(
+                                                    'Are you sure you want to update the work order status? This action cannot be undone.'),
+                                                actions: [
+                                                  TextButton(
+                                                    onPressed: () =>
+                                                        Navigator.pop(
+                                                            alertDialogContext,
+                                                            false),
+                                                    child: Text('❌ Cancel'),
+                                                  ),
+                                                  TextButton(
+                                                    onPressed: () =>
+                                                        Navigator.pop(
+                                                            alertDialogContext,
+                                                            true),
+                                                    child: Text('✅ Confirm'),
+                                                  ),
+                                                ],
+                                              ),
                                             );
                                           },
                                         ) ??
@@ -208,27 +210,29 @@ class _WorkOrderStatusWidgetState extends State<WorkOrderStatusWidget> {
                                     await showDialog<bool>(
                                           context: context,
                                           builder: (alertDialogContext) {
-                                            return AlertDialog(
-                                              title: Text(
-                                                  'Update Status Confirmation'),
-                                              content: Text(
-                                                  'Are you sure you want to update the work order status? This action cannot be undone.'),
-                                              actions: [
-                                                TextButton(
-                                                  onPressed: () =>
-                                                      Navigator.pop(
-                                                          alertDialogContext,
-                                                          false),
-                                                  child: Text('❌ Cancel'),
-                                                ),
-                                                TextButton(
-                                                  onPressed: () =>
-                                                      Navigator.pop(
-                                                          alertDialogContext,
-                                                          true),
-                                                  child: Text('✅ Confirm'),
-                                                ),
-                                              ],
+                                            return WebViewAware(
+                                              child: AlertDialog(
+                                                title: Text(
+                                                    'Update Status Confirmation'),
+                                                content: Text(
+                                                    'Are you sure you want to update the work order status? This action cannot be undone.'),
+                                                actions: [
+                                                  TextButton(
+                                                    onPressed: () =>
+                                                        Navigator.pop(
+                                                            alertDialogContext,
+                                                            false),
+                                                    child: Text('❌ Cancel'),
+                                                  ),
+                                                  TextButton(
+                                                    onPressed: () =>
+                                                        Navigator.pop(
+                                                            alertDialogContext,
+                                                            true),
+                                                    child: Text('✅ Confirm'),
+                                                  ),
+                                                ],
+                                              ),
                                             );
                                           },
                                         ) ??
@@ -290,27 +294,29 @@ class _WorkOrderStatusWidgetState extends State<WorkOrderStatusWidget> {
                                     await showDialog<bool>(
                                           context: context,
                                           builder: (alertDialogContext) {
-                                            return AlertDialog(
-                                              title: Text(
-                                                  'Update Status Confirmation'),
-                                              content: Text(
-                                                  'Are you sure you want to update the work order status? This action cannot be undone.'),
-                                              actions: [
-                                                TextButton(
-                                                  onPressed: () =>
-                                                      Navigator.pop(
-                                                          alertDialogContext,
-                                                          false),
-                                                  child: Text('❌ Cancel'),
-                                                ),
-                                                TextButton(
-                                                  onPressed: () =>
-                                                      Navigator.pop(
-                                                          alertDialogContext,
-                                                          true),
-                                                  child: Text('✅ Confirm'),
-                                                ),
-                                              ],
+                                            return WebViewAware(
+                                              child: AlertDialog(
+                                                title: Text(
+                                                    'Update Status Confirmation'),
+                                                content: Text(
+                                                    'Are you sure you want to update the work order status? This action cannot be undone.'),
+                                                actions: [
+                                                  TextButton(
+                                                    onPressed: () =>
+                                                        Navigator.pop(
+                                                            alertDialogContext,
+                                                            false),
+                                                    child: Text('❌ Cancel'),
+                                                  ),
+                                                  TextButton(
+                                                    onPressed: () =>
+                                                        Navigator.pop(
+                                                            alertDialogContext,
+                                                            true),
+                                                    child: Text('✅ Confirm'),
+                                                  ),
+                                                ],
+                                              ),
                                             );
                                           },
                                         ) ??
@@ -373,27 +379,29 @@ class _WorkOrderStatusWidgetState extends State<WorkOrderStatusWidget> {
                                     await showDialog<bool>(
                                           context: context,
                                           builder: (alertDialogContext) {
-                                            return AlertDialog(
-                                              title: Text(
-                                                  'Update Status Confirmation'),
-                                              content: Text(
-                                                  'Are you sure you want to update the work order status? This action cannot be undone.'),
-                                              actions: [
-                                                TextButton(
-                                                  onPressed: () =>
-                                                      Navigator.pop(
-                                                          alertDialogContext,
-                                                          false),
-                                                  child: Text('❌ Cancel'),
-                                                ),
-                                                TextButton(
-                                                  onPressed: () =>
-                                                      Navigator.pop(
-                                                          alertDialogContext,
-                                                          true),
-                                                  child: Text('✅ Confirm'),
-                                                ),
-                                              ],
+                                            return WebViewAware(
+                                              child: AlertDialog(
+                                                title: Text(
+                                                    'Update Status Confirmation'),
+                                                content: Text(
+                                                    'Are you sure you want to update the work order status? This action cannot be undone.'),
+                                                actions: [
+                                                  TextButton(
+                                                    onPressed: () =>
+                                                        Navigator.pop(
+                                                            alertDialogContext,
+                                                            false),
+                                                    child: Text('❌ Cancel'),
+                                                  ),
+                                                  TextButton(
+                                                    onPressed: () =>
+                                                        Navigator.pop(
+                                                            alertDialogContext,
+                                                            true),
+                                                    child: Text('✅ Confirm'),
+                                                  ),
+                                                ],
+                                              ),
                                             );
                                           },
                                         ) ??
@@ -454,27 +462,29 @@ class _WorkOrderStatusWidgetState extends State<WorkOrderStatusWidget> {
                                     await showDialog<bool>(
                                           context: context,
                                           builder: (alertDialogContext) {
-                                            return AlertDialog(
-                                              title: Text(
-                                                  'Update Status Confirmation'),
-                                              content: Text(
-                                                  'Are you sure you want to update the work order status? This action cannot be undone.'),
-                                              actions: [
-                                                TextButton(
-                                                  onPressed: () =>
-                                                      Navigator.pop(
-                                                          alertDialogContext,
-                                                          false),
-                                                  child: Text('❌ Cancel'),
-                                                ),
-                                                TextButton(
-                                                  onPressed: () =>
-                                                      Navigator.pop(
-                                                          alertDialogContext,
-                                                          true),
-                                                  child: Text('✅ Confirm'),
-                                                ),
-                                              ],
+                                            return WebViewAware(
+                                              child: AlertDialog(
+                                                title: Text(
+                                                    'Update Status Confirmation'),
+                                                content: Text(
+                                                    'Are you sure you want to update the work order status? This action cannot be undone.'),
+                                                actions: [
+                                                  TextButton(
+                                                    onPressed: () =>
+                                                        Navigator.pop(
+                                                            alertDialogContext,
+                                                            false),
+                                                    child: Text('❌ Cancel'),
+                                                  ),
+                                                  TextButton(
+                                                    onPressed: () =>
+                                                        Navigator.pop(
+                                                            alertDialogContext,
+                                                            true),
+                                                    child: Text('✅ Confirm'),
+                                                  ),
+                                                ],
+                                              ),
                                             );
                                           },
                                         ) ??
@@ -535,27 +545,29 @@ class _WorkOrderStatusWidgetState extends State<WorkOrderStatusWidget> {
                                     await showDialog<bool>(
                                           context: context,
                                           builder: (alertDialogContext) {
-                                            return AlertDialog(
-                                              title: Text(
-                                                  'Update Status Confirmation'),
-                                              content: Text(
-                                                  'Are you sure you want to update the work order status? This action cannot be undone.'),
-                                              actions: [
-                                                TextButton(
-                                                  onPressed: () =>
-                                                      Navigator.pop(
-                                                          alertDialogContext,
-                                                          false),
-                                                  child: Text('❌ Cancel'),
-                                                ),
-                                                TextButton(
-                                                  onPressed: () =>
-                                                      Navigator.pop(
-                                                          alertDialogContext,
-                                                          true),
-                                                  child: Text('✅ Confirm'),
-                                                ),
-                                              ],
+                                            return WebViewAware(
+                                              child: AlertDialog(
+                                                title: Text(
+                                                    'Update Status Confirmation'),
+                                                content: Text(
+                                                    'Are you sure you want to update the work order status? This action cannot be undone.'),
+                                                actions: [
+                                                  TextButton(
+                                                    onPressed: () =>
+                                                        Navigator.pop(
+                                                            alertDialogContext,
+                                                            false),
+                                                    child: Text('❌ Cancel'),
+                                                  ),
+                                                  TextButton(
+                                                    onPressed: () =>
+                                                        Navigator.pop(
+                                                            alertDialogContext,
+                                                            true),
+                                                    child: Text('✅ Confirm'),
+                                                  ),
+                                                ],
+                                              ),
                                             );
                                           },
                                         ) ??
@@ -634,17 +646,19 @@ class _WorkOrderStatusWidgetState extends State<WorkOrderStatusWidget> {
                           await showDialog(
                             context: context,
                             builder: (alertDialogContext) {
-                              return AlertDialog(
-                                title: Text('⚠ Status Not Updated'),
-                                content: Text(
-                                    'The work order status has not been updated. Please update the status before proceeding.'),
-                                actions: [
-                                  TextButton(
-                                    onPressed: () =>
-                                        Navigator.pop(alertDialogContext),
-                                    child: Text('Ok'),
-                                  ),
-                                ],
+                              return WebViewAware(
+                                child: AlertDialog(
+                                  title: Text('⚠ Status Not Updated'),
+                                  content: Text(
+                                      'The work order status has not been updated. Please update the status before proceeding.'),
+                                  actions: [
+                                    TextButton(
+                                      onPressed: () =>
+                                          Navigator.pop(alertDialogContext),
+                                      child: Text('Ok'),
+                                    ),
+                                  ],
+                                ),
                               );
                             },
                           );
@@ -696,17 +710,19 @@ class _WorkOrderStatusWidgetState extends State<WorkOrderStatusWidget> {
                           await showDialog(
                             context: context,
                             builder: (alertDialogContext) {
-                              return AlertDialog(
-                                title: Text('⚠ Status Not Updated'),
-                                content: Text(
-                                    'The work order status has not been updated. Please update the status before proceeding.'),
-                                actions: [
-                                  TextButton(
-                                    onPressed: () =>
-                                        Navigator.pop(alertDialogContext),
-                                    child: Text('Ok'),
-                                  ),
-                                ],
+                              return WebViewAware(
+                                child: AlertDialog(
+                                  title: Text('⚠ Status Not Updated'),
+                                  content: Text(
+                                      'The work order status has not been updated. Please update the status before proceeding.'),
+                                  actions: [
+                                    TextButton(
+                                      onPressed: () =>
+                                          Navigator.pop(alertDialogContext),
+                                      child: Text('Ok'),
+                                    ),
+                                  ],
+                                ),
                               );
                             },
                           );

@@ -1,4 +1,3 @@
-import '';
 import '/backend/supabase/supabase.dart';
 import '/components/diagnosis_view_b_s_widget.dart';
 import '/components/side_menu_view_widget.dart';
@@ -7,6 +6,7 @@ import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/work_review/work_status_notes/work_status_notes_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:webviewx_plus/webviewx_plus.dart';
 import 'work_review_model.dart';
 export 'work_review_model.dart';
 
@@ -378,17 +378,19 @@ class _WorkReviewWidgetState extends State<WorkReviewWidget> {
                                                                                                                                         enableDrag: false,
                                                                                                                                         context: context,
                                                                                                                                         builder: (context) {
-                                                                                                                                          return GestureDetector(
-                                                                                                                                            onTap: () {
-                                                                                                                                              FocusScope.of(context).unfocus();
-                                                                                                                                              FocusManager.instance.primaryFocus?.unfocus();
-                                                                                                                                            },
-                                                                                                                                            child: Padding(
-                                                                                                                                              padding: MediaQuery.viewInsetsOf(context),
-                                                                                                                                              child: Container(
-                                                                                                                                                height: MediaQuery.sizeOf(context).height * 0.3,
-                                                                                                                                                child: WorkStatusNotesWidget(
-                                                                                                                                                  workReviewNotes: diagnosisFilterItem,
+                                                                                                                                          return WebViewAware(
+                                                                                                                                            child: GestureDetector(
+                                                                                                                                              onTap: () {
+                                                                                                                                                FocusScope.of(context).unfocus();
+                                                                                                                                                FocusManager.instance.primaryFocus?.unfocus();
+                                                                                                                                              },
+                                                                                                                                              child: Padding(
+                                                                                                                                                padding: MediaQuery.viewInsetsOf(context),
+                                                                                                                                                child: Container(
+                                                                                                                                                  height: MediaQuery.sizeOf(context).height * 0.3,
+                                                                                                                                                  child: WorkStatusNotesWidget(
+                                                                                                                                                    workReviewNotes: diagnosisFilterItem,
+                                                                                                                                                  ),
                                                                                                                                                 ),
                                                                                                                                               ),
                                                                                                                                             ),
@@ -549,17 +551,19 @@ class _WorkReviewWidgetState extends State<WorkReviewWidget> {
                                                                                                                                           enableDrag: false,
                                                                                                                                           context: context,
                                                                                                                                           builder: (context) {
-                                                                                                                                            return GestureDetector(
-                                                                                                                                              onTap: () {
-                                                                                                                                                FocusScope.of(context).unfocus();
-                                                                                                                                                FocusManager.instance.primaryFocus?.unfocus();
-                                                                                                                                              },
-                                                                                                                                              child: Padding(
-                                                                                                                                                padding: MediaQuery.viewInsetsOf(context),
-                                                                                                                                                child: Container(
-                                                                                                                                                  height: MediaQuery.sizeOf(context).height * 1.0,
-                                                                                                                                                  child: DiagnosisViewBSWidget(
-                                                                                                                                                    diagnosisParameterWorkId: diagnosisFilterItem,
+                                                                                                                                            return WebViewAware(
+                                                                                                                                              child: GestureDetector(
+                                                                                                                                                onTap: () {
+                                                                                                                                                  FocusScope.of(context).unfocus();
+                                                                                                                                                  FocusManager.instance.primaryFocus?.unfocus();
+                                                                                                                                                },
+                                                                                                                                                child: Padding(
+                                                                                                                                                  padding: MediaQuery.viewInsetsOf(context),
+                                                                                                                                                  child: Container(
+                                                                                                                                                    height: MediaQuery.sizeOf(context).height * 1.0,
+                                                                                                                                                    child: DiagnosisViewBSWidget(
+                                                                                                                                                      diagnosisParameterWorkId: diagnosisFilterItem,
+                                                                                                                                                    ),
                                                                                                                                                   ),
                                                                                                                                                 ),
                                                                                                                                               ),
@@ -847,17 +851,19 @@ class _WorkReviewWidgetState extends State<WorkReviewWidget> {
                                                                                                                                     enableDrag: false,
                                                                                                                                     context: context,
                                                                                                                                     builder: (context) {
-                                                                                                                                      return GestureDetector(
-                                                                                                                                        onTap: () {
-                                                                                                                                          FocusScope.of(context).unfocus();
-                                                                                                                                          FocusManager.instance.primaryFocus?.unfocus();
-                                                                                                                                        },
-                                                                                                                                        child: Padding(
-                                                                                                                                          padding: MediaQuery.viewInsetsOf(context),
-                                                                                                                                          child: Container(
-                                                                                                                                            height: MediaQuery.sizeOf(context).height * 0.4,
-                                                                                                                                            child: WorkStatusNotesWidget(
-                                                                                                                                              workReviewNotes: diagnosisFilterItem,
+                                                                                                                                      return WebViewAware(
+                                                                                                                                        child: GestureDetector(
+                                                                                                                                          onTap: () {
+                                                                                                                                            FocusScope.of(context).unfocus();
+                                                                                                                                            FocusManager.instance.primaryFocus?.unfocus();
+                                                                                                                                          },
+                                                                                                                                          child: Padding(
+                                                                                                                                            padding: MediaQuery.viewInsetsOf(context),
+                                                                                                                                            child: Container(
+                                                                                                                                              height: MediaQuery.sizeOf(context).height * 0.4,
+                                                                                                                                              child: WorkStatusNotesWidget(
+                                                                                                                                                workReviewNotes: diagnosisFilterItem,
+                                                                                                                                              ),
                                                                                                                                             ),
                                                                                                                                           ),
                                                                                                                                         ),
@@ -1022,17 +1028,19 @@ class _WorkReviewWidgetState extends State<WorkReviewWidget> {
                                                                                                                                       enableDrag: false,
                                                                                                                                       context: context,
                                                                                                                                       builder: (context) {
-                                                                                                                                        return GestureDetector(
-                                                                                                                                          onTap: () {
-                                                                                                                                            FocusScope.of(context).unfocus();
-                                                                                                                                            FocusManager.instance.primaryFocus?.unfocus();
-                                                                                                                                          },
-                                                                                                                                          child: Padding(
-                                                                                                                                            padding: MediaQuery.viewInsetsOf(context),
-                                                                                                                                            child: Container(
-                                                                                                                                              height: MediaQuery.sizeOf(context).height * 1.0,
-                                                                                                                                              child: DiagnosisViewBSWidget(
-                                                                                                                                                diagnosisParameterWorkId: diagnosisFilterItem,
+                                                                                                                                        return WebViewAware(
+                                                                                                                                          child: GestureDetector(
+                                                                                                                                            onTap: () {
+                                                                                                                                              FocusScope.of(context).unfocus();
+                                                                                                                                              FocusManager.instance.primaryFocus?.unfocus();
+                                                                                                                                            },
+                                                                                                                                            child: Padding(
+                                                                                                                                              padding: MediaQuery.viewInsetsOf(context),
+                                                                                                                                              child: Container(
+                                                                                                                                                height: MediaQuery.sizeOf(context).height * 1.0,
+                                                                                                                                                child: DiagnosisViewBSWidget(
+                                                                                                                                                  diagnosisParameterWorkId: diagnosisFilterItem,
+                                                                                                                                                ),
                                                                                                                                               ),
                                                                                                                                             ),
                                                                                                                                           ),
@@ -1318,17 +1326,19 @@ class _WorkReviewWidgetState extends State<WorkReviewWidget> {
                                                                                                                                     enableDrag: false,
                                                                                                                                     context: context,
                                                                                                                                     builder: (context) {
-                                                                                                                                      return GestureDetector(
-                                                                                                                                        onTap: () {
-                                                                                                                                          FocusScope.of(context).unfocus();
-                                                                                                                                          FocusManager.instance.primaryFocus?.unfocus();
-                                                                                                                                        },
-                                                                                                                                        child: Padding(
-                                                                                                                                          padding: MediaQuery.viewInsetsOf(context),
-                                                                                                                                          child: Container(
-                                                                                                                                            height: MediaQuery.sizeOf(context).height * 0.4,
-                                                                                                                                            child: WorkStatusNotesWidget(
-                                                                                                                                              workReviewNotes: diagnosisFilterItem,
+                                                                                                                                      return WebViewAware(
+                                                                                                                                        child: GestureDetector(
+                                                                                                                                          onTap: () {
+                                                                                                                                            FocusScope.of(context).unfocus();
+                                                                                                                                            FocusManager.instance.primaryFocus?.unfocus();
+                                                                                                                                          },
+                                                                                                                                          child: Padding(
+                                                                                                                                            padding: MediaQuery.viewInsetsOf(context),
+                                                                                                                                            child: Container(
+                                                                                                                                              height: MediaQuery.sizeOf(context).height * 0.4,
+                                                                                                                                              child: WorkStatusNotesWidget(
+                                                                                                                                                workReviewNotes: diagnosisFilterItem,
+                                                                                                                                              ),
                                                                                                                                             ),
                                                                                                                                           ),
                                                                                                                                         ),
@@ -1493,17 +1503,19 @@ class _WorkReviewWidgetState extends State<WorkReviewWidget> {
                                                                                                                                       enableDrag: false,
                                                                                                                                       context: context,
                                                                                                                                       builder: (context) {
-                                                                                                                                        return GestureDetector(
-                                                                                                                                          onTap: () {
-                                                                                                                                            FocusScope.of(context).unfocus();
-                                                                                                                                            FocusManager.instance.primaryFocus?.unfocus();
-                                                                                                                                          },
-                                                                                                                                          child: Padding(
-                                                                                                                                            padding: MediaQuery.viewInsetsOf(context),
-                                                                                                                                            child: Container(
-                                                                                                                                              height: MediaQuery.sizeOf(context).height * 1.0,
-                                                                                                                                              child: DiagnosisViewBSWidget(
-                                                                                                                                                diagnosisParameterWorkId: diagnosisFilterItem,
+                                                                                                                                        return WebViewAware(
+                                                                                                                                          child: GestureDetector(
+                                                                                                                                            onTap: () {
+                                                                                                                                              FocusScope.of(context).unfocus();
+                                                                                                                                              FocusManager.instance.primaryFocus?.unfocus();
+                                                                                                                                            },
+                                                                                                                                            child: Padding(
+                                                                                                                                              padding: MediaQuery.viewInsetsOf(context),
+                                                                                                                                              child: Container(
+                                                                                                                                                height: MediaQuery.sizeOf(context).height * 1.0,
+                                                                                                                                                child: DiagnosisViewBSWidget(
+                                                                                                                                                  diagnosisParameterWorkId: diagnosisFilterItem,
+                                                                                                                                                ),
                                                                                                                                               ),
                                                                                                                                             ),
                                                                                                                                           ),
@@ -1789,17 +1801,19 @@ class _WorkReviewWidgetState extends State<WorkReviewWidget> {
                                                                                                                                     enableDrag: false,
                                                                                                                                     context: context,
                                                                                                                                     builder: (context) {
-                                                                                                                                      return GestureDetector(
-                                                                                                                                        onTap: () {
-                                                                                                                                          FocusScope.of(context).unfocus();
-                                                                                                                                          FocusManager.instance.primaryFocus?.unfocus();
-                                                                                                                                        },
-                                                                                                                                        child: Padding(
-                                                                                                                                          padding: MediaQuery.viewInsetsOf(context),
-                                                                                                                                          child: Container(
-                                                                                                                                            height: MediaQuery.sizeOf(context).height * 0.4,
-                                                                                                                                            child: WorkStatusNotesWidget(
-                                                                                                                                              workReviewNotes: diagnosisFilterItem,
+                                                                                                                                      return WebViewAware(
+                                                                                                                                        child: GestureDetector(
+                                                                                                                                          onTap: () {
+                                                                                                                                            FocusScope.of(context).unfocus();
+                                                                                                                                            FocusManager.instance.primaryFocus?.unfocus();
+                                                                                                                                          },
+                                                                                                                                          child: Padding(
+                                                                                                                                            padding: MediaQuery.viewInsetsOf(context),
+                                                                                                                                            child: Container(
+                                                                                                                                              height: MediaQuery.sizeOf(context).height * 0.4,
+                                                                                                                                              child: WorkStatusNotesWidget(
+                                                                                                                                                workReviewNotes: diagnosisFilterItem,
+                                                                                                                                              ),
                                                                                                                                             ),
                                                                                                                                           ),
                                                                                                                                         ),
@@ -1962,17 +1976,19 @@ class _WorkReviewWidgetState extends State<WorkReviewWidget> {
                                                                                                                                       enableDrag: false,
                                                                                                                                       context: context,
                                                                                                                                       builder: (context) {
-                                                                                                                                        return GestureDetector(
-                                                                                                                                          onTap: () {
-                                                                                                                                            FocusScope.of(context).unfocus();
-                                                                                                                                            FocusManager.instance.primaryFocus?.unfocus();
-                                                                                                                                          },
-                                                                                                                                          child: Padding(
-                                                                                                                                            padding: MediaQuery.viewInsetsOf(context),
-                                                                                                                                            child: Container(
-                                                                                                                                              height: MediaQuery.sizeOf(context).height * 1.0,
-                                                                                                                                              child: DiagnosisViewBSWidget(
-                                                                                                                                                diagnosisParameterWorkId: diagnosisFilterItem,
+                                                                                                                                        return WebViewAware(
+                                                                                                                                          child: GestureDetector(
+                                                                                                                                            onTap: () {
+                                                                                                                                              FocusScope.of(context).unfocus();
+                                                                                                                                              FocusManager.instance.primaryFocus?.unfocus();
+                                                                                                                                            },
+                                                                                                                                            child: Padding(
+                                                                                                                                              padding: MediaQuery.viewInsetsOf(context),
+                                                                                                                                              child: Container(
+                                                                                                                                                height: MediaQuery.sizeOf(context).height * 1.0,
+                                                                                                                                                child: DiagnosisViewBSWidget(
+                                                                                                                                                  diagnosisParameterWorkId: diagnosisFilterItem,
+                                                                                                                                                ),
                                                                                                                                               ),
                                                                                                                                             ),
                                                                                                                                           ),

@@ -1,5 +1,5 @@
+import '/appointment/pages/nav_bar1/nav_bar1_widget.dart';
 import '/flutter_flow/flutter_flow_util.dart';
-import '/pages/nav_bar1/nav_bar1_widget.dart';
 import 'today_list_view_schedules_widget.dart'
     show TodayListViewSchedulesWidget;
 import 'package:flutter/material.dart';

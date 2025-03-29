@@ -39,8 +39,8 @@ class WorkOrdersRow extends SupabaseDataRow {
   double? get lat => getField<double>('lat');
   set lat(double? value) => setField<double>('lat', value);
 
-  double? get long => getField<double>('long');
-  set long(double? value) => setField<double>('long', value);
+  double? get lng => getField<double>('lng');
+  set lng(double? value) => setField<double>('lng', value);
 
   String? get workOrderStatus => getField<String>('work_order_status');
   set workOrderStatus(String? value) =>
@@ -99,4 +99,10 @@ class WorkOrdersRow extends SupabaseDataRow {
 
   bool? get checkList => getField<bool>('check_list');
   set checkList(bool? value) => setField<bool>('check_list', value);
+
+  String? get pinMakerUrl => getField<String>('pin_maker_url');
+  set pinMakerUrl(String? value) => setField<String>('pin_maker_url', value);
+
+  List<String> get items => getListField<String>('items');
+  set items(List<String>? value) => setListField<String>('items', value);
 }

@@ -1,6 +1,6 @@
+import '/appointment/pages/nav_bar1/nav_bar1_widget.dart';
 import '/components/side_menu_view_widget.dart';
 import '/flutter_flow/flutter_flow_util.dart';
-import '/pages/nav_bar1/nav_bar1_widget.dart';
 import '/index.dart';
 import 'profile_widget.dart' show ProfileWidget;
 import 'package:flutter/material.dart';

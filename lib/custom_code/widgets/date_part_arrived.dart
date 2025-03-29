@@ -124,14 +124,12 @@ class _DatePartArrivedState extends State<DatePartArrived> {
                   barrierDismissible: true,
                 );
 
-                if (pickedDate != null) {
-                  setState(() {
-                    selectedDateArrived = pickedDate;
-                  });
-                  print(
-                      'DatePartArrived - ElevatedButton Picker - Selected Date: $pickedDate');
-                  _updateAppStateDate();
-                }
+                setState(() {
+                  selectedDateArrived = pickedDate;
+                });
+                print(
+                    'DatePartArrived - ElevatedButton Picker - Selected Date: $pickedDate');
+                _updateAppStateDate();
               },
               icon: Icon(Icons.calendar_today), // Calendar icon
               label: Text(

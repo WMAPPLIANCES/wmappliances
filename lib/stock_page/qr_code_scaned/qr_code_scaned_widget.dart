@@ -1,9 +1,9 @@
-import '';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/stock_page/part_location_photo/part_location_photo_widget.dart';
 import '/custom_code/widgets/index.dart' as custom_widgets;
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:webviewx_plus/webviewx_plus.dart';
 import 'qr_code_scaned_model.dart';
 export 'qr_code_scaned_model.dart';
 
@@ -41,11 +41,13 @@ class _QrCodeScanedWidgetState extends State<QrCodeScanedWidget> {
         enableDrag: false,
         context: context,
         builder: (context) {
-          return Padding(
-            padding: MediaQuery.viewInsetsOf(context),
-            child: Container(
-              height: MediaQuery.sizeOf(context).height * 1.0,
-              child: PartLocationPhotoWidget(),
+          return WebViewAware(
+            child: Padding(
+              padding: MediaQuery.viewInsetsOf(context),
+              child: Container(
+                height: MediaQuery.sizeOf(context).height * 1.0,
+                child: PartLocationPhotoWidget(),
+              ),
             ),
           );
         },

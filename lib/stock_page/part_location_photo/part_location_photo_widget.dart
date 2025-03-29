@@ -1,4 +1,3 @@
-import '';
 import '/backend/supabase/supabase.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
@@ -8,6 +7,7 @@ import '/flutter_flow/upload_data.dart';
 import '/stock_page/qr_code_scaned/qr_code_scaned_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:webviewx_plus/webviewx_plus.dart';
 import 'part_location_photo_model.dart';
 export 'part_location_photo_model.dart';
 
@@ -94,11 +94,13 @@ class _PartLocationPhotoWidgetState extends State<PartLocationPhotoWidget> {
                         enableDrag: false,
                         context: context,
                         builder: (context) {
-                          return Padding(
-                            padding: MediaQuery.viewInsetsOf(context),
-                            child: Container(
-                              height: MediaQuery.sizeOf(context).height * 1.0,
-                              child: QrCodeScanedWidget(),
+                          return WebViewAware(
+                            child: Padding(
+                              padding: MediaQuery.viewInsetsOf(context),
+                              child: Container(
+                                height: MediaQuery.sizeOf(context).height * 1.0,
+                                child: QrCodeScanedWidget(),
+                              ),
                             ),
                           );
                         },

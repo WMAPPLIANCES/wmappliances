@@ -9,7 +9,6 @@ import '/backend/supabase/supabase.dart';
 
 import '/auth/base_auth_user_provider.dart';
 
-import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 
 import '/index.dart';
@@ -104,11 +103,6 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           ),
         ),
         FFRoute(
-          name: JobDisplayTodayWidget.routeName,
-          path: JobDisplayTodayWidget.routePath,
-          builder: (context, params) => JobDisplayTodayWidget(),
-        ),
-        FFRoute(
           name: EditnotesWidget.routeName,
           path: EditnotesWidget.routePath,
           builder: (context, params) => EditnotesWidget(
@@ -129,9 +123,9 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           builder: (context, params) => DashboardTechnicianWidget(),
         ),
         FFRoute(
-          name: FindWorkOrderBottonSheetWidget.routeName,
-          path: FindWorkOrderBottonSheetWidget.routePath,
-          builder: (context, params) => FindWorkOrderBottonSheetWidget(),
+          name: WebSearchWidget.routeName,
+          path: WebSearchWidget.routePath,
+          builder: (context, params) => WebSearchWidget(),
         ),
         FFRoute(
           name: ProfileWidget.routeName,
@@ -199,11 +193,6 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           ),
         ),
         FFRoute(
-          name: TestAPPWidget.routeName,
-          path: TestAPPWidget.routePath,
-          builder: (context, params) => TestAPPWidget(),
-        ),
-        FFRoute(
           name: WorkOrderWidget.routeName,
           path: WorkOrderWidget.routePath,
           builder: (context, params) => WorkOrderWidget(
@@ -247,11 +236,6 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           name: WorkOrderWorkFlowWidget.routeName,
           path: WorkOrderWorkFlowWidget.routePath,
           builder: (context, params) => WorkOrderWorkFlowWidget(),
-        ),
-        FFRoute(
-          name: DashBoardTec2Widget.routeName,
-          path: DashBoardTec2Widget.routePath,
-          builder: (context, params) => DashBoardTec2Widget(),
         ),
         FFRoute(
           name: SignUpWidget.routeName,
@@ -299,14 +283,9 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           builder: (context, params) => TodayListViewSchedulesWidget(),
         ),
         FFRoute(
-          name: WorkOrderOfficeViewWidget.routeName,
-          path: WorkOrderOfficeViewWidget.routePath,
-          builder: (context, params) => WorkOrderOfficeViewWidget(
-            workOrderRow: params.getParam<WorkOrdersRow>(
-              'workOrderRow',
-              ParamType.SupabaseRow,
-            ),
-          ),
+          name: DispatchTodayViewWidget.routeName,
+          path: DispatchTodayViewWidget.routePath,
+          builder: (context, params) => DispatchTodayViewWidget(),
         ),
         FFRoute(
           name: QrPageOfficeWidget.routeName,
@@ -322,6 +301,21 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           name: WorkOderSearchWidget.routeName,
           path: WorkOderSearchWidget.routePath,
           builder: (context, params) => WorkOderSearchWidget(),
+        ),
+        FFRoute(
+          name: TradutorWidget.routeName,
+          path: TradutorWidget.routePath,
+          builder: (context, params) => TradutorWidget(),
+        ),
+        FFRoute(
+          name: AppointmentTodayViewWidget.routeName,
+          path: AppointmentTodayViewWidget.routePath,
+          builder: (context, params) => AppointmentTodayViewWidget(),
+        ),
+        FFRoute(
+          name: MapsNotUserWidget.routeName,
+          path: MapsNotUserWidget.routePath,
+          builder: (context, params) => MapsNotUserWidget(),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
       observers: [routeObserver],
@@ -508,9 +502,9 @@ class FFRoute {
               : builder(context, ffParams);
           final child = appStateNotifier.loading
               ? Container(
-                  color: FlutterFlowTheme.of(context).primaryText,
+                  color: Colors.transparent,
                   child: Image.asset(
-                    'assets/images/LOGO_WM_APPLIANCE_NOVA_casa_alta_reso.png',
+                    'assets/images/wmappliancescasa512x512.png',
                     fit: BoxFit.contain,
                   ),
                 )
