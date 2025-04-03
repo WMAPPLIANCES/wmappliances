@@ -7,6 +7,8 @@ import '/flutter_flow/flutter_flow_util.dart';
 import '/custom_code/widgets/index.dart' as custom_widgets;
 import '/flutter_flow/custom_functions.dart' as functions;
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
+import 'package:provider/provider.dart';
 import 'today_list_view_schedules_model.dart';
 export 'today_list_view_schedules_model.dart';
 
@@ -32,6 +34,24 @@ class _TodayListViewSchedulesWidgetState
     super.initState();
     _model = createModel(context, () => TodayListViewSchedulesModel());
 
+    // On page load action.
+    SchedulerBinding.instance.addPostFrameCallback((_) async {
+      _model.workoDERtODAY = await AppointmentsTable().queryRows(
+        queryFn: (q) => q
+            .eqOrNull(
+              'technician_id',
+              currentUserUid,
+            )
+            .eqOrNull(
+              'appointment_date',
+              supaSerialize<DateTime>(functions.today()),
+            )
+            .order('stop_number', ascending: true),
+      );
+
+      safeSetState(() {});
+    });
+
     WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
@@ -44,147 +64,114 @@ class _TodayListViewSchedulesWidgetState
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<List<AppointmentsRow>>(
-      future: AppointmentsTable().queryRows(
-        queryFn: (q) => q
-            .eqOrNull(
-              'technician_id',
-              currentUserUid,
-            )
-            .eqOrNull(
-              'appointment_date',
-              supaSerialize<DateTime>(functions.today()),
-            )
-            .order('stop_number'),
-      ),
-      builder: (context, snapshot) {
-        // Customize what your widget looks like when it's loading.
-        if (!snapshot.hasData) {
-          return Scaffold(
+    context.watch<FFAppState>();
+
+    return Title(
+        title: 'todayListViewSchedules',
+        color: FlutterFlowTheme.of(context).primary.withAlpha(0XFF),
+        child: GestureDetector(
+          onTap: () {
+            FocusScope.of(context).unfocus();
+            FocusManager.instance.primaryFocus?.unfocus();
+          },
+          child: Scaffold(
+            key: scaffoldKey,
             backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
-            body: Center(
-              child: SizedBox(
-                width: 50.0,
-                height: 50.0,
-                child: CircularProgressIndicator(
-                  valueColor: AlwaysStoppedAnimation<Color>(
-                    FlutterFlowTheme.of(context).primary,
+            body: Align(
+              alignment: AlignmentDirectional(0.0, 1.0),
+              child: Stack(
+                children: [
+                  SingleChildScrollView(
+                    child: Column(
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                        Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(
+                              0.0, 0.0, 0.0, 8.0),
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color: FlutterFlowTheme.of(context)
+                                  .secondaryBackground,
+                              borderRadius: BorderRadius.only(
+                                bottomLeft: Radius.circular(16.0),
+                                bottomRight: Radius.circular(16.0),
+                                topLeft: Radius.circular(0.0),
+                                topRight: Radius.circular(0.0),
+                              ),
+                            ),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.max,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      0.0, 16.0, 0.0, 8.0),
+                                  child: Text(
+                                    'Service Calls Today',
+                                    style: FlutterFlowTheme.of(context)
+                                        .bodyMedium
+                                        .override(
+                                          fontFamily: 'Manrope',
+                                          fontSize: 28.0,
+                                          letterSpacing: 0.0,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(
+                              0.0, 0.0, 0.0, 64.0),
+                          child: Builder(
+                            builder: (context) {
+                              final appointment =
+                                  _model.workoDERtODAY?.toList() ?? [];
+
+                              return SingleChildScrollView(
+                                primary: false,
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.max,
+                                  children: List.generate(appointment.length,
+                                      (appointmentIndex) {
+                                    final appointmentItem =
+                                        appointment[appointmentIndex];
+                                    return ListAppointmentViewWidget(
+                                      key: Key(
+                                          'Keyttk_${appointmentIndex}_of_${appointment.length}'),
+                                      scheduleParamt: appointmentItem,
+                                    );
+                                  }),
+                                ),
+                              );
+                            },
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
-                ),
+                  Align(
+                    alignment: AlignmentDirectional(0.0, 1.0),
+                    child: wrapWithModel(
+                      model: _model.navBar1Model,
+                      updateCallback: () => safeSetState(() {}),
+                      child: NavBar1Widget(),
+                    ),
+                  ),
+                  Container(
+                    width: 1.0,
+                    height: 1.0,
+                    child: custom_widgets.LiveLocationTimer(
+                      width: 1.0,
+                      height: 1.0,
+                    ),
+                  ),
+                ],
               ),
             ),
-          );
-        }
-        List<AppointmentsRow> todayListViewSchedulesAppointmentsRowList =
-            snapshot.data!;
-
-        return Title(
-            title: 'todayListViewSchedules',
-            color: FlutterFlowTheme.of(context).primary.withAlpha(0XFF),
-            child: GestureDetector(
-              onTap: () {
-                FocusScope.of(context).unfocus();
-                FocusManager.instance.primaryFocus?.unfocus();
-              },
-              child: Scaffold(
-                key: scaffoldKey,
-                backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
-                body: Align(
-                  alignment: AlignmentDirectional(0.0, 1.0),
-                  child: Stack(
-                    children: [
-                      Column(
-                        mainAxisSize: MainAxisSize.max,
-                        children: [
-                          Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
-                                0.0, 0.0, 0.0, 8.0),
-                            child: Container(
-                              decoration: BoxDecoration(
-                                color: FlutterFlowTheme.of(context)
-                                    .secondaryBackground,
-                                borderRadius: BorderRadius.only(
-                                  bottomLeft: Radius.circular(16.0),
-                                  bottomRight: Radius.circular(16.0),
-                                  topLeft: Radius.circular(0.0),
-                                  topRight: Radius.circular(0.0),
-                                ),
-                              ),
-                              child: Row(
-                                mainAxisSize: MainAxisSize.max,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        0.0, 16.0, 0.0, 8.0),
-                                    child: Text(
-                                      'Service Calls Today',
-                                      style: FlutterFlowTheme.of(context)
-                                          .bodyMedium
-                                          .override(
-                                            fontFamily: 'Manrope',
-                                            fontSize: 28.0,
-                                            letterSpacing: 0.0,
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                          Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
-                                0.0, 0.0, 0.0, 64.0),
-                            child: Builder(
-                              builder: (context) {
-                                final appointment =
-                                    todayListViewSchedulesAppointmentsRowList
-                                        .toList();
-
-                                return SingleChildScrollView(
-                                  primary: false,
-                                  child: Column(
-                                    mainAxisSize: MainAxisSize.max,
-                                    children: List.generate(appointment.length,
-                                        (appointmentIndex) {
-                                      final appointmentItem =
-                                          appointment[appointmentIndex];
-                                      return ListAppointmentViewWidget(
-                                        key: Key(
-                                            'Keyttk_${appointmentIndex}_of_${appointment.length}'),
-                                        scheduleParamt: appointmentItem,
-                                      );
-                                    }),
-                                  ),
-                                );
-                              },
-                            ),
-                          ),
-                        ],
-                      ),
-                      Align(
-                        alignment: AlignmentDirectional(0.0, 1.0),
-                        child: wrapWithModel(
-                          model: _model.navBar1Model,
-                          updateCallback: () => safeSetState(() {}),
-                          child: NavBar1Widget(),
-                        ),
-                      ),
-                      Container(
-                        width: 1.0,
-                        height: 1.0,
-                        child: custom_widgets.LiveLocationTimer(
-                          width: 1.0,
-                          height: 1.0,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ));
-      },
-    );
+          ),
+        ));
   }
 }

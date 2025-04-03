@@ -10,8 +10,8 @@ import '/index.dart';
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'work_oder_search_model.dart';
-export 'work_oder_search_model.dart';
+import 'work_order_search_model.dart';
+export 'work_order_search_model.dart';
 
 /// **Design Prompt for a Modern Responsive Work Order Interface**
 ///
@@ -39,25 +39,25 @@ export 'work_oder_search_model.dart';
 /// ### Mobile View:
 /// - Stack panels, prioritize the information panel, and ensure
 /// touch-friendly navigation. *** KEEP SIDE BAR***
-class WorkOderSearchWidget extends StatefulWidget {
-  const WorkOderSearchWidget({super.key});
+class WorkOrderSearchWidget extends StatefulWidget {
+  const WorkOrderSearchWidget({super.key});
 
-  static String routeName = 'workOderSearch';
-  static String routePath = '/workOderSearch';
+  static String routeName = 'workOrderSearch';
+  static String routePath = '/workOrderSearch';
 
   @override
-  State<WorkOderSearchWidget> createState() => _WorkOderSearchWidgetState();
+  State<WorkOrderSearchWidget> createState() => _WorkOrderSearchWidgetState();
 }
 
-class _WorkOderSearchWidgetState extends State<WorkOderSearchWidget> {
-  late WorkOderSearchModel _model;
+class _WorkOrderSearchWidgetState extends State<WorkOrderSearchWidget> {
+  late WorkOrderSearchModel _model;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
     super.initState();
-    _model = createModel(context, () => WorkOderSearchModel());
+    _model = createModel(context, () => WorkOrderSearchModel());
 
     _model.textController ??= TextEditingController();
     _model.textFieldFocusNode ??= FocusNode();
@@ -100,10 +100,10 @@ class _WorkOderSearchWidgetState extends State<WorkOderSearchWidget> {
             ),
           );
         }
-        List<WorkOrdersRow> workOderSearchWorkOrdersRowList = snapshot.data!;
+        List<WorkOrdersRow> workOrderSearchWorkOrdersRowList = snapshot.data!;
 
         return Title(
-            title: 'workOderSearch',
+            title: 'workOrderSearch',
             color: FlutterFlowTheme.of(context).primary.withAlpha(0XFF),
             child: GestureDetector(
               onTap: () {
@@ -333,117 +333,6 @@ class _WorkOderSearchWidgetState extends State<WorkOderSearchWidget> {
                                                                           mainAxisAlignment:
                                                                               MainAxisAlignment.spaceBetween,
                                                                           children: [
-                                                                            Row(
-                                                                              mainAxisSize: MainAxisSize.max,
-                                                                              children: [
-                                                                                Padding(
-                                                                                  padding: EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 0.0, 0.0),
-                                                                                  child: Text(
-                                                                                    'Select Date ',
-                                                                                    style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                          fontFamily: 'Manrope',
-                                                                                          fontSize: 22.0,
-                                                                                          letterSpacing: 0.0,
-                                                                                          fontWeight: FontWeight.w600,
-                                                                                        ),
-                                                                                  ),
-                                                                                ),
-                                                                                Align(
-                                                                                  alignment: AlignmentDirectional(0.0, 0.0),
-                                                                                  child: InkWell(
-                                                                                    splashColor: Colors.transparent,
-                                                                                    focusColor: Colors.transparent,
-                                                                                    hoverColor: Colors.transparent,
-                                                                                    highlightColor: Colors.transparent,
-                                                                                    onTap: () async {
-                                                                                      final _datePickedDate = await showDatePicker(
-                                                                                        context: context,
-                                                                                        initialDate: getCurrentTimestamp,
-                                                                                        firstDate: DateTime(1900),
-                                                                                        lastDate: DateTime(2050),
-                                                                                        builder: (context, child) {
-                                                                                          return wrapInMaterialDatePickerTheme(
-                                                                                            context,
-                                                                                            child!,
-                                                                                            headerBackgroundColor: FlutterFlowTheme.of(context).primary,
-                                                                                            headerForegroundColor: FlutterFlowTheme.of(context).info,
-                                                                                            headerTextStyle: FlutterFlowTheme.of(context).headlineLarge.override(
-                                                                                                  fontFamily: 'Outfit',
-                                                                                                  fontSize: 32.0,
-                                                                                                  letterSpacing: 0.0,
-                                                                                                  fontWeight: FontWeight.w600,
-                                                                                                ),
-                                                                                            pickerBackgroundColor: FlutterFlowTheme.of(context).secondaryBackground,
-                                                                                            pickerForegroundColor: FlutterFlowTheme.of(context).primaryText,
-                                                                                            selectedDateTimeBackgroundColor: FlutterFlowTheme.of(context).primary,
-                                                                                            selectedDateTimeForegroundColor: FlutterFlowTheme.of(context).info,
-                                                                                            actionButtonForegroundColor: FlutterFlowTheme.of(context).primaryText,
-                                                                                            iconSize: 24.0,
-                                                                                          );
-                                                                                        },
-                                                                                      );
-
-                                                                                      if (_datePickedDate != null) {
-                                                                                        safeSetState(() {
-                                                                                          _model.datePicked = DateTime(
-                                                                                            _datePickedDate.year,
-                                                                                            _datePickedDate.month,
-                                                                                            _datePickedDate.day,
-                                                                                          );
-                                                                                        });
-                                                                                      } else if (_model.datePicked != null) {
-                                                                                        safeSetState(() {
-                                                                                          _model.datePicked = getCurrentTimestamp;
-                                                                                        });
-                                                                                      }
-                                                                                      FFAppState().workOderSearchDate = _model.datePicked;
-                                                                                      safeSetState(() {});
-                                                                                      _model.searchDate = true;
-                                                                                      safeSetState(() {});
-                                                                                    },
-                                                                                    child: Container(
-                                                                                      width: 60.0,
-                                                                                      height: 60.0,
-                                                                                      decoration: BoxDecoration(),
-                                                                                      child: Padding(
-                                                                                        padding: EdgeInsetsDirectional.fromSTEB(8.0, 0.0, 12.0, 0.0),
-                                                                                        child: Icon(
-                                                                                          Icons.calendar_month_rounded,
-                                                                                          color: FlutterFlowTheme.of(context).primary,
-                                                                                          size: 48.0,
-                                                                                        ),
-                                                                                      ),
-                                                                                    ),
-                                                                                  ),
-                                                                                ),
-                                                                                if (_model.searchDate == true)
-                                                                                  Container(
-                                                                                    width: 200.0,
-                                                                                    height: 50.0,
-                                                                                    decoration: BoxDecoration(
-                                                                                      color: FlutterFlowTheme.of(context).secondaryBackground,
-                                                                                    ),
-                                                                                    child: Align(
-                                                                                      alignment: AlignmentDirectional(-1.0, 0.0),
-                                                                                      child: Padding(
-                                                                                        padding: EdgeInsetsDirectional.fromSTEB(8.0, 0.0, 0.0, 0.0),
-                                                                                        child: Text(
-                                                                                          valueOrDefault<String>(
-                                                                                            dateTimeFormat("MMMEd", FFAppState().workOderSearchDate),
-                                                                                            'Thu, Mar 6',
-                                                                                          ),
-                                                                                          style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                                fontFamily: 'Manrope',
-                                                                                                fontSize: 22.0,
-                                                                                                letterSpacing: 0.0,
-                                                                                                fontWeight: FontWeight.bold,
-                                                                                              ),
-                                                                                        ),
-                                                                                      ),
-                                                                                    ),
-                                                                                  ),
-                                                                              ],
-                                                                            ),
                                                                             Padding(
                                                                               padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 8.0, 0.0),
                                                                               child: FFButtonWidget(
@@ -491,7 +380,7 @@ class _WorkOderSearchWidgetState extends State<WorkOderSearchWidget> {
                                                                             child:
                                                                                 Builder(
                                                                               builder: (context) {
-                                                                                final searchWorkOrderDate = workOderSearchWorkOrdersRowList.where((e) => e.scheduledDate! >= FFAppState().workOderSearchDate!).toList();
+                                                                                final searchWorkOrderDate = workOrderSearchWorkOrdersRowList.where((e) => e.scheduledDate! >= FFAppState().workOderSearchDate!).toList();
 
                                                                                 return FlutterFlowDataTable<WorkOrdersRow>(
                                                                                   controller: _model.paginatedDataTableController1,
@@ -816,9 +705,12 @@ class _WorkOderSearchWidgetState extends State<WorkOderSearchWidget> {
                                                                                                 context.pushNamed(
                                                                                                   WorkOrderWidget.routeName,
                                                                                                   queryParameters: {
-                                                                                                    'workOrderRow': serializeParam(
-                                                                                                      searchWorkOrderDateItem,
-                                                                                                      ParamType.SupabaseRow,
+                                                                                                    'workOrderId': serializeParam(
+                                                                                                      valueOrDefault<String>(
+                                                                                                        searchWorkOrderDateItem.workOrderId,
+                                                                                                        '43342',
+                                                                                                      ),
+                                                                                                      ParamType.String,
                                                                                                     ),
                                                                                                   }.withoutNulls,
                                                                                                   extra: <String, dynamic>{
@@ -865,7 +757,7 @@ class _WorkOderSearchWidgetState extends State<WorkOderSearchWidget> {
                                                                             child:
                                                                                 Builder(
                                                                               builder: (context) {
-                                                                                final workOrderSearch = workOderSearchWorkOrdersRowList.toList();
+                                                                                final workOrderSearch = workOrderSearchWorkOrdersRowList.toList();
 
                                                                                 return FlutterFlowDataTable<WorkOrdersRow>(
                                                                                   controller: _model.paginatedDataTableController2,
@@ -1178,9 +1070,12 @@ class _WorkOderSearchWidgetState extends State<WorkOderSearchWidget> {
                                                                                               context.pushNamed(
                                                                                                 WorkOrderWidget.routeName,
                                                                                                 queryParameters: {
-                                                                                                  'workOrderRow': serializeParam(
-                                                                                                    workOrderSearchItem,
-                                                                                                    ParamType.SupabaseRow,
+                                                                                                  'workOrderId': serializeParam(
+                                                                                                    valueOrDefault<String>(
+                                                                                                      workOrderSearchItem.workOrderId,
+                                                                                                      '34343',
+                                                                                                    ),
+                                                                                                    ParamType.String,
                                                                                                   ),
                                                                                                 }.withoutNulls,
                                                                                                 extra: <String, dynamic>{

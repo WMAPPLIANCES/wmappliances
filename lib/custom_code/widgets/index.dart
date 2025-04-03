@@ -19,3 +19,4 @@ export 'today_appointment.dart' show TodayAppointment;
 export 'string_to_date_time.dart' show StringToDateTime;
 export 'schedule_map_widget.dart' show ScheduleMapWidget;
 export 'live_location_timer.dart' show LiveLocationTimer;
+export 'list_of_items.dart' show ListOfItems;

@@ -103,6 +103,20 @@ class WorkOrdersRow extends SupabaseDataRow {
   String? get pinMakerUrl => getField<String>('pin_maker_url');
   set pinMakerUrl(String? value) => setField<String>('pin_maker_url', value);
 
-  List<String> get items => getListField<String>('items');
-  set items(List<String>? value) => setListField<String>('items', value);
+  List<dynamic> get items => getListField<dynamic>('items');
+  set items(List<dynamic>? value) => setListField<dynamic>('items', value);
+
+  String? get coveragePlan => getField<String>('coverage_plan');
+  set coveragePlan(String? value) => setField<String>('coverage_plan', value);
+
+  String? get appointmentId => getField<String>('appointment_id');
+  set appointmentId(String? value) => setField<String>('appointment_id', value);
+
+  bool? get completed => getField<bool>('completed');
+  set completed(bool? value) => setField<bool>('completed', value);
+
+  List<String> get modelNumberImageList =>
+      getListField<String>('model_number_image_list');
+  set modelNumberImageList(List<String>? value) =>
+      setListField<String>('model_number_image_list', value);
 }

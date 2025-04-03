@@ -10,6 +10,9 @@ import 'package:flutter/material.dart';
 // Begin custom widget code
 // DO NOT REMOVE OR MODIFY THE CODE ABOVE!
 
+/// Automatic FlutterFlow imports
+import 'index.dart'; // Imports other custom widgets
+
 import 'index.dart'; // Imports other custom widgets
 
 // BEGIN FlutterFlow BOILERPLATE
@@ -47,6 +50,7 @@ class AppointmentModel {
   final double? lng;
   final String? status;
   final List<String>? items;
+  final List<String>? items_view; // Adicionar campo para items_view
 
   AppointmentModel({
     required this.appointmentId,
@@ -63,6 +67,7 @@ class AppointmentModel {
     this.lng,
     this.status,
     this.items,
+    this.items_view, // Adicionar items_view ao construtor
   });
 }
 
@@ -121,7 +126,8 @@ class ScheduleMapWidget extends StatefulWidget {
 }
 
 class _ScheduleMapWidgetState extends State<ScheduleMapWidget> {
-  late gmaps.GoogleMapController _mapController;
+  // Usando late with null checking para lidar com a inicialização tardia
+  gmaps.GoogleMapController? _mapController;
 
   List<AppointmentModel> _appointments = [];
   Set<gmaps.Marker> _markers = {};
@@ -141,23 +147,23 @@ class _ScheduleMapWidgetState extends State<ScheduleMapWidget> {
 
   // Um estilo escuro padrão, caso você queira
   final String _defaultDarkMapStyle = '''
-  [
-    {"elementType": "geometry","stylers": [{"color": "#242f3e"}]},
-    {"elementType": "labels.text.fill","stylers": [{"color": "#746855"}]},
-    {"elementType": "labels.text.stroke","stylers": [{"color": "#242f3e"}]},
-    {"featureType": "administrative.land_parcel","stylers": [{"visibility": "off"}]},
-    {"featureType": "administrative.locality","stylers": [{"color": "#d59563"}]},
-    {"featureType": "poi","stylers": [{"visibility": "off"}]},
-    {"featureType": "poi.park","stylers": [{"color": "#263c3f"}]},
-    {"featureType": "road","elementType": "geometry","stylers": [{"color": "#38414e"}]},
-    {"featureType": "road","elementType": "geometry.stroke","stylers": [{"color": "#212a37"}]},
-    {"featureType": "road","elementType": "labels.text.fill","stylers": [{"color": "#9ca5b3"}]},
-    {"featureType": "road.highway","stylers": [{"color": "#746855"}]},
-    {"featureType": "road.local","stylers": [{"visibility": "off"}]},
-    {"featureType": "transit","stylers": [{"color": "#2f3948"}]},
-    {"featureType": "water","stylers": [{"color": "#17263c"}]}
-  ]
-  ''';
+[
+{"elementType": "geometry","stylers": [{"color": "#242f3e"}]},
+{"elementType": "labels.text.fill","stylers": [{"color": "#746855"}]},
+{"elementType": "labels.text.stroke","stylers": [{"color": "#242f3e"}]},
+{"featureType": "administrative.land_parcel","stylers": [{"visibility": "off"}]},
+{"featureType": "administrative.locality","stylers": [{"color": "#d59563"}]},
+{"featureType": "poi","stylers": [{"visibility": "off"}]},
+{"featureType": "poi.park","stylers": [{"color": "#263c3f"}]},
+{"featureType": "road","elementType": "geometry","stylers": [{"color": "#38414e"}]},
+{"featureType": "road","elementType": "geometry.stroke","stylers": [{"color": "#212a37"}]},
+{"featureType": "road","elementType": "labels.text.fill","stylers": [{"color": "#9ca5b3"}]},
+{"featureType": "road.highway","stylers": [{"color": "#746855"}]},
+{"featureType": "road.local","stylers": [{"visibility": "off"}]},
+{"featureType": "transit","stylers": [{"color": "#2f3948"}]},
+{"featureType": "water","stylers": [{"color": "#17263c"}]}
+]
+''';
 
   // Timer para atualizar localização
   Timer? _locationUpdateTimer;
@@ -169,7 +175,7 @@ class _ScheduleMapWidgetState extends State<ScheduleMapWidget> {
   List<Map<String, dynamic>> _newWorkOrders = [];
   Timer? _workOrderPollingTimer;
 
-  // Adicione esta variável de controle para evitar consultas duplicadas
+  // Variável de controle para evitar consultas duplicadas
   bool _isCurrentlyFetching = false;
 
   @override
@@ -177,19 +183,26 @@ class _ScheduleMapWidgetState extends State<ScheduleMapWidget> {
     super.initState();
     _fetchAppointmentsByDate();
 
-    // Iniciar rastreamento se showLiveTracking estiver ativado
+    // Adicionar um pequeno delay para iniciar rastreamento
+    // para evitar chamadas simultâneas durante a inicialização
     if (widget.showLiveTracking) {
-      _initLiveTracking();
+      Future.delayed(const Duration(seconds: 1), () {
+        _initLiveTracking();
+      });
     }
 
-    // Adicionar inicialização para novas work orders
+    // Adicionar delay para novas work orders também
     if (widget.showNewWorkOrders) {
-      _fetchNewWorkOrders();
-      _startWorkOrderPolling();
+      Future.delayed(const Duration(seconds: 2), () {
+        _fetchNewWorkOrders();
+        _startWorkOrderPolling();
+      });
     }
 
-    // Buscar técnicos ativos
-    _fetchActiveTechnicians();
+    // Buscar técnicos ativos com delay
+    Future.delayed(const Duration(seconds: 3), () {
+      _fetchActiveTechnicians();
+    });
   }
 
   @override
@@ -248,8 +261,26 @@ class _ScheduleMapWidgetState extends State<ScheduleMapWidget> {
           itemList = (map['items'] as List).map((e) => e.toString()).toList();
         }
 
+        // Se a coluna 'items_view' for array, converte
+        List<String>? itemsViewList;
+        if (map['items_view'] is List) {
+          itemsViewList =
+              (map['items_view'] as List).map((e) => e.toString()).toList();
+        }
+
+        // Verificação de segurança para lat e lng
+        double? lat;
+        if (map['lat'] != null) {
+          lat = (map['lat'] as num).toDouble();
+        }
+
+        double? lng;
+        if (map['lng'] != null) {
+          lng = (map['lng'] as num).toDouble();
+        }
+
         return AppointmentModel(
-          appointmentId: map['appointment_id'],
+          appointmentId: map['appointment_id'] ?? '',
           scheduledStart: map['scheduled_start'] != null
               ? DateTime.parse(map['scheduled_start'])
               : null,
@@ -263,10 +294,11 @@ class _ScheduleMapWidgetState extends State<ScheduleMapWidget> {
           stopNumber: (map['stop_number'] ?? 1) as int,
           clientName: map['client_name'],
           address: map['address'],
-          lat: (map['lat'] as num?)?.toDouble(),
-          lng: (map['lng'] as num?)?.toDouble(),
+          lat: lat,
+          lng: lng,
           status: map['status'],
           items: itemList,
+          items_view: itemsViewList,
         );
       }).toList();
 
@@ -288,6 +320,11 @@ class _ScheduleMapWidgetState extends State<ScheduleMapWidget> {
 
   /// Constrói todos os marcadores - appointments, office e work orders
   Future<void> _buildAllMarkers() async {
+    if (_mapController == null) {
+      print('❌ Map controller not initialized yet, skipping marker update');
+      return;
+    }
+
     final markers = <gmaps.Marker>[];
 
     // 1. Adicionar marcadores de appointments
@@ -438,9 +475,11 @@ class _ScheduleMapWidgetState extends State<ScheduleMapWidget> {
     }
 
     // Atualizar o conjunto de marcadores
-    setState(() {
-      _markers = markers.toSet();
-    });
+    if (mounted) {
+      setState(() {
+        _markers = markers.toSet();
+      });
+    }
   }
 
   /// Cria marcadores com foto do técnico
@@ -455,12 +494,13 @@ class _ScheduleMapWidgetState extends State<ScheduleMapWidget> {
     required int size,
     required int borderSize,
   }) async {
-    final cacheKey = '$photoUrl|$colorHex|$size|$borderSize';
+    final cacheKey =
+        'photo_${photoUrl}_color_${colorHex}_size_${size}_border_${borderSize}';
     if (_photoCache.containsKey(cacheKey)) {
       return _photoCache[cacheKey]!;
     }
 
-    // Se não tem foto, retorna defaultMarker with hue
+// Se não tem foto, retorna defaultMarker with hue
     if (photoUrl.isEmpty) {
       final hue = _hexColorToHue(colorHex);
       return gmaps.BitmapDescriptor.defaultMarkerWithHue(hue);
@@ -532,13 +572,82 @@ class _ScheduleMapWidgetState extends State<ScheduleMapWidget> {
     // Cria um MarkerId para o marcador clicado
     final gmaps.MarkerId markerId = gmaps.MarkerId(apt.appointmentId);
 
+    // Imprimir dados originais para depuração
+    print('DEBUG: Original items_view type: ${apt.items_view.runtimeType}');
+    print('DEBUG: Original items_view: ${apt.items_view}');
+
+    // Lista para armazenar os itens processados
+    List<Map<String, dynamic>> processedItems = [];
+
+    if (apt.items_view != null && apt.items_view!.isNotEmpty) {
+      for (String item in apt.items_view!) {
+        try {
+          // Processar o item diretamente sem tratamento adicional
+          print('DEBUG: Processando item: $item');
+
+          Map<String, dynamic> parsedItem;
+
+          // Tenta primeiro interpretar como JSON normal
+          try {
+            parsedItem = json.decode(item);
+          } catch (jsonError) {
+            // Se falhar, tenta fazer parse exibindo o erro exato
+            print('DEBUG: Erro no primeiro parse: $jsonError');
+
+            // Tenta um método alternativo - remover as chaves e fazer parse manual
+            // Este é um fallback extremo para quando nada mais funcionar
+            final itemRegex = RegExp(
+                r'brand\s*:\s*(.*?),\s*model\s*:\s*(.*?),\s*problem\s*:\s*(.*?),\s*itemName\s*:\s*(.*?),\s*location\s*:\s*(.*)');
+            final match = itemRegex.firstMatch(item);
+
+            if (match != null) {
+              parsedItem = {
+                'brand': match.group(1)?.replaceAll('"', '') ?? 'N/A',
+                'model': match.group(2)?.replaceAll('"', '') ?? 'N/A',
+                'problem': match.group(3)?.replaceAll('"', '') ?? 'N/A',
+                'itemName': match.group(4)?.replaceAll('"', '') ?? 'N/A',
+                'location':
+                    match.group(5)?.replaceAll('"', '').replaceAll('}', '') ??
+                        'N/A',
+              };
+            } else {
+              // Se nada funcionar, cria um objeto com o item como título
+              parsedItem = {
+                'itemName': item,
+                'brand': 'N/A',
+                'model': 'N/A',
+                'problem': 'N/A',
+                'location': 'N/A'
+              };
+            }
+          }
+
+          // Adiciona o item processado
+          processedItems.add(parsedItem);
+          print('DEBUG: Item processado com sucesso: $parsedItem');
+        } catch (e) {
+          print('DEBUG: Erro ao processar: $e');
+          // Último recurso - criar um objeto com valores conhecidos
+          processedItems.add({
+            'itemName': item,
+            'brand': 'N/A',
+            'model': 'N/A',
+            'problem': 'N/A',
+            'location': 'N/A'
+          });
+        }
+      }
+    }
+
+    print('DEBUG: Processados ${processedItems.length} itens');
+    print('DEBUG: Processed items: $processedItems');
+
     showModalBottomSheet(
       context: context,
       backgroundColor: Colors.transparent,
       isScrollControlled: true,
       builder: (sheetCtx) {
         return DraggableScrollableSheet(
-          // Aumentar o tamanho inicial para o sheet aparecer mais alto
           initialChildSize: 0.5,
           minChildSize: 0.2,
           maxChildSize: 0.9,
@@ -609,8 +718,8 @@ class _ScheduleMapWidgetState extends State<ScheduleMapWidget> {
                           ),
                         const SizedBox(height: 12),
 
-                        // Se houver items
-                        if (apt.items != null && apt.items!.isNotEmpty)
+                        // Seção de eletrodomésticos
+                        if (processedItems.isNotEmpty)
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -623,28 +732,103 @@ class _ScheduleMapWidgetState extends State<ScheduleMapWidget> {
                                 ),
                               ),
                               const SizedBox(height: 4),
-                              ...apt.items!.map(
-                                (item) => Row(
-                                  children: [
-                                    const Text(
-                                      '• ',
-                                      style: TextStyle(color: Colors.white),
+                              // Renderizar cada eletrodoméstico
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: processedItems.map((appliance) {
+                                  final String itemName =
+                                      appliance['itemName']?.toString() ??
+                                          'N/A';
+                                  final String brand =
+                                      appliance['brand']?.toString() ?? 'N/A';
+                                  final String model =
+                                      appliance['model']?.toString() ?? 'N/A';
+                                  final String problem =
+                                      appliance['problem']?.toString() ?? 'N/A';
+                                  final String location = appliance['location']
+                                              ?.toString() ==
+                                          'null'
+                                      ? 'N/A'
+                                      : (appliance['location']?.toString() ??
+                                          'N/A');
+
+                                  return Container(
+                                    margin: const EdgeInsets.only(bottom: 8),
+                                    padding: const EdgeInsets.all(12),
+                                    decoration: BoxDecoration(
+                                      color: Colors.black45,
+                                      borderRadius: BorderRadius.circular(8),
+                                      border: Border.all(
+                                          color: Colors.grey.shade800),
                                     ),
-                                    Expanded(
-                                      child: Text(
-                                        item,
-                                        style: const TextStyle(
-                                          color: Colors.white70,
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        // Nome do item em destaque
+                                        Text(
+                                          itemName,
+                                          style: const TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 15,
+                                            color: Colors.white,
+                                          ),
                                         ),
-                                      ),
+                                        const SizedBox(height: 6),
+
+                                        // Detalhes em duas colunas
+                                        Row(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            // Coluna da esquerda
+                                            Expanded(
+                                              child: Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  Text('Brand: $brand',
+                                                      style: const TextStyle(
+                                                          color:
+                                                              Colors.white70)),
+                                                  const SizedBox(height: 2),
+                                                  Text('Problem: $problem',
+                                                      style: const TextStyle(
+                                                          color:
+                                                              Colors.white70)),
+                                                ],
+                                              ),
+                                            ),
+                                            // Coluna da direita
+                                            Expanded(
+                                              child: Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  Text('Model: $model',
+                                                      style: const TextStyle(
+                                                          color:
+                                                              Colors.white70)),
+                                                  const SizedBox(height: 2),
+                                                  Text('Location: $location',
+                                                      style: const TextStyle(
+                                                          color:
+                                                              Colors.white70)),
+                                                ],
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ],
                                     ),
-                                  ],
-                                ),
+                                  );
+                                }).toList(),
                               ),
                             ],
                           ),
                         const SizedBox(height: 16),
 
+                        // Botões de ação
                         ElevatedButton.icon(
                           onPressed: () => _editStopNumber(apt),
                           icon: const Icon(Icons.edit, size: 18),
@@ -657,7 +841,7 @@ class _ScheduleMapWidgetState extends State<ScheduleMapWidget> {
                         ElevatedButton(
                           onPressed: () {
                             // Fechar o InfoWindow do marcador
-                            _mapController.hideMarkerInfoWindow(markerId);
+                            _mapController?.hideMarkerInfoWindow(markerId);
 
                             // Fechar o BottomSheet
                             Navigator.pop(sheetCtx);
@@ -680,10 +864,7 @@ class _ScheduleMapWidgetState extends State<ScheduleMapWidget> {
       routeSettings: const RouteSettings(name: 'appointmentBottomSheet'),
     ).then((_) {
       // Fechar o InfoWindow quando o BottomSheet for fechado
-      _mapController.hideMarkerInfoWindow(markerId);
-
-      // Não precisamos atualizar os dados aqui para evitar recarregamento desnecessário
-      // que pode fazer com que o marcador do escritório desapareça novamente
+      _mapController?.hideMarkerInfoWindow(markerId);
     });
   }
 
@@ -790,11 +971,11 @@ class _ScheduleMapWidgetState extends State<ScheduleMapWidget> {
 
   /// Função para obter a URL da imagem com base no número do stop
   String getStopImageUrl(int stopNumber) {
-    // URL de fallback para caso nenhuma das opções abaixo se aplique
+// URL de fallback para caso nenhuma das opções abaixo se aplique
     final fallbackUrl =
         'https://api.wmappliances.cloud/storage/v1/object/public/photos/users/wmlogoSupabase.png';
 
-    // Mapeamento de stop_number para URLs de imagem
+// Mapeamento de stop_number para URLs de imagem
     final Map<int, String> stopImageUrls = {
       0: 'https://api.wmappliances.cloud/storage/v1/object/public/photos/users/wmlogoSupabase.png',
       1: 'https://api.wmappliances.cloud/storage/v1/object/public/photos/stopNumbers/1.png',
@@ -820,7 +1001,7 @@ class _ScheduleMapWidgetState extends State<ScheduleMapWidget> {
       21: 'https://api.wmappliances.cloud/storage/v1/object/public/photos/stopNumbers/21.png',
     };
 
-    // Retorna a URL correspondente ao stop_number ou a URL de fallback
+// Retorna a URL correspondente ao stop_number ou a URL de fallback
     return stopImageUrls[stopNumber] ?? fallbackUrl;
   }
 
@@ -832,7 +1013,7 @@ class _ScheduleMapWidgetState extends State<ScheduleMapWidget> {
       gmaps.BitmapDescriptor.hueAzure,
     );
 
-    // Se houver officeMarkerUrl, tenta criar circular icon
+// Se houver officeMarkerUrl, tenta criar circular icon
     if (widget.officeMarkerUrl != null && widget.officeMarkerUrl!.isNotEmpty) {
       try {
         icon = await _createCircularIcon(
@@ -860,9 +1041,14 @@ class _ScheduleMapWidgetState extends State<ScheduleMapWidget> {
 
   /// Centraliza no office ou no 1o appointment
   void _recenterMap() {
+    if (_mapController == null) {
+      print('❌ Map controller not initialized yet, skipping map centering');
+      return;
+    }
+
     if (widget.officeLat != null && widget.officeLng != null) {
       final officePos = gmaps.LatLng(widget.officeLat!, widget.officeLng!);
-      _mapController.animateCamera(
+      _mapController!.animateCamera(
         gmaps.CameraUpdate.newLatLngZoom(officePos, 9.0),
       );
       return;
@@ -874,7 +1060,7 @@ class _ScheduleMapWidgetState extends State<ScheduleMapWidget> {
       );
       if (firstWithCoords.lat != null && firstWithCoords.lng != null) {
         final pos = gmaps.LatLng(firstWithCoords.lat!, firstWithCoords.lng!);
-        _mapController
+        _mapController!
             .animateCamera(gmaps.CameraUpdate.newLatLngZoom(pos, 9.0));
       }
     }
@@ -882,13 +1068,15 @@ class _ScheduleMapWidgetState extends State<ScheduleMapWidget> {
 
   /// Aplica estilo no onMapCreated
   void _applyMapStyle() {
+    if (_mapController == null) return;
+
     // Se 'mapStyleJson' foi passado, usar ele, senão usar o defaultDarkMapStyle
     final styleToUse =
         (widget.mapStyleJson != null && widget.mapStyleJson!.isNotEmpty)
             ? widget.mapStyleJson!
             : _defaultDarkMapStyle;
 
-    _mapController.setMapStyle(styleToUse).catchError((e) {
+    _mapController!.setMapStyle(styleToUse).catchError((e) {
       debugPrint('Erro ao aplicar map style: $e');
     });
   }
@@ -934,7 +1122,7 @@ class _ScheduleMapWidgetState extends State<ScheduleMapWidget> {
     return h;
   }
 
-  // Iniciar rastreamento em tempo real
+// Iniciar rastreamento em tempo real
   void _initLiveTracking() async {
     // Versão simplificada para evitar dependências
     try {
@@ -944,9 +1132,10 @@ class _ScheduleMapWidgetState extends State<ScheduleMapWidget> {
         permission = await Geolocator.requestPermission();
       }
 
-      // Configurar timer para atualizar a cada 30 segundos
+      // Configurar timer para atualizar a cada 60 segundos (ao invés de 30)
+      // para reduzir atualizações frequentes
       _locationUpdateTimer = Timer.periodic(
-        const Duration(seconds: 30),
+        const Duration(seconds: 60),
         (timer) => _updateTechnicianLocations(),
       );
     } catch (e) {
@@ -958,13 +1147,13 @@ class _ScheduleMapWidgetState extends State<ScheduleMapWidget> {
     _locationUpdateTimer?.cancel();
     _locationUpdateTimer = null;
 
-    // Simplificado
+// Simplificado
     FFAppState().update(() {
       FFAppState().locationTrackingState = false;
     });
   }
 
-  // Atualizar localizações dos técnicos
+// Atualizar localizações dos técnicos
   Future<void> _updateTechnicianLocations() async {
     try {
       await _updateCurrentLocationMarkerWithPhoto();
@@ -974,12 +1163,12 @@ class _ScheduleMapWidgetState extends State<ScheduleMapWidget> {
     }
   }
 
-  // Obter foto do usuário e atualizar marcador com ela
+// Obter foto do usuário e atualizar marcador com ela
   Future<void> _getUserPhotoAndUpdateMarker() async {
     await _updateCurrentLocationMarkerWithPhoto();
   }
 
-  // ADICIONE este método DENTRO da classe
+// ADICIONE este método DENTRO da classe
   Future<void> _fetchActiveTechnicians() async {
     try {
       // Buscar localizações de técnicos ativos (com dados recentes)
@@ -1052,8 +1241,8 @@ class _ScheduleMapWidgetState extends State<ScheduleMapWidget> {
     }
   }
 
-  // REMOVA a implementação existente de _updateCurrentLocationMarkerWithPhoto se houver
-  // e ADICIONE este método DENTRO da classe
+// REMOVA a implementação existente de _updateCurrentLocationMarkerWithPhoto se houver
+// e ADICIONE este método DENTRO da classe
   Future<void> _updateCurrentLocationMarkerWithPhoto() async {
     try {
       final position = await Geolocator.getCurrentPosition();
@@ -1131,7 +1320,7 @@ class _ScheduleMapWidgetState extends State<ScheduleMapWidget> {
     double initLat = 37.7749;
     double initLng = -122.4194;
 
-    // Ajusta lat/lng inicial
+// Ajusta lat/lng inicial
     if (_appointments.isNotEmpty) {
       final firstWithCoords = _appointments.firstWhere(
         (a) => a.lat != null && a.lng != null,
@@ -1327,7 +1516,7 @@ class _ScheduleMapWidgetState extends State<ScheduleMapWidget> {
     );
   }
 
-  // Método para alternar entre ligar e desligar o rastreamento
+// Método para alternar entre ligar e desligar o rastreamento
   void _toggleLiveTracking() {
     final newState = !FFAppState().locationTrackingState;
 
@@ -1354,40 +1543,25 @@ class _ScheduleMapWidgetState extends State<ScheduleMapWidget> {
         _markers = newMarkers;
       });
     }
-
-    // Exibir feedback para o usuário
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(
-          newState ? 'Location tracking enabled' : 'Location tracking disabled',
-          style: const TextStyle(color: Colors.white),
-        ),
-        backgroundColor: newState ? const Color(0xFF2797FF) : Colors.grey[700],
-        duration: const Duration(seconds: 2),
-        behavior: SnackBarBehavior.floating,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10),
-        ),
-      ),
-    );
   }
 
-  // Iniciar polling de novas work orders
+// Iniciar polling de novas work orders
   void _startWorkOrderPolling() {
     _workOrderPollingTimer?.cancel();
+    // Aumentar o intervalo para 3 minutos (180 segundos) para reduzir atualizações excessivas
     _workOrderPollingTimer = Timer.periodic(
-      Duration(seconds: widget.pollIntervalSeconds),
+      const Duration(seconds: 180),
       (_) => _fetchNewWorkOrders(),
     );
   }
 
-  // Parar polling de novas work orders
+// Parar polling de novas work orders
   void _stopWorkOrderPolling() {
     _workOrderPollingTimer?.cancel();
     _workOrderPollingTimer = null;
   }
 
-  // Modificar o método que carrega pins diretamente da URL para redimensionar para 36px
+// Modificar o método que carrega pins diretamente da URL para redimensionar para 36px
   Future<gmaps.BitmapDescriptor> _loadPinFromUrl(String url) async {
     try {
       print('🖼️ Loading pin image from: $url');
@@ -1424,12 +1598,12 @@ class _ScheduleMapWidgetState extends State<ScheduleMapWidget> {
     }
   }
 
-  // Modificar o método _fetchNewWorkOrders para usar o novo método de carregamento
+// Modificar o método _fetchNewWorkOrders para usar o novo método de carregamento
   Future<void> _fetchNewWorkOrders() async {
     try {
       print('🔍 Searching for new work orders...');
 
-      // Buscar ordens com status "New"
+// Buscar ordens com status "New"
       final response = await Supabase.instance.client
           .from('work_orders')
           .select('*')
@@ -1575,15 +1749,15 @@ class _ScheduleMapWidgetState extends State<ScheduleMapWidget> {
     }
   }
 
-  // Atualize também o método _createWorkOrderMarkerIcon para garantir consistência
+// Atualize também o método _createWorkOrderMarkerIcon para garantir consistência
   Future<gmaps.BitmapDescriptor> _createWorkOrderMarkerIcon() async {
-    // Simplificar para web
+// Simplificar para web
     if (kIsWeb) {
       return gmaps.BitmapDescriptor.defaultMarkerWithHue(
           gmaps.BitmapDescriptor.hueGreen);
     }
 
-    // Código existente para Mobile...
+// Código existente para Mobile...
     try {
       final String markerUrl = widget.newWorkOrderMarkerUrl ??
           'https://api.wmappliances.cloud/storage/v1/object/public/photos/stopNumbers/pinNewJob.png';
@@ -1604,7 +1778,7 @@ class _ScheduleMapWidgetState extends State<ScheduleMapWidget> {
     }
   }
 
-  // Adicionar uma verificação no método didChangeDependencies
+// Adicionar uma verificação no método didChangeDependencies
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
@@ -1612,7 +1786,7 @@ class _ScheduleMapWidgetState extends State<ScheduleMapWidget> {
     print('🔄 didChangeDependencies chamado');
     print('🔧 showNewWorkOrders = ${widget.showNewWorkOrders}');
 
-    // Forçar verificação
+// Forçar verificação
     Future.delayed(const Duration(seconds: 2), () {
       if (mounted && _mapController != null) {
         print('🔄 Atualizando dados após delay...');
@@ -1627,8 +1801,14 @@ class _ScheduleMapWidgetState extends State<ScheduleMapWidget> {
     });
   }
 
-  // Adicionar este método para lidar com taps em work orders
+// Adicionar este método para lidar com taps em work orders
   void _onTapWorkOrderMarker(Map<String, dynamic> workOrder) {
+    // Chamar a implementação existente
+    onTapWorkOrderMarker(workOrder);
+  }
+
+// Adicionar este método para lidar com taps em work orders
+  void onTapWorkOrderMarker(Map<String, dynamic> workOrder) {
     final gmaps.MarkerId markerId =
         gmaps.MarkerId('wo_${workOrder['work_order_id']}');
 
@@ -1718,7 +1898,7 @@ class _ScheduleMapWidgetState extends State<ScheduleMapWidget> {
                                 ),
                               ),
                               const SizedBox(height: 4),
-                              // Verificar se items é uma lista, string ou null
+                              // Usar o método melhorado para exibir os eletrodomésticos
                               _buildAppliancesList(workOrder['items']),
                             ],
                           ),
@@ -1730,11 +1910,13 @@ class _ScheduleMapWidgetState extends State<ScheduleMapWidget> {
                             // Fechar o bottomsheet
                             Navigator.pop(sheetCtx);
 
-                            // Navegar para a página workOrder com a row do Supabase como parâmetro
+                            // Navegar para a página workOrder com apenas o workOrderId como parâmetro
                             context.pushNamed(
                               'workOrder',
                               queryParameters: {
-                                'workOrderRow': json.encode(workOrder),
+                                'workOrderId':
+                                    workOrder['work_order_id']?.toString() ??
+                                        '',
                               },
                             );
                           },
@@ -1748,7 +1930,7 @@ class _ScheduleMapWidgetState extends State<ScheduleMapWidget> {
                         ElevatedButton(
                           onPressed: () {
                             // Fechar o InfoWindow do marcador
-                            _mapController.hideMarkerInfoWindow(markerId);
+                            _mapController?.hideMarkerInfoWindow(markerId);
 
                             // Fechar o BottomSheet
                             Navigator.pop(sheetCtx);
@@ -1771,86 +1953,13 @@ class _ScheduleMapWidgetState extends State<ScheduleMapWidget> {
       routeSettings: const RouteSettings(name: 'workOrderBottomSheet'),
     ).then((_) {
       // Fechar o InfoWindow quando o BottomSheet for fechado
-      _mapController.hideMarkerInfoWindow(markerId);
+      _mapController?.hideMarkerInfoWindow(markerId);
     });
   }
 
-  // Método auxiliar para construir a lista de appliances
-  Widget _buildAppliancesList(dynamic items) {
-    if (items == null) {
-      return const Text(
-        'No appliances found',
-        style: TextStyle(color: Colors.white70, fontStyle: FontStyle.italic),
-      );
-    }
-
-    List<String> applianceList = [];
-
-    // Converter para lista de strings, independente do formato original
-    if (items is List) {
-      applianceList = items.map((item) => item.toString()).toList();
-    } else if (items is String) {
-      try {
-        // Tentar converter se for JSON
-        final decoded = json.decode(items);
-        if (decoded is List) {
-          applianceList = decoded.map((item) => item.toString()).toList();
-        } else {
-          // Se não for lista, adicionar como item único
-          applianceList = [items];
-        }
-      } catch (e) {
-        // Se não for JSON, adicionar como item único
-        applianceList = [items];
-      }
-    }
-
-    if (applianceList.isEmpty) {
-      return const Text(
-        'No appliances found',
-        style: TextStyle(color: Colors.white70, fontStyle: FontStyle.italic),
-      );
-    }
-
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: applianceList
-          .map((appliance) => Row(
-                children: [
-                  const Text(
-                    '• ',
-                    style: TextStyle(color: Colors.white),
-                  ),
-                  Expanded(
-                    child: Text(
-                      appliance,
-                      style: const TextStyle(
-                        color: Colors.white70,
-                      ),
-                    ),
-                  ),
-                ],
-              ))
-          .toList(),
-    );
-  }
-
-  // Método para centralizar nos marcadores também traduzido
+// Método para centralizar nos marcadores também traduzido
   void _focusOnWorkOrderMarkers() {
-    if (_newWorkOrders.isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text(
-            'No work orders to display',
-            style: TextStyle(color: Colors.white),
-          ),
-          backgroundColor: Colors.orange,
-          duration: Duration(seconds: 2),
-          behavior: SnackBarBehavior.floating,
-        ),
-      );
-      return;
-    }
+    if (_mapController == null || _newWorkOrders.isEmpty) return;
 
     // Criar bounds para incluir todos os marcadores de work orders
     List<gmaps.LatLng> points = [];
@@ -1864,20 +1973,7 @@ class _ScheduleMapWidgetState extends State<ScheduleMapWidget> {
       }
     }
 
-    if (points.isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text(
-            'No valid coordinates to display',
-            style: TextStyle(color: Colors.white),
-          ),
-          backgroundColor: Colors.red,
-          duration: Duration(seconds: 2),
-          behavior: SnackBarBehavior.floating,
-        ),
-      );
-      return;
-    }
+    if (points.isEmpty) return;
 
     // Encontrar os limites (bounds)
     double minLat = points.first.latitude;
@@ -1899,42 +1995,19 @@ class _ScheduleMapWidgetState extends State<ScheduleMapWidget> {
     );
 
     // Animar o mapa para mostrar todas as work orders
-    _mapController.animateCamera(
+    _mapController!.animateCamera(
       gmaps.CameraUpdate.newLatLngBounds(bounds, 50.0),
-    );
-
-    // Feedback
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(
-          'Showing ${points.length} work orders',
-          style: const TextStyle(color: Colors.white),
-        ),
-        backgroundColor: Colors.green,
-        duration: const Duration(seconds: 2),
-        behavior: SnackBarBehavior.floating,
-      ),
     );
   }
 
-  // Método para busca manual com feedback visual
+// Método para busca manual com feedback visual
   Future<void> _manualFetchNewWorkOrders() async {
-    // Evitar consultas duplicadas
+// Evitar consultas duplicadas
     if (_isCurrentlyFetching) return;
     _isCurrentlyFetching = true;
 
     try {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text(
-            'Searching for new work orders...',
-            style: TextStyle(color: Colors.white),
-          ),
-          backgroundColor: Colors.orange,
-          duration: Duration(seconds: 1),
-          behavior: SnackBarBehavior.floating,
-        ),
-      );
+      // Removido: SnackBar de busca
 
       // Realizar consulta explícita à tabela work_orders
       final response = await Supabase.instance.client
@@ -1969,60 +2042,336 @@ class _ScheduleMapWidgetState extends State<ScheduleMapWidget> {
           _focusOnWorkOrderMarkers();
         }
 
-        // Feedback de sucesso
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(
-              'Found and displayed ${response.length} new work orders on the map',
-              style: const TextStyle(color: Colors.white),
-            ),
-            backgroundColor: Colors.green,
-            duration: const Duration(seconds: 3),
-            behavior: SnackBarBehavior.floating,
-          ),
-        );
+        // Removido: SnackBar de sucesso
       } else {
-        // Feedback caso não encontre resultados
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text(
-              'No new work orders found',
-              style: TextStyle(color: Colors.white),
-            ),
-            backgroundColor: Colors.red,
-            duration: Duration(seconds: 3),
-            behavior: SnackBarBehavior.floating,
-          ),
-        );
+        // Removido: SnackBar de não encontrado
       }
     } catch (e) {
-      // Tratamento de erro
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(
-            'Error fetching orders: $e',
-            style: const TextStyle(color: Colors.white),
-          ),
-          backgroundColor: Colors.red,
-          duration: const Duration(seconds: 5),
-          behavior: SnackBarBehavior.floating,
-        ),
-      );
+      // Removido: SnackBar de erro
+      print('❌ ERROR fetching work orders: $e');
     } finally {
       _isCurrentlyFetching = false;
+    }
+  }
+
+// Método auxiliar para construir a lista de appliances
+  Widget _buildAppliancesList(dynamic appliances) {
+    try {
+      // Verificar entrada vazia
+      if (appliances == null) {
+        return const Text('No appliances found',
+            style: const TextStyle(color: Colors.white));
+      }
+
+      // Converter para lista de Map<String, dynamic>
+      List<Map<String, dynamic>> appliancesList = [];
+
+      if (appliances is List) {
+        // Processar cada item da lista
+        for (var item in appliances) {
+          if (item is Map<String, dynamic>) {
+            // Já é um mapa, adicionar diretamente
+            appliancesList.add(item);
+          } else if (item is String) {
+            // Processar string JSON
+            try {
+              // Remover aspas extras se necessário e tentar várias abordagens
+              String processedString = item;
+
+              // Registrar o formato original para debug
+              print('Original JSON string: $item');
+
+              // Verificar se tem aspas extras no início e fim
+              if (item.startsWith('"') && item.endsWith('"')) {
+                processedString = item.substring(1, item.length - 1);
+                print('Removed outer quotes: $processedString');
+              }
+
+              // Remover escapes de aspas extras
+              if (processedString.contains('\\\"')) {
+                processedString = processedString.replaceAll('\\\"', '\"');
+                print('Replaced \\\" with \": $processedString');
+              }
+
+              // Remover escapes duplos
+              if (processedString.contains('\\\\')) {
+                processedString = processedString.replaceAll('\\\\', '\\');
+                print('Replaced \\\\ with \\: $processedString');
+              }
+
+              // Tentar decodificar o JSON
+              try {
+                final decoded = json.decode(processedString);
+                if (decoded is Map<String, dynamic>) {
+                  appliancesList.add(decoded);
+                  print('Successfully decoded as JSON object');
+                } else {
+                  // Se não for um mapa, tentar decodificar novamente se for string
+                  if (decoded is String) {
+                    try {
+                      final innerDecoded = json.decode(decoded);
+                      if (innerDecoded is Map<String, dynamic>) {
+                        appliancesList.add(innerDecoded);
+                        print('Successfully decoded inner JSON string');
+                      } else {
+                        appliancesList.add({'itemName': item});
+                      }
+                    } catch (e) {
+                      print('Failed to parse inner JSON: $e');
+                      appliancesList.add({'itemName': item});
+                    }
+                  } else {
+                    appliancesList.add({'itemName': item});
+                  }
+                }
+              } catch (e) {
+                print('Failed to parse JSON after cleaning: $e');
+
+                // Tentar extrair com regex como último recurso
+                final regex = RegExp(
+                    r'"brand":\s*"([^"]*)".*?"model":\s*"([^"]*)".*?"problem":\s*"([^"]*)".*?"itemName":\s*"([^"]*)".*?"location":\s*([^,}]*)');
+                final match = regex.firstMatch(processedString);
+                if (match != null) {
+                  final brand = match.group(1) ?? 'N/A';
+                  final model = match.group(2) ?? 'N/A';
+                  final problem = match.group(3) ?? 'N/A';
+                  final itemName = match.group(4) ?? 'N/A';
+                  final location = match.group(5)?.trim() == 'null'
+                      ? 'N/A'
+                      : (match.group(5) ?? 'N/A');
+
+                  print('Extracted using regex: brand=$brand, model=$model');
+                  appliancesList.add({
+                    'brand': brand,
+                    'model': model,
+                    'problem': problem,
+                    'itemName': itemName,
+                    'location': location,
+                  });
+                } else {
+                  appliancesList.add({'itemName': item});
+                }
+              }
+            } catch (e) {
+              print('Error processing string: $e');
+              appliancesList.add({'itemName': item});
+            }
+          } else {
+            // Outro tipo, usar toString()
+            appliancesList.add({'itemName': item.toString()});
+          }
+        }
+      } else if (appliances is Map<String, dynamic>) {
+        // Um único mapa
+        appliancesList.add(appliances);
+      } else if (appliances is String) {
+        // Tentar processar uma string única
+        try {
+          final decoded = json.decode(appliances);
+          if (decoded is List) {
+            // É uma lista JSON
+            for (var item in decoded) {
+              if (item is Map<String, dynamic>) {
+                appliancesList.add(item);
+              } else {
+                appliancesList.add({'itemName': item.toString()});
+              }
+            }
+          } else if (decoded is Map<String, dynamic>) {
+            // É um objeto JSON único
+            appliancesList.add(decoded);
+          } else {
+            appliancesList.add({'itemName': appliances});
+          }
+        } catch (e) {
+          // Não é JSON válido
+          appliancesList.add({'itemName': appliances});
+        }
+      } else {
+        // Tipo desconhecido
+        return Text('Error processing appliance list: unexpected format',
+            style: const TextStyle(color: Colors.red));
+      }
+
+      // Se não tiver aparelhos
+      if (appliancesList.isEmpty) {
+        return const Text('No appliances found',
+            style: const TextStyle(color: Colors.white));
+      }
+
+      // Construir a UI
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: appliancesList.map((appliance) {
+          // Extrair valores com fallbacks
+          final String itemName = appliance['itemName']?.toString() ?? 'N/A';
+          final String brand = appliance['brand']?.toString() ?? 'N/A';
+          final String model = appliance['model']?.toString() ?? 'N/A';
+          final String problem = appliance['problem']?.toString() ?? 'N/A';
+          final String location = appliance['location']?.toString() == 'null'
+              ? 'N/A'
+              : (appliance['location']?.toString() ?? 'N/A');
+
+          // Card do aparelho
+          return Container(
+            margin: const EdgeInsets.only(bottom: 8),
+            padding: const EdgeInsets.all(12),
+            decoration: BoxDecoration(
+              color: Colors.black45,
+              borderRadius: BorderRadius.circular(8),
+              border: Border.all(color: Colors.grey.shade800),
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // Nome do item em destaque
+                Text(
+                  itemName,
+                  style: const TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 15,
+                    color: Colors.white,
+                  ),
+                ),
+                const SizedBox(height: 6),
+
+                // Detalhes em duas colunas
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    // Coluna da esquerda
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text('Brand: $brand',
+                              style: const TextStyle(color: Colors.white70)),
+                          const SizedBox(height: 2),
+                          Text('Problem: $problem',
+                              style: const TextStyle(color: Colors.white70)),
+                        ],
+                      ),
+                    ),
+                    // Coluna da direita
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text('Model: $model',
+                              style: const TextStyle(color: Colors.white70)),
+                          const SizedBox(height: 2),
+                          Text('Location: $location',
+                              style: const TextStyle(color: Colors.white70)),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          );
+        }).toList(),
+      );
+    } catch (e) {
+      print('Error in _buildAppliancesList: $e');
+      return Text('Error processing appliance list: $e',
+          style: const TextStyle(color: Colors.red));
+    }
+  }
+
+// Método para processar strings JSON em diferentes formatos
+  Map<String, dynamic> _processJsonString(String item) {
+    try {
+      // Registrar o formato original para debug
+      print('Original JSON string: $item');
+
+      // Remover aspas extras se necessário e tentar várias abordagens
+      String processedString = item;
+
+      // Verificar se tem aspas extras no início e fim
+      if (item.startsWith('"') && item.endsWith('"')) {
+        processedString = item.substring(1, item.length - 1);
+        print('Removed outer quotes: $processedString');
+      }
+
+      // Remover escapes de aspas extras
+      if (processedString.contains('\\\"')) {
+        processedString = processedString.replaceAll('\\\"', '\"');
+        print('Replaced \\\" with \": $processedString');
+      }
+
+      // Remover escapes duplos
+      if (processedString.contains('\\\\')) {
+        processedString = processedString.replaceAll('\\\\', '\\');
+        print('Replaced \\\\ with \\: $processedString');
+      }
+
+      // Tentar decodificar o JSON
+      try {
+        final decoded = json.decode(processedString);
+        if (decoded is Map<String, dynamic>) {
+          print('Successfully decoded as JSON object');
+          return decoded;
+        } else {
+          // Se não for um mapa, tentar decodificar novamente se for string
+          if (decoded is String) {
+            try {
+              final innerDecoded = json.decode(decoded);
+              if (innerDecoded is Map<String, dynamic>) {
+                print('Successfully decoded inner JSON string');
+                return innerDecoded;
+              }
+            } catch (e) {
+              print('Failed to parse inner JSON: $e');
+              return {'itemName': item};
+            }
+          }
+        }
+      } catch (e) {
+        print('Failed to parse JSON after cleaning: $e');
+
+        // Última tentativa: usar regex para extrair campos
+        final regex = RegExp(
+            r'"brand":\s*"([^"]*)".*?"model":\s*"([^"]*)".*?"problem":\s*"([^"]*)".*?"itemName":\s*"([^"]*)".*?"location":\s*([^,}]*)');
+        final match = regex.firstMatch(processedString);
+        if (match != null) {
+          final brand = match.group(1) ?? 'N/A';
+          final model = match.group(2) ?? 'N/A';
+          final problem = match.group(3) ?? 'N/A';
+          final itemName = match.group(4) ?? 'N/A';
+          final location = match.group(5)?.trim() == 'null'
+              ? 'N/A'
+              : (match.group(5) ?? 'N/A');
+
+          print('Extracted using regex: brand=$brand, model=$model');
+          return {
+            'brand': brand,
+            'model': model,
+            'problem': problem,
+            'itemName': itemName,
+            'location': location,
+          };
+        }
+      }
+
+      // Fallback se tudo falhar
+      return {'itemName': item};
+    } catch (e) {
+      print('Error processing string: $e');
+      return {'itemName': item};
     }
   }
 }
 
 Future<bool> initializeLocationTracking() async {
   try {
-    // Verificar se o serviço de localização está ativo
+// Verificar se o serviço de localização está ativo
     bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
     if (!serviceEnabled) {
       return false;
     }
 
-    // Verificar permissões
+// Verificar permissões
     LocationPermission permission = await Geolocator.checkPermission();
     if (permission == LocationPermission.denied) {
       permission = await Geolocator.requestPermission();
@@ -2035,12 +2384,12 @@ Future<bool> initializeLocationTracking() async {
       return false;
     }
 
-    // Atualizar o estado do rastreamento
+// Atualizar o estado do rastreamento
     FFAppState().update(() {
       FFAppState().locationTrackingState = true;
     });
 
-    // Obter posição atual e atualizar no AppState
+// Obter posição atual e atualizar no AppState
     Position position = await Geolocator.getCurrentPosition();
     FFAppState().update(() {
       FFAppState().currentLocation = LatLng(
@@ -2049,7 +2398,7 @@ Future<bool> initializeLocationTracking() async {
       );
     });
 
-    // Opcional: Salvar no banco de dados
+// Opcional: Salvar no banco de dados
     final currentUser = Supabase.instance.client.auth.currentUser;
     if (currentUser != null) {
       await Supabase.instance.client.from('technician_locations').upsert({
@@ -2070,18 +2419,18 @@ Future<bool> initializeLocationTracking() async {
 
 Future<bool> updateCurrentLocation() async {
   try {
-    // Verificar se o serviço de localização está ativo
+// Verificar se o serviço de localização está ativo
     bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
     if (!serviceEnabled) {
       return false;
     }
 
-    // Obter localização atual
+// Obter localização atual
     final position = await Geolocator.getCurrentPosition(
       desiredAccuracy: LocationAccuracy.high,
     );
 
-    // Atualizar no AppState
+// Atualizar no AppState
     FFAppState().update(() {
       FFAppState().currentLocation = LatLng(
         position.latitude,
@@ -2089,7 +2438,7 @@ Future<bool> updateCurrentLocation() async {
       );
     });
 
-    // Opcional: Atualizar na base de dados
+// Opcional: Atualizar na base de dados
     if (FFAppState().locationTrackingState) {
       final currentUser = Supabase.instance.client.auth.currentUser;
       if (currentUser != null) {
@@ -2116,13 +2465,13 @@ Future<gmaps.BitmapDescriptor> _createCurrentLocationIcon({
   int innerCircleSize = 40,
   Color? color,
 }) async {
-  // Usar ícone padrão na compilação web para reduzir complexidade
+// Usar ícone padrão na compilação web para reduzir complexidade
   if (kIsWeb) {
     return gmaps.BitmapDescriptor.defaultMarkerWithHue(
         color != null ? _colorToHue(color) : gmaps.BitmapDescriptor.hueAzure);
   }
 
-  // Implementação existente para outras plataformas
+// Implementação existente para outras plataformas
   final recorder = ui.PictureRecorder();
   final canvas = ui.Canvas(recorder);
   final paint = ui.Paint()..isAntiAlias = true;

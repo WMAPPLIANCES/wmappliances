@@ -191,6 +191,10 @@ class FFAppState extends ChangeNotifier {
               }).toList() ??
               _newWorkOrdersList;
     });
+    await _safeInitAsync(() async {
+      _numColMobile =
+          await secureStorage.getInt('ff_numColMobile') ?? _numColMobile;
+    });
   }
 
   void update(VoidCallback callback) {
@@ -1033,6 +1037,17 @@ class FFAppState extends ChangeNotifier {
     newWorkOrdersList.insert(index, value);
     secureStorage.setStringList('ff_newWorkOrdersList',
         _newWorkOrdersList.map((x) => jsonEncode(x)).toList());
+  }
+
+  int _numColMobile = 2;
+  int get numColMobile => _numColMobile;
+  set numColMobile(int value) {
+    _numColMobile = value;
+    secureStorage.setInt('ff_numColMobile', value);
+  }
+
+  void deleteNumColMobile() {
+    secureStorage.delete(key: 'ff_numColMobile');
   }
 }
 

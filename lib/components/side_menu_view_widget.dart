@@ -376,7 +376,7 @@ class _SideMenuViewWidgetState extends State<SideMenuViewWidget> {
                           highlightColor: Colors.transparent,
                           onTap: () async {
                             context.pushNamed(
-                              WorkOderSearchWidget.routeName,
+                              WorkOrderSearchWidget.routeName,
                               extra: <String, dynamic>{
                                 kTransitionInfoKey: TransitionInfo(
                                   hasTransition: true,
@@ -621,7 +621,8 @@ class _SideMenuViewWidgetState extends State<SideMenuViewWidget> {
                         ),
                       if ((FFAppState().userRole == 'admin') ||
                           (FFAppState().userRole == 'office_manager') ||
-                          (FFAppState().userRole == 'manager'))
+                          (FFAppState().userRole == 'manager') ||
+                          (FFAppState().userRole == 'technician'))
                         MouseRegion(
                           opaque: false,
                           cursor: MouseCursor.defer ?? MouseCursor.defer,
@@ -911,95 +912,101 @@ class _SideMenuViewWidgetState extends State<SideMenuViewWidget> {
                       MouseRegion(
                         opaque: false,
                         cursor: MouseCursor.defer ?? MouseCursor.defer,
-                        child: InkWell(
-                          splashColor: Colors.transparent,
-                          focusColor: Colors.transparent,
-                          hoverColor: Colors.transparent,
-                          highlightColor: Colors.transparent,
-                          onTap: () async {
-                            context.pushNamed(
-                              WebSearchWidget.routeName,
-                              extra: <String, dynamic>{
-                                kTransitionInfoKey: TransitionInfo(
-                                  hasTransition: true,
-                                  transitionType: PageTransitionType.fade,
-                                  duration: Duration(milliseconds: 0),
-                                ),
-                              },
-                            );
-                          },
-                          child: Container(
-                            width: double.infinity,
-                            decoration: BoxDecoration(
-                              color: _model.itenHoverHovered9
-                                  ? FlutterFlowTheme.of(context).alternate
-                                  : Color(0x00000000),
-                              borderRadius: BorderRadius.circular(8.0),
-                            ),
-                            child: Padding(
-                              padding: EdgeInsetsDirectional.fromSTEB(
-                                  valueOrDefault<double>(
-                                    _model.paddingItem,
-                                    0.0,
+                        child: Visibility(
+                          visible: FFAppState().userRole == 'admin',
+                          child: InkWell(
+                            splashColor: Colors.transparent,
+                            focusColor: Colors.transparent,
+                            hoverColor: Colors.transparent,
+                            highlightColor: Colors.transparent,
+                            onTap: () async {
+                              context.pushNamed(
+                                WebSearchWidget.routeName,
+                                extra: <String, dynamic>{
+                                  kTransitionInfoKey: TransitionInfo(
+                                    hasTransition: true,
+                                    transitionType: PageTransitionType.fade,
+                                    duration: Duration(milliseconds: 0),
                                   ),
-                                  valueOrDefault<double>(
-                                    _model.paddingItem / 2,
-                                    0.0,
-                                  ),
-                                  valueOrDefault<double>(
-                                    _model.paddingItem,
-                                    0.0,
-                                  ),
-                                  valueOrDefault<double>(
-                                    _model.paddingItem / 2,
-                                    0.0,
-                                  )),
-                              child: Row(
-                                mainAxisSize: MainAxisSize.min,
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  FaIcon(
-                                    FontAwesomeIcons.internetExplorer,
-                                    color: FlutterFlowTheme.of(context).primary,
-                                    size: 24.0,
-                                  ),
-                                  Expanded(
-                                    child: InkWell(
-                                      splashColor: Colors.transparent,
-                                      focusColor: Colors.transparent,
-                                      hoverColor: Colors.transparent,
-                                      highlightColor: Colors.transparent,
-                                      onTap: () async {
-                                        context.pushNamed(
-                                          WebSearchWidget.routeName,
-                                          extra: <String, dynamic>{
-                                            kTransitionInfoKey: TransitionInfo(
-                                              hasTransition: true,
-                                              transitionType:
-                                                  PageTransitionType.fade,
-                                              duration:
-                                                  Duration(milliseconds: 0),
+                                },
+                              );
+                            },
+                            child: Container(
+                              width: double.infinity,
+                              decoration: BoxDecoration(
+                                color: _model.itenHoverHovered9
+                                    ? FlutterFlowTheme.of(context).alternate
+                                    : Color(0x00000000),
+                                borderRadius: BorderRadius.circular(8.0),
+                              ),
+                              child: Padding(
+                                padding: EdgeInsetsDirectional.fromSTEB(
+                                    valueOrDefault<double>(
+                                      _model.paddingItem,
+                                      0.0,
+                                    ),
+                                    valueOrDefault<double>(
+                                      _model.paddingItem / 2,
+                                      0.0,
+                                    ),
+                                    valueOrDefault<double>(
+                                      _model.paddingItem,
+                                      0.0,
+                                    ),
+                                    valueOrDefault<double>(
+                                      _model.paddingItem / 2,
+                                      0.0,
+                                    )),
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    FaIcon(
+                                      FontAwesomeIcons.internetExplorer,
+                                      color:
+                                          FlutterFlowTheme.of(context).primary,
+                                      size: 24.0,
+                                    ),
+                                    Expanded(
+                                      child: InkWell(
+                                        splashColor: Colors.transparent,
+                                        focusColor: Colors.transparent,
+                                        hoverColor: Colors.transparent,
+                                        highlightColor: Colors.transparent,
+                                        onTap: () async {
+                                          context.pushNamed(
+                                            WebSearchWidget.routeName,
+                                            extra: <String, dynamic>{
+                                              kTransitionInfoKey:
+                                                  TransitionInfo(
+                                                hasTransition: true,
+                                                transitionType:
+                                                    PageTransitionType.fade,
+                                                duration:
+                                                    Duration(milliseconds: 0),
+                                              ),
+                                            },
+                                          );
+                                        },
+                                        child: Row(
+                                          mainAxisSize: MainAxisSize.max,
+                                          children: [
+                                            Text(
+                                              'Search',
+                                              style:
+                                                  FlutterFlowTheme.of(context)
+                                                      .bodyLarge
+                                                      .override(
+                                                        fontFamily: 'Manrope',
+                                                        letterSpacing: 0.0,
+                                                      ),
                                             ),
-                                          },
-                                        );
-                                      },
-                                      child: Row(
-                                        mainAxisSize: MainAxisSize.max,
-                                        children: [
-                                          Text(
-                                            'Search',
-                                            style: FlutterFlowTheme.of(context)
-                                                .bodyLarge
-                                                .override(
-                                                  fontFamily: 'Manrope',
-                                                  letterSpacing: 0.0,
-                                                ),
-                                          ),
-                                        ],
+                                          ],
+                                        ),
                                       ),
                                     ),
-                                  ),
-                                ].divide(SizedBox(width: _model.paddingItem)),
+                                  ].divide(SizedBox(width: _model.paddingItem)),
+                                ),
                               ),
                             ),
                           ),

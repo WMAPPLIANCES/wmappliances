@@ -12,6 +12,7 @@ import '/stock_page/print_stock_parts/print_stock_parts_widget.dart';
 import '/custom_code/actions/index.dart' as actions;
 import '/custom_code/widgets/index.dart' as custom_widgets;
 import '/flutter_flow/custom_functions.dart' as functions;
+import '/index.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -446,16 +447,26 @@ class _DashboardTechnicianWidgetState extends State<DashboardTechnicianWidget> {
                                                                         icon:
                                                                             Icon(
                                                                           Icons
-                                                                              .settings_outlined,
+                                                                              .shelves,
                                                                           color:
                                                                               FlutterFlowTheme.of(context).primaryText,
                                                                           size:
                                                                               24.0,
                                                                         ),
                                                                         onPressed:
-                                                                            () {
-                                                                          print(
-                                                                              'IconButton pressed ...');
+                                                                            () async {
+                                                                          context
+                                                                              .pushNamed(
+                                                                            PagePartStockMobileWidget.routeName,
+                                                                            extra: <String,
+                                                                                dynamic>{
+                                                                              kTransitionInfoKey: TransitionInfo(
+                                                                                hasTransition: true,
+                                                                                transitionType: PageTransitionType.fade,
+                                                                                duration: Duration(milliseconds: 0),
+                                                                              ),
+                                                                            },
+                                                                          );
                                                                         },
                                                                       ),
                                                                     ),

@@ -47,9 +47,11 @@ export '/computer_office/qr_page_office/qr_page_office_widget.dart'
     show QrPageOfficeWidget;
 export '/delivery/delivery_parts_arrived_page/delivery_parts_arrived_page_widget.dart'
     show DeliveryPartsArrivedPageWidget;
-export '/dashboards/work_oder_search/work_oder_search_widget.dart'
-    show WorkOderSearchWidget;
+export '/dashboards/work_order_search/work_order_search_widget.dart'
+    show WorkOrderSearchWidget;
 export '/tradutor/tradutor_widget.dart' show TradutorWidget;
 export '/appointment_today_view/appointment_today_view_widget.dart'
     show AppointmentTodayViewWidget;
 export '/maps_not_user/maps_not_user_widget.dart' show MapsNotUserWidget;
+export '/stock_page/page_part_stock_mobile/page_part_stock_mobile_widget.dart'
+    show PagePartStockMobileWidget;

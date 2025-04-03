@@ -1,4 +1,5 @@
 import '/backend/supabase/supabase.dart';
+import '/components/appointment_sugested_time_component_widget.dart';
 import '/components/side_menu_view_widget.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/form_field_controller.dart';
@@ -71,8 +72,14 @@ class WorkOrderModel extends FlutterFlowModel<WorkOrderWidget> {
 
   String technicianColor = '#2797FF';
 
+  bool applianceRequested = false;
+
+  bool showAppointmentRequested = false;
+
   ///  State fields for stateful widgets in this page.
 
+  // Stores action output result for [Backend Call - Query Rows] action in workOrder widget.
+  List<WorkOrdersRow>? workOrderQueryOnPage;
   // Stores action output result for [Backend Call - Query Rows] action in workOrder widget.
   List<WorkOrdersRow>? queryPreviusJob;
   // Model for sideMenuView component.
@@ -81,6 +88,13 @@ class WorkOrderModel extends FlutterFlowModel<WorkOrderWidget> {
   bool? switchValue1;
   // State field(s) for Switch widget.
   bool? switchValue2;
+  // State field(s) for Switch widget.
+  bool? switchValue3;
+  // State field(s) for Switch widget.
+  bool? switchValue4;
+  // Model for appointmentSugestedTimeComponent component.
+  late AppointmentSugestedTimeComponentModel
+      appointmentSugestedTimeComponentModel;
   // State field(s) for SwitchListTile widget.
   bool? switchListTileValue1;
   // State field(s) for SwitchListTile widget.
@@ -115,25 +129,28 @@ class WorkOrderModel extends FlutterFlowModel<WorkOrderWidget> {
   TextEditingController? textController1;
   String? Function(BuildContext, String?)? textController1Validator;
   // State field(s) for Switch widget.
-  bool? switchValue3;
+  bool? switchValue5;
   // State field(s) for AddNoteDispatch widget.
   FocusNode? addNoteDispatchFocusNode;
   TextEditingController? addNoteDispatchTextController;
   String? Function(BuildContext, String?)?
       addNoteDispatchTextControllerValidator;
   // State field(s) for Switch widget.
-  bool? switchValue4;
+  bool? switchValue6;
   // Stores action output result for [Backend Call - Insert Row] action in Button widget.
   NotesDispatchRow? disptchnotes;
 
   @override
   void initState(BuildContext context) {
     sideMenuViewModel = createModel(context, () => SideMenuViewModel());
+    appointmentSugestedTimeComponentModel =
+        createModel(context, () => AppointmentSugestedTimeComponentModel());
   }
 
   @override
   void dispose() {
     sideMenuViewModel.dispose();
+    appointmentSugestedTimeComponentModel.dispose();
     textFieldFocusNode?.dispose();
     textController1?.dispose();
 

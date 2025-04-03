@@ -67,8 +67,8 @@ class AppointmentsRow extends SupabaseDataRow {
   String? get clientName => getField<String>('client_name');
   set clientName(String? value) => setField<String>('client_name', value);
 
-  List<String> get items => getListField<String>('items');
-  set items(List<String>? value) => setListField<String>('items', value);
+  List<dynamic> get items => getListField<dynamic>('items');
+  set items(List<dynamic>? value) => setListField<dynamic>('items', value);
 
   DateTime? get appointmentDate => getField<DateTime>('appointment_date');
   set appointmentDate(DateTime? value) =>
@@ -101,4 +101,8 @@ class AppointmentsRow extends SupabaseDataRow {
 
   String? get scheduleId => getField<String>('schedule_id');
   set scheduleId(String? value) => setField<String>('schedule_id', value);
+
+  List<dynamic> get itemsView => getListField<dynamic>('items_view');
+  set itemsView(List<dynamic>? value) =>
+      setListField<dynamic>('items_view', value);
 }

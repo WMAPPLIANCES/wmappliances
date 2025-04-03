@@ -1,10 +1,10 @@
 import '/backend/supabase/supabase.dart';
-import '/flutter_flow/flutter_flow_google_map.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
-import '/flutter_flow/custom_functions.dart' as functions;
+import '/custom_code/widgets/index.dart' as custom_widgets;
 import '/index.dart';
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:webviewx_plus/webviewx_plus.dart';
 import 'list_appointment_view_model.dart';
 export 'list_appointment_view_model.dart';
@@ -25,8 +25,6 @@ class ListAppointmentViewWidget extends StatefulWidget {
 class _ListAppointmentViewWidgetState extends State<ListAppointmentViewWidget> {
   late ListAppointmentViewModel _model;
 
-  LatLng? currentUserLocationValue;
-
   @override
   void setState(VoidCallback callback) {
     super.setState(callback);
@@ -38,8 +36,6 @@ class _ListAppointmentViewWidgetState extends State<ListAppointmentViewWidget> {
     super.initState();
     _model = createModel(context, () => ListAppointmentViewModel());
 
-    getCurrentUserLocation(defaultLocation: LatLng(0.0, 0.0), cached: true)
-        .then((loc) => safeSetState(() => currentUserLocationValue = loc));
     WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
@@ -52,23 +48,6 @@ class _ListAppointmentViewWidgetState extends State<ListAppointmentViewWidget> {
 
   @override
   Widget build(BuildContext context) {
-    if (currentUserLocationValue == null) {
-      return Container(
-        color: FlutterFlowTheme.of(context).primaryBackground,
-        child: Center(
-          child: SizedBox(
-            width: 50.0,
-            height: 50.0,
-            child: CircularProgressIndicator(
-              valueColor: AlwaysStoppedAnimation<Color>(
-                FlutterFlowTheme.of(context).primary,
-              ),
-            ),
-          ),
-        ),
-      );
-    }
-
     return Padding(
       padding: EdgeInsetsDirectional.fromSTEB(12.0, 4.0, 12.0, 4.0),
       child: Container(
@@ -557,50 +536,33 @@ class _ListAppointmentViewWidgetState extends State<ListAppointmentViewWidget> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      'Item',
+                                      'Number of Items Requested  ${widget.scheduleParamt?.items.length.toString()}',
                                       style: FlutterFlowTheme.of(context)
                                           .bodySmall
                                           .override(
                                             fontFamily: 'Manrope',
                                             color: FlutterFlowTheme.of(context)
                                                 .secondaryText,
+                                            fontSize: 14.0,
                                             letterSpacing: 0.0,
                                           ),
                                     ),
-                                    Builder(
-                                      builder: (context) {
-                                        final items = widget
-                                                .scheduleParamt?.items
-                                                .toList() ??
-                                            [];
-
-                                        return Column(
-                                          mainAxisSize: MainAxisSize.max,
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: List.generate(items.length,
-                                              (itemsIndex) {
-                                            final itemsItem = items[itemsIndex];
-                                            return Padding(
-                                              padding: EdgeInsetsDirectional
-                                                  .fromSTEB(0.0, 0.0, 0.0, 1.0),
-                                              child: Text(
-                                                valueOrDefault<String>(
-                                                  itemsItem,
-                                                  'itens',
-                                                ),
-                                                style:
-                                                    FlutterFlowTheme.of(context)
-                                                        .bodyMedium
-                                                        .override(
-                                                          fontFamily: 'Manrope',
-                                                          letterSpacing: 0.0,
-                                                        ),
-                                              ),
-                                            );
-                                          }),
-                                        );
-                                      },
+                                    Column(
+                                      mainAxisSize: MainAxisSize.max,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Container(
+                                          width: double.infinity,
+                                          height: 200.0,
+                                          child: custom_widgets.ListOfItems(
+                                            width: double.infinity,
+                                            height: 200.0,
+                                            items:
+                                                widget.scheduleParamt?.items,
+                                          ),
+                                        ),
+                                      ],
                                     ),
                                     Expanded(
                                       child: Column(
@@ -625,41 +587,67 @@ class _ListAppointmentViewWidgetState extends State<ListAppointmentViewWidget> {
                                             mainAxisAlignment:
                                                 MainAxisAlignment.spaceBetween,
                                             children: [
-                                              Row(
-                                                mainAxisSize: MainAxisSize.max,
-                                                children: [
-                                                  Padding(
-                                                    padding:
-                                                        EdgeInsetsDirectional
-                                                            .fromSTEB(8.0, 4.0,
-                                                                0.0, 0.0),
-                                                    child: Icon(
-                                                      Icons.phone_rounded,
-                                                      color:
+                                              InkWell(
+                                                splashColor: Colors.transparent,
+                                                focusColor: Colors.transparent,
+                                                hoverColor: Colors.transparent,
+                                                highlightColor:
+                                                    Colors.transparent,
+                                                onTap: () async {
+                                                  await launchUrl(Uri(
+                                                    scheme: 'tel',
+                                                    path:
+                                                        valueOrDefault<String>(
+                                                      widget.scheduleParamt
+                                                          ?.technicianPhoto,
+                                                      '+15103933334',
+                                                    ),
+                                                  ));
+                                                },
+                                                child: Row(
+                                                  mainAxisSize:
+                                                      MainAxisSize.max,
+                                                  children: [
+                                                    Padding(
+                                                      padding:
+                                                          EdgeInsetsDirectional
+                                                              .fromSTEB(
+                                                                  8.0,
+                                                                  4.0,
+                                                                  0.0,
+                                                                  0.0),
+                                                      child: Icon(
+                                                        Icons.phone_rounded,
+                                                        color:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .primary,
+                                                        size: 20.0,
+                                                      ),
+                                                    ),
+                                                    Text(
+                                                      '+1 ${valueOrDefault<String>(
+                                                        widget.scheduleParamt
+                                                            ?.clientPhone,
+                                                        '5109003030',
+                                                      )}',
+                                                      style:
                                                           FlutterFlowTheme.of(
                                                                   context)
-                                                              .primary,
-                                                      size: 20.0,
+                                                              .bodyMedium
+                                                              .override(
+                                                                fontFamily:
+                                                                    'Manrope',
+                                                                color: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .primary,
+                                                                letterSpacing:
+                                                                    0.0,
+                                                              ),
                                                     ),
-                                                  ),
-                                                  Text(
-                                                    valueOrDefault<String>(
-                                                      widget.scheduleParamt
-                                                          ?.clientPhone,
-                                                      '5109003030',
-                                                    ),
-                                                    style: FlutterFlowTheme.of(
-                                                            context)
-                                                        .bodyMedium
-                                                        .override(
-                                                          fontFamily: 'Manrope',
-                                                          color: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .primary,
-                                                          letterSpacing: 0.0,
-                                                        ),
-                                                  ),
-                                                ].divide(SizedBox(width: 8.0)),
+                                                  ].divide(
+                                                      SizedBox(width: 8.0)),
+                                                ),
                                               ),
                                               Row(
                                                 mainAxisSize: MainAxisSize.max,
@@ -715,95 +703,6 @@ class _ListAppointmentViewWidgetState extends State<ListAppointmentViewWidget> {
                                                 ],
                                               ),
                                             ],
-                                          ),
-                                          Expanded(
-                                            child: Column(
-                                              mainAxisSize: MainAxisSize.max,
-                                              children: [
-                                                Expanded(
-                                                  child: Card(
-                                                    clipBehavior: Clip
-                                                        .antiAliasWithSaveLayer,
-                                                    color: FlutterFlowTheme.of(
-                                                            context)
-                                                        .secondaryBackground,
-                                                    elevation: 0.0,
-                                                    shape:
-                                                        RoundedRectangleBorder(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              8.0),
-                                                    ),
-                                                    child: Container(
-                                                      height: 200.0,
-                                                      child: Builder(
-                                                          builder: (context) {
-                                                        final _googleMapMarker = functions
-                                                            .convertlanLngStringToLatLng(
-                                                                valueOrDefault<
-                                                                    double>(
-                                                                  widget
-                                                                      .scheduleParamt
-                                                                      ?.lat,
-                                                                  32232412.0,
-                                                                ),
-                                                                valueOrDefault<
-                                                                    double>(
-                                                                  widget
-                                                                      .scheduleParamt
-                                                                      ?.lng,
-                                                                  -122322.0,
-                                                                ));
-                                                        return FlutterFlowGoogleMap(
-                                                          controller: _model
-                                                              .googleMapsController,
-                                                          onCameraIdle:
-                                                              (latLng) => _model
-                                                                      .googleMapsCenter =
-                                                                  latLng,
-                                                          initialLocation: _model
-                                                                  .googleMapsCenter ??=
-                                                              currentUserLocationValue!,
-                                                          markers: [
-                                                            FlutterFlowMarker(
-                                                              _googleMapMarker
-                                                                  .serialize(),
-                                                              _googleMapMarker,
-                                                            ),
-                                                          ],
-                                                          markerColor:
-                                                              GoogleMarkerColor
-                                                                  .azure,
-                                                          markerImage:
-                                                              MarkerImage(
-                                                            imagePath:
-                                                                'assets/images/pinlocation100x100.png',
-                                                            isAssetImage: true,
-                                                            size: 60.0 ?? 20,
-                                                          ),
-                                                          mapType:
-                                                              MapType.normal,
-                                                          style: GoogleMapStyle
-                                                              .night,
-                                                          initialZoom: 11.0,
-                                                          allowInteraction:
-                                                              true,
-                                                          allowZoom: true,
-                                                          showZoomControls:
-                                                              true,
-                                                          showLocation: true,
-                                                          showCompass: false,
-                                                          showMapToolbar: false,
-                                                          showTraffic: true,
-                                                          centerMapOnMarkerTap:
-                                                              true,
-                                                        );
-                                                      }),
-                                                    ),
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
                                           ),
                                         ].divide(SizedBox(height: 2.0)),
                                       ),

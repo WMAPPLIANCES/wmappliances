@@ -1,4 +1,5 @@
 import '/appointment/pages/nav_bar1/nav_bar1_widget.dart';
+import '/backend/supabase/supabase.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'today_list_view_schedules_widget.dart'
     show TodayListViewSchedulesWidget;
@@ -8,6 +9,8 @@ class TodayListViewSchedulesModel
     extends FlutterFlowModel<TodayListViewSchedulesWidget> {
   ///  State fields for stateful widgets in this page.
 
+  // Stores action output result for [Backend Call - Query Rows] action in todayListViewSchedules widget.
+  List<AppointmentsRow>? workoDERtODAY;
   // Model for NavBar1 component.
   late NavBar1Model navBar1Model;
 

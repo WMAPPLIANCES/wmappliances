@@ -11,6 +11,7 @@ export 'tables/execution_data.dart';
 export 'tables/parts_total_price.dart';
 export 'tables/stock_parts.dart';
 export 'tables/ai_action_logs.dart';
+export 'tables/customers.dart';
 export 'tables/parts_installed.dart';
 export 'tables/technicians_schedules.dart';
 export 'tables/tickets.dart';

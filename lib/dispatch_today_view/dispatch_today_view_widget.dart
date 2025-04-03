@@ -1067,9 +1067,12 @@ class _DispatchTodayViewWidgetState extends State<DispatchTodayViewWidget> {
                                                                                                   context.pushNamed(
                                                                                                     WorkOrderWidget.routeName,
                                                                                                     queryParameters: {
-                                                                                                      'workOrderRow': serializeParam(
-                                                                                                        _model.workOrderFromAppointment1?.firstOrNull,
-                                                                                                        ParamType.SupabaseRow,
+                                                                                                      'workOrderId': serializeParam(
+                                                                                                        valueOrDefault<String>(
+                                                                                                          _model.workOrderFromAppointment1?.firstOrNull?.workOrderId,
+                                                                                                          '4342',
+                                                                                                        ),
+                                                                                                        ParamType.String,
                                                                                                       ),
                                                                                                     }.withoutNulls,
                                                                                                     extra: <String, dynamic>{
@@ -1492,9 +1495,12 @@ class _DispatchTodayViewWidgetState extends State<DispatchTodayViewWidget> {
                                                                                                   context.pushNamed(
                                                                                                     WorkOrderWidget.routeName,
                                                                                                     queryParameters: {
-                                                                                                      'workOrderRow': serializeParam(
-                                                                                                        _model.workOrderAppointment2?.firstOrNull,
-                                                                                                        ParamType.SupabaseRow,
+                                                                                                      'workOrderId': serializeParam(
+                                                                                                        valueOrDefault<String>(
+                                                                                                          _model.workOrderAppointment2?.firstOrNull?.workOrderId,
+                                                                                                          '2443',
+                                                                                                        ),
+                                                                                                        ParamType.String,
                                                                                                       ),
                                                                                                     }.withoutNulls,
                                                                                                     extra: <String, dynamic>{

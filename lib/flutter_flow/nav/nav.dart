@@ -196,9 +196,9 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           name: WorkOrderWidget.routeName,
           path: WorkOrderWidget.routePath,
           builder: (context, params) => WorkOrderWidget(
-            workOrderRow: params.getParam<WorkOrdersRow>(
-              'workOrderRow',
-              ParamType.SupabaseRow,
+            workOrderId: params.getParam(
+              'workOrderId',
+              ParamType.String,
             ),
           ),
         ),
@@ -298,9 +298,9 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           builder: (context, params) => DeliveryPartsArrivedPageWidget(),
         ),
         FFRoute(
-          name: WorkOderSearchWidget.routeName,
-          path: WorkOderSearchWidget.routePath,
-          builder: (context, params) => WorkOderSearchWidget(),
+          name: WorkOrderSearchWidget.routeName,
+          path: WorkOrderSearchWidget.routePath,
+          builder: (context, params) => WorkOrderSearchWidget(),
         ),
         FFRoute(
           name: TradutorWidget.routeName,
@@ -316,6 +316,11 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           name: MapsNotUserWidget.routeName,
           path: MapsNotUserWidget.routePath,
           builder: (context, params) => MapsNotUserWidget(),
+        ),
+        FFRoute(
+          name: PagePartStockMobileWidget.routeName,
+          path: PagePartStockMobileWidget.routePath,
+          builder: (context, params) => PagePartStockMobileWidget(),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
       observers: [routeObserver],

@@ -1,4 +1,5 @@
 import '/backend/supabase/supabase.dart';
+import '/components/appointment_sugested_time_component_widget.dart';
 import '/components/diagnosis_view_b_s_widget.dart';
 import '/components/print_parts_arrived_widget.dart';
 import '/components/side_menu_view_widget.dart';
@@ -50,10 +51,10 @@ export 'work_order_model.dart';
 class WorkOrderWidget extends StatefulWidget {
   const WorkOrderWidget({
     super.key,
-    required this.workOrderRow,
-  });
+    String? workOrderId,
+  }) : this.workOrderId = workOrderId ?? 'id';
 
-  final WorkOrdersRow? workOrderRow;
+  final String workOrderId;
 
   static String routeName = 'workOrder';
   static String routePath = '/workOrder';
@@ -74,21 +75,26 @@ class _WorkOrderWidgetState extends State<WorkOrderWidget> {
 
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
+      _model.workOrderQueryOnPage = await WorkOrdersTable().queryRows(
+        queryFn: (q) => q
+            .eqOrNull(
+              'work_order_id',
+              widget.workOrderId,
+            )
+            .order('created_at'),
+      );
       _model.queryPreviusJob = await WorkOrdersTable().queryRows(
         queryFn: (q) => q
             .eqOrNull(
               'customer_email',
               valueOrDefault<String>(
-                widget.workOrderRow?.customerEmail,
-                'email',
+                _model.workOrderQueryOnPage?.firstOrNull?.customerEmail,
+                '00300',
               ),
             )
             .eqOrNull(
               'work_order_id',
-              valueOrDefault<String>(
-                widget.workOrderRow?.workOrderId,
-                '51102',
-              ),
+              widget.workOrderId,
             )
             .order('created_at'),
       );
@@ -96,14 +102,16 @@ class _WorkOrderWidgetState extends State<WorkOrderWidget> {
 
     _model.switchValue1 = false;
     _model.switchValue2 = false;
+    _model.switchValue3 = false;
+    _model.switchValue4 = false;
     _model.textController1 ??= TextEditingController();
     _model.textFieldFocusNode ??= FocusNode();
 
-    _model.switchValue3 = false;
+    _model.switchValue5 = false;
     _model.addNoteDispatchTextController ??= TextEditingController();
     _model.addNoteDispatchFocusNode ??= FocusNode();
 
-    _model.switchValue4 = false;
+    _model.switchValue6 = false;
     WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
@@ -123,10 +131,7 @@ class _WorkOrderWidgetState extends State<WorkOrderWidget> {
         queryFn: (q) => q
             .eqOrNull(
               'work_order_id',
-              valueOrDefault<String>(
-                widget.workOrderRow?.workOrderId,
-                '003006069',
-              ),
+              widget.workOrderId,
             )
             .order('created_at'),
       ),
@@ -280,10 +285,11 @@ class _WorkOrderWidgetState extends State<WorkOrderWidget> {
                                                             Text(
                                                               valueOrDefault<
                                                                   String>(
-                                                                widget
-                                                                    .workOrderRow
+                                                                _model
+                                                                    .workOrderQueryOnPage
+                                                                    ?.firstOrNull
                                                                     ?.workOrderId,
-                                                                '003006062',
+                                                                '003006069',
                                                               ),
                                                               style: FlutterFlowTheme
                                                                       .of(context)
@@ -338,8 +344,8 @@ class _WorkOrderWidgetState extends State<WorkOrderWidget> {
                                                                             ),
                                                                             Text(
                                                                               valueOrDefault<String>(
-                                                                                widget.workOrderRow?.customerName,
-                                                                                'name',
+                                                                                _model.workOrderQueryOnPage?.firstOrNull?.customerName,
+                                                                                'Willian Marciano',
                                                                               ),
                                                                               style: FlutterFlowTheme.of(context).bodyMedium.override(
                                                                                     fontFamily: 'Manrope',
@@ -371,10 +377,10 @@ class _WorkOrderWidgetState extends State<WorkOrderWidget> {
                                                                               size: 35.0,
                                                                             ),
                                                                             Text(
-                                                                              valueOrDefault<String>(
-                                                                                widget.workOrderRow?.customerPhone,
-                                                                                'Phone',
-                                                                              ),
+                                                                              '+1 ${valueOrDefault<String>(
+                                                                                _model.workOrderQueryOnPage?.firstOrNull?.customerPhone,
+                                                                                '5109003030',
+                                                                              )}',
                                                                               style: FlutterFlowTheme.of(context).bodyMedium.override(
                                                                                     fontFamily: 'Manrope',
                                                                                     fontSize: 22.0,
@@ -427,8 +433,8 @@ class _WorkOrderWidgetState extends State<WorkOrderWidget> {
                                                                             ),
                                                                             Text(
                                                                               valueOrDefault<String>(
-                                                                                widget.workOrderRow?.customerEmail,
-                                                                                'customer_email',
+                                                                                _model.workOrderQueryOnPage?.firstOrNull?.customerEmail,
+                                                                                'support@wmappliances.net',
                                                                               ),
                                                                               style: FlutterFlowTheme.of(context).bodyMedium.override(
                                                                                     fontFamily: 'Manrope',
@@ -460,7 +466,10 @@ class _WorkOrderWidgetState extends State<WorkOrderWidget> {
                                                                               size: 35.0,
                                                                             ),
                                                                             Text(
-                                                                              dateTimeFormat("yMMMd", widget.workOrderRow!.createdAt!),
+                                                                              valueOrDefault<String>(
+                                                                                dateTimeFormat("MMMEd", _model.workOrderQueryOnPage?.firstOrNull?.createdAt),
+                                                                                '12',
+                                                                              ),
                                                                               style: FlutterFlowTheme.of(context).bodyMedium.override(
                                                                                     fontFamily: 'Manrope',
                                                                                     fontSize: 22.0,
@@ -511,8 +520,8 @@ class _WorkOrderWidgetState extends State<WorkOrderWidget> {
                                                                             children: [
                                                                               Text(
                                                                                 '${valueOrDefault<String>(
-                                                                                  widget.workOrderRow?.address,
-                                                                                  'address',
+                                                                                  _model.workOrderQueryOnPage?.firstOrNull?.address,
+                                                                                  '0',
                                                                                 )}  ',
                                                                                 style: FlutterFlowTheme.of(context).bodyMedium.override(
                                                                                       fontFamily: 'Manrope',
@@ -520,12 +529,13 @@ class _WorkOrderWidgetState extends State<WorkOrderWidget> {
                                                                                       letterSpacing: 0.0,
                                                                                     ),
                                                                               ),
-                                                                              if (widget.workOrderRow?.apartmentNumber != null && widget.workOrderRow?.apartmentNumber != '')
+                                                                              if (valueOrDefault<String>(
+                                                                                        _model.workOrderQueryOnPage?.firstOrNull?.apartmentNumber,
+                                                                                        '0',
+                                                                                      ) ==
+                                                                                      '')
                                                                                 Text(
-                                                                                  'APT: ${valueOrDefault<String>(
-                                                                                    widget.workOrderRow?.apartmentNumber,
-                                                                                    'apartment_number',
-                                                                                  )}',
+                                                                                  'APT: ${_model.workOrderQueryOnPage?.firstOrNull?.apartmentNumber}',
                                                                                   style: FlutterFlowTheme.of(context).bodyMedium.override(
                                                                                         fontFamily: 'Manrope',
                                                                                         fontSize: 22.0,
@@ -563,7 +573,7 @@ class _WorkOrderWidgetState extends State<WorkOrderWidget> {
                                                                     size: 20.0,
                                                                   ),
                                                                   Text(
-                                                                    'View Detail',
+                                                                    'Previous Job                                          ',
                                                                     style: FlutterFlowTheme.of(
                                                                             context)
                                                                         .bodyMedium
@@ -584,12 +594,12 @@ class _WorkOrderWidgetState extends State<WorkOrderWidget> {
                                                                           _model.switchValue1 =
                                                                               newValue);
                                                                       if (newValue) {
-                                                                        _model.showDetail =
+                                                                        _model.viewPreviousWorkOrder =
                                                                             true;
                                                                         safeSetState(
                                                                             () {});
                                                                       } else {
-                                                                        _model.showDetail =
+                                                                        _model.viewPreviousWorkOrder =
                                                                             false;
                                                                         safeSetState(
                                                                             () {});
@@ -600,13 +610,13 @@ class _WorkOrderWidgetState extends State<WorkOrderWidget> {
                                                                             .primary,
                                                                     activeTrackColor:
                                                                         FlutterFlowTheme.of(context)
-                                                                            .primary,
+                                                                            .primaryBackground,
                                                                     inactiveTrackColor:
                                                                         FlutterFlowTheme.of(context)
-                                                                            .alternate,
+                                                                            .secondary,
                                                                     inactiveThumbColor:
                                                                         FlutterFlowTheme.of(context)
-                                                                            .secondaryBackground,
+                                                                            .primaryBackground,
                                                                   ),
                                                                 ].divide(SizedBox(
                                                                     width:
@@ -635,7 +645,7 @@ class _WorkOrderWidgetState extends State<WorkOrderWidget> {
                                                                     size: 20.0,
                                                                   ),
                                                                   Text(
-                                                                    'View Previous Job',
+                                                                    'Job Description                                   ',
                                                                     style: FlutterFlowTheme.of(
                                                                             context)
                                                                         .bodyMedium
@@ -656,12 +666,12 @@ class _WorkOrderWidgetState extends State<WorkOrderWidget> {
                                                                           _model.switchValue2 =
                                                                               newValue);
                                                                       if (newValue) {
-                                                                        _model.viewPreviousWorkOrder =
+                                                                        _model.showDetail =
                                                                             true;
                                                                         safeSetState(
                                                                             () {});
                                                                       } else {
-                                                                        _model.viewPreviousWorkOrder =
+                                                                        _model.showDetail =
                                                                             false;
                                                                         safeSetState(
                                                                             () {});
@@ -672,13 +682,157 @@ class _WorkOrderWidgetState extends State<WorkOrderWidget> {
                                                                             .primary,
                                                                     activeTrackColor:
                                                                         FlutterFlowTheme.of(context)
-                                                                            .primary,
+                                                                            .primaryBackground,
                                                                     inactiveTrackColor:
                                                                         FlutterFlowTheme.of(context)
-                                                                            .alternate,
+                                                                            .secondary,
                                                                     inactiveThumbColor:
                                                                         FlutterFlowTheme.of(context)
-                                                                            .secondaryBackground,
+                                                                            .primaryBackground,
+                                                                  ),
+                                                                ].divide(SizedBox(
+                                                                    width:
+                                                                        8.0)),
+                                                              ),
+                                                            ),
+                                                            Padding(
+                                                              padding:
+                                                                  EdgeInsetsDirectional
+                                                                      .fromSTEB(
+                                                                          12.0,
+                                                                          0.0,
+                                                                          0.0,
+                                                                          0.0),
+                                                              child: Row(
+                                                                mainAxisSize:
+                                                                    MainAxisSize
+                                                                        .max,
+                                                                children: [
+                                                                  Icon(
+                                                                    Icons
+                                                                        .remove_red_eye,
+                                                                    color: FlutterFlowTheme.of(
+                                                                            context)
+                                                                        .primary,
+                                                                    size: 20.0,
+                                                                  ),
+                                                                  Text(
+                                                                    'Appliance Requested                     ',
+                                                                    style: FlutterFlowTheme.of(
+                                                                            context)
+                                                                        .bodyMedium
+                                                                        .override(
+                                                                          fontFamily:
+                                                                              'Manrope',
+                                                                          letterSpacing:
+                                                                              0.0,
+                                                                        ),
+                                                                  ),
+                                                                  Switch
+                                                                      .adaptive(
+                                                                    value: _model
+                                                                        .switchValue3!,
+                                                                    onChanged:
+                                                                        (newValue) async {
+                                                                      safeSetState(() =>
+                                                                          _model.switchValue3 =
+                                                                              newValue);
+                                                                      if (newValue) {
+                                                                        _model.applianceRequested =
+                                                                            true;
+                                                                        safeSetState(
+                                                                            () {});
+                                                                      } else {
+                                                                        _model.applianceRequested =
+                                                                            false;
+                                                                        safeSetState(
+                                                                            () {});
+                                                                      }
+                                                                    },
+                                                                    activeColor:
+                                                                        FlutterFlowTheme.of(context)
+                                                                            .primary,
+                                                                    activeTrackColor:
+                                                                        FlutterFlowTheme.of(context)
+                                                                            .primaryBackground,
+                                                                    inactiveTrackColor:
+                                                                        FlutterFlowTheme.of(context)
+                                                                            .secondary,
+                                                                    inactiveThumbColor:
+                                                                        FlutterFlowTheme.of(context)
+                                                                            .primaryBackground,
+                                                                  ),
+                                                                ].divide(SizedBox(
+                                                                    width:
+                                                                        8.0)),
+                                                              ),
+                                                            ),
+                                                            Padding(
+                                                              padding:
+                                                                  EdgeInsetsDirectional
+                                                                      .fromSTEB(
+                                                                          12.0,
+                                                                          0.0,
+                                                                          0.0,
+                                                                          0.0),
+                                                              child: Row(
+                                                                mainAxisSize:
+                                                                    MainAxisSize
+                                                                        .max,
+                                                                children: [
+                                                                  Icon(
+                                                                    Icons
+                                                                        .remove_red_eye,
+                                                                    color: FlutterFlowTheme.of(
+                                                                            context)
+                                                                        .primary,
+                                                                    size: 20.0,
+                                                                  ),
+                                                                  Text(
+                                                                    'Sugested Appointment                 ',
+                                                                    style: FlutterFlowTheme.of(
+                                                                            context)
+                                                                        .bodyMedium
+                                                                        .override(
+                                                                          fontFamily:
+                                                                              'Manrope',
+                                                                          letterSpacing:
+                                                                              0.0,
+                                                                        ),
+                                                                  ),
+                                                                  Switch
+                                                                      .adaptive(
+                                                                    value: _model
+                                                                        .switchValue4!,
+                                                                    onChanged:
+                                                                        (newValue) async {
+                                                                      safeSetState(() =>
+                                                                          _model.switchValue4 =
+                                                                              newValue);
+                                                                      if (newValue) {
+                                                                        _model.showAppointmentRequested =
+                                                                            true;
+                                                                        safeSetState(
+                                                                            () {});
+                                                                      } else {
+                                                                        _model.showAppointmentRequested =
+                                                                            false;
+                                                                        safeSetState(
+                                                                            () {});
+                                                                      }
+                                                                    },
+                                                                    activeColor:
+                                                                        FlutterFlowTheme.of(context)
+                                                                            .primary,
+                                                                    activeTrackColor:
+                                                                        FlutterFlowTheme.of(context)
+                                                                            .primaryBackground,
+                                                                    inactiveTrackColor:
+                                                                        FlutterFlowTheme.of(context)
+                                                                            .secondary,
+                                                                    inactiveThumbColor:
+                                                                        FlutterFlowTheme.of(context)
+                                                                            .primaryBackground,
                                                                   ),
                                                                 ].divide(SizedBox(
                                                                     width:
@@ -744,7 +898,7 @@ class _WorkOrderWidgetState extends State<WorkOrderWidget> {
                                                                             0.0,
                                                                             0.0),
                                                                     child: Text(
-                                                                      'Detail',
+                                                                      'Job Description',
                                                                       style: FlutterFlowTheme.of(
                                                                               context)
                                                                           .titleMedium
@@ -786,8 +940,8 @@ class _WorkOrderWidgetState extends State<WorkOrderWidget> {
                                                                             child:
                                                                                 MarkdownBody(
                                                                               data: valueOrDefault<String>(
-                                                                                widget.workOrderRow?.detail,
-                                                                                'detail',
+                                                                                _model.workOrderQueryOnPage?.firstOrNull?.detail,
+                                                                                'No Detail Found',
                                                                               ),
                                                                               selectable: true,
                                                                               onTapLink: (_, url, __) => launchURL(url!),
@@ -918,11 +1072,21 @@ class _WorkOrderWidgetState extends State<WorkOrderWidget> {
                                                                                       context.pushNamed(
                                                                                         WorkOrderWidget.routeName,
                                                                                         queryParameters: {
-                                                                                          'workOrderRow': serializeParam(
-                                                                                            previusJobItem,
-                                                                                            ParamType.SupabaseRow,
+                                                                                          'workOrderId': serializeParam(
+                                                                                            valueOrDefault<String>(
+                                                                                              previusJobItem.workOrderId,
+                                                                                              '124334',
+                                                                                            ),
+                                                                                            ParamType.String,
                                                                                           ),
                                                                                         }.withoutNulls,
+                                                                                        extra: <String, dynamic>{
+                                                                                          kTransitionInfoKey: TransitionInfo(
+                                                                                            hasTransition: true,
+                                                                                            transitionType: PageTransitionType.fade,
+                                                                                            duration: Duration(milliseconds: 0),
+                                                                                          ),
+                                                                                        },
                                                                                       );
 
                                                                                       safeSetState(() {});
@@ -950,11 +1114,21 @@ class _WorkOrderWidgetState extends State<WorkOrderWidget> {
                                                                                             context.pushNamed(
                                                                                               WorkOrderWidget.routeName,
                                                                                               queryParameters: {
-                                                                                                'workOrderRow': serializeParam(
-                                                                                                  previusJobItem,
-                                                                                                  ParamType.SupabaseRow,
+                                                                                                'workOrderId': serializeParam(
+                                                                                                  valueOrDefault<String>(
+                                                                                                    previusJobItem.workOrderId,
+                                                                                                    '51415',
+                                                                                                  ),
+                                                                                                  ParamType.String,
                                                                                                 ),
                                                                                               }.withoutNulls,
+                                                                                              extra: <String, dynamic>{
+                                                                                                kTransitionInfoKey: TransitionInfo(
+                                                                                                  hasTransition: true,
+                                                                                                  transitionType: PageTransitionType.fade,
+                                                                                                  duration: Duration(milliseconds: 0),
+                                                                                                ),
+                                                                                              },
                                                                                             );
 
                                                                                             safeSetState(() {});
@@ -984,6 +1158,208 @@ class _WorkOrderWidgetState extends State<WorkOrderWidget> {
                                                         ),
                                                       ),
                                                     ),
+                                                  if (_model
+                                                          .showAppointmentRequested ==
+                                                      true)
+                                                    Material(
+                                                      color: Colors.transparent,
+                                                      elevation: 1.0,
+                                                      shape:
+                                                          RoundedRectangleBorder(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(16.0),
+                                                      ),
+                                                      child: Container(
+                                                        width:
+                                                            MediaQuery.sizeOf(
+                                                                        context)
+                                                                    .width *
+                                                                1.0,
+                                                        decoration:
+                                                            BoxDecoration(
+                                                          color: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .secondaryBackground,
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(
+                                                                      16.0),
+                                                        ),
+                                                        child: Padding(
+                                                          padding:
+                                                              EdgeInsetsDirectional
+                                                                  .fromSTEB(
+                                                                      16.0,
+                                                                      16.0,
+                                                                      16.0,
+                                                                      16.0),
+                                                          child: Column(
+                                                            mainAxisSize:
+                                                                MainAxisSize
+                                                                    .max,
+                                                            children: [
+                                                              Row(
+                                                                mainAxisSize:
+                                                                    MainAxisSize
+                                                                        .max,
+                                                                mainAxisAlignment:
+                                                                    MainAxisAlignment
+                                                                        .center,
+                                                                children: [
+                                                                  Align(
+                                                                    alignment:
+                                                                        AlignmentDirectional(
+                                                                            0.0,
+                                                                            0.0),
+                                                                    child: Text(
+                                                                      'Suggested Appointment Dates',
+                                                                      style: FlutterFlowTheme.of(
+                                                                              context)
+                                                                          .titleMedium
+                                                                          .override(
+                                                                            fontFamily:
+                                                                                'Manrope',
+                                                                            fontSize:
+                                                                                22.0,
+                                                                            letterSpacing:
+                                                                                0.0,
+                                                                            fontWeight:
+                                                                                FontWeight.bold,
+                                                                          ),
+                                                                    ),
+                                                                  ),
+                                                                ],
+                                                              ),
+                                                              Row(
+                                                                mainAxisSize:
+                                                                    MainAxisSize
+                                                                        .max,
+                                                                mainAxisAlignment:
+                                                                    MainAxisAlignment
+                                                                        .center,
+                                                                children: [
+                                                                  Expanded(
+                                                                    child:
+                                                                        Container(
+                                                                      decoration:
+                                                                          BoxDecoration(),
+                                                                      child:
+                                                                          Column(
+                                                                        mainAxisSize:
+                                                                            MainAxisSize.max,
+                                                                        crossAxisAlignment:
+                                                                            CrossAxisAlignment.start,
+                                                                        children:
+                                                                            [
+                                                                          wrapWithModel(
+                                                                            model:
+                                                                                _model.appointmentSugestedTimeComponentModel,
+                                                                            updateCallback: () =>
+                                                                                safeSetState(() {}),
+                                                                            child:
+                                                                                AppointmentSugestedTimeComponentWidget(
+                                                                              workOrder: valueOrDefault<String>(
+                                                                                _model.workOrderQueryOnPage?.firstOrNull?.workOrderId,
+                                                                                '342434',
+                                                                              ),
+                                                                              appointmentId: valueOrDefault<String>(
+                                                                                _model.workOrderQueryOnPage?.firstOrNull?.appointmentId,
+                                                                                '342434',
+                                                                              ),
+                                                                            ),
+                                                                          ),
+                                                                        ].divide(SizedBox(height: 8.0)),
+                                                                      ),
+                                                                    ),
+                                                                  ),
+                                                                ],
+                                                              ),
+                                                            ].divide(SizedBox(
+                                                                height: 16.0)),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  Material(
+                                                    color: Colors.transparent,
+                                                    elevation: 1.0,
+                                                    shape:
+                                                        RoundedRectangleBorder(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              16.0),
+                                                    ),
+                                                    child: Container(
+                                                      width: MediaQuery.sizeOf(
+                                                                  context)
+                                                              .width *
+                                                          1.0,
+                                                      decoration: BoxDecoration(
+                                                        color: FlutterFlowTheme
+                                                                .of(context)
+                                                            .secondaryBackground,
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(16.0),
+                                                      ),
+                                                      child: Visibility(
+                                                        visible: _model
+                                                                .applianceRequested ==
+                                                            true,
+                                                        child: Column(
+                                                          mainAxisSize:
+                                                              MainAxisSize.max,
+                                                          children: [
+                                                            Padding(
+                                                              padding:
+                                                                  EdgeInsets
+                                                                      .all(
+                                                                          16.0),
+                                                              child: Text(
+                                                                'Appliances Detail',
+                                                                style: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .bodyMedium
+                                                                    .override(
+                                                                      fontFamily:
+                                                                          'Manrope',
+                                                                      fontSize:
+                                                                          22.0,
+                                                                      letterSpacing:
+                                                                          0.0,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .bold,
+                                                                    ),
+                                                              ),
+                                                            ),
+                                                            Padding(
+                                                              padding:
+                                                                  EdgeInsets
+                                                                      .all(
+                                                                          16.0),
+                                                              child: Container(
+                                                                width: double
+                                                                    .infinity,
+                                                                height: 600.0,
+                                                                child: custom_widgets
+                                                                    .ListOfItems(
+                                                                  width: double
+                                                                      .infinity,
+                                                                  height: 600.0,
+                                                                  items: _model
+                                                                      .workOrderQueryOnPage
+                                                                      ?.firstOrNull
+                                                                      ?.items,
+                                                                ),
+                                                              ),
+                                                            ),
+                                                          ],
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
                                                   Material(
                                                     color: Colors.transparent,
                                                     elevation: 1.0,
@@ -1078,7 +1454,7 @@ class _WorkOrderWidgetState extends State<WorkOrderWidget> {
                                                                               LinearPercentIndicator(
                                                                             percent:
                                                                                 valueOrDefault<double>(
-                                                                              widget.workOrderRow?.workOrderBarValue,
+                                                                              _model.workOrderQueryOnPage?.firstOrNull?.workOrderBarValue,
                                                                               0.0,
                                                                             ),
                                                                             lineHeight:
@@ -1094,8 +1470,8 @@ class _WorkOrderWidgetState extends State<WorkOrderWidget> {
                                                                             center:
                                                                                 Text(
                                                                               valueOrDefault<String>(
-                                                                                widget.workOrderRow?.workOrderStatus,
-                                                                                'Not Confirmed',
+                                                                                _model.workOrderQueryOnPage?.firstOrNull?.workOrderStatus,
+                                                                                '0',
                                                                               ),
                                                                               style: FlutterFlowTheme.of(context).headlineSmall.override(
                                                                                     fontFamily: 'Outfit',
@@ -1119,51 +1495,54 @@ class _WorkOrderWidgetState extends State<WorkOrderWidget> {
                                                                             'dispatch')
                                                                           Expanded(
                                                                             child:
-                                                                                FFButtonWidget(
-                                                                              onPressed: () async {
-                                                                                await showModalBottomSheet(
-                                                                                  isScrollControlled: true,
-                                                                                  backgroundColor: Colors.transparent,
-                                                                                  enableDrag: false,
-                                                                                  context: context,
-                                                                                  builder: (context) {
-                                                                                    return WebViewAware(
-                                                                                      child: GestureDetector(
-                                                                                        onTap: () {
-                                                                                          FocusScope.of(context).unfocus();
-                                                                                          FocusManager.instance.primaryFocus?.unfocus();
-                                                                                        },
-                                                                                        child: Padding(
-                                                                                          padding: MediaQuery.viewInsetsOf(context),
-                                                                                          child: Container(
-                                                                                            height: MediaQuery.sizeOf(context).height * 1.0,
-                                                                                            child: WorkOrderStatusWidget(
-                                                                                              workOrderString: valueOrDefault<String>(
-                                                                                                widget.workOrderRow?.workOrderId,
-                                                                                                '45115',
+                                                                                Padding(
+                                                                              padding: EdgeInsetsDirectional.fromSTEB(0.0, 16.0, 0.0, 0.0),
+                                                                              child: FFButtonWidget(
+                                                                                onPressed: () async {
+                                                                                  await showModalBottomSheet(
+                                                                                    isScrollControlled: true,
+                                                                                    backgroundColor: Colors.transparent,
+                                                                                    enableDrag: false,
+                                                                                    context: context,
+                                                                                    builder: (context) {
+                                                                                      return WebViewAware(
+                                                                                        child: GestureDetector(
+                                                                                          onTap: () {
+                                                                                            FocusScope.of(context).unfocus();
+                                                                                            FocusManager.instance.primaryFocus?.unfocus();
+                                                                                          },
+                                                                                          child: Padding(
+                                                                                            padding: MediaQuery.viewInsetsOf(context),
+                                                                                            child: Container(
+                                                                                              height: MediaQuery.sizeOf(context).height * 1.0,
+                                                                                              child: WorkOrderStatusWidget(
+                                                                                                workOrderString: valueOrDefault<String>(
+                                                                                                  _model.workOrderQueryOnPage?.firstOrNull?.workOrderId,
+                                                                                                  '00300',
+                                                                                                ),
                                                                                               ),
                                                                                             ),
                                                                                           ),
                                                                                         ),
+                                                                                      );
+                                                                                    },
+                                                                                  ).then((value) => safeSetState(() {}));
+                                                                                },
+                                                                                text: 'Update Status',
+                                                                                options: FFButtonOptions(
+                                                                                  height: 40.0,
+                                                                                  padding: EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
+                                                                                  iconPadding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                                                                                  color: FlutterFlowTheme.of(context).secondary,
+                                                                                  textStyle: FlutterFlowTheme.of(context).titleSmall.override(
+                                                                                        fontFamily: 'Manrope',
+                                                                                        color: Colors.white,
+                                                                                        letterSpacing: 0.0,
+                                                                                        fontWeight: FontWeight.w600,
                                                                                       ),
-                                                                                    );
-                                                                                  },
-                                                                                ).then((value) => safeSetState(() {}));
-                                                                              },
-                                                                              text: 'Update Status',
-                                                                              options: FFButtonOptions(
-                                                                                height: 40.0,
-                                                                                padding: EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
-                                                                                iconPadding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-                                                                                color: FlutterFlowTheme.of(context).primary,
-                                                                                textStyle: FlutterFlowTheme.of(context).titleSmall.override(
-                                                                                      fontFamily: 'Manrope',
-                                                                                      color: Colors.white,
-                                                                                      letterSpacing: 0.0,
-                                                                                      fontWeight: FontWeight.w600,
-                                                                                    ),
-                                                                                elevation: 0.0,
-                                                                                borderRadius: BorderRadius.circular(8.0),
+                                                                                  elevation: 0.0,
+                                                                                  borderRadius: BorderRadius.circular(8.0),
+                                                                                ),
                                                                               ),
                                                                             ),
                                                                           ),
@@ -2537,8 +2916,8 @@ class _WorkOrderWidgetState extends State<WorkOrderWidget> {
                                                                                           if (_model.helperTrue == true) {
                                                                                             _model.scheuduleId1 = await SchedulesTable().insert({
                                                                                               'work_order_id': valueOrDefault<String>(
-                                                                                                widget.workOrderRow?.workOrderId,
-                                                                                                '003006069',
+                                                                                                _model.workOrderQueryOnPage?.firstOrNull?.workOrderId,
+                                                                                                '00300',
                                                                                               ),
                                                                                               'technicians_uuid': valueOrDefault<String>(
                                                                                                 _model.technicianUuid,
@@ -2549,20 +2928,20 @@ class _WorkOrderWidgetState extends State<WorkOrderWidget> {
                                                                                               'end_time': supaSerialize<DateTime>(FFAppState().endTime),
                                                                                               'helper': _model.helperTrue,
                                                                                               'customer_address': valueOrDefault<String>(
-                                                                                                widget.workOrderRow?.address,
-                                                                                                'address',
+                                                                                                _model.workOrderQueryOnPage?.firstOrNull?.address,
+                                                                                                '00300',
                                                                                               ),
                                                                                               'customer_phone': valueOrDefault<String>(
-                                                                                                widget.workOrderRow?.customerPhone,
-                                                                                                'phone',
+                                                                                                _model.workOrderQueryOnPage?.firstOrNull?.customerPhone,
+                                                                                                '00300',
                                                                                               ),
                                                                                               'itens': _model.applianceValues,
                                                                                               'appointment_type': _model.serviceTypeValue,
                                                                                               'technicians_photo': FFAppState().technicianPhoto,
                                                                                               'appointment_status': 'Not Confirmed',
                                                                                               'customer_name': valueOrDefault<String>(
-                                                                                                widget.workOrderRow?.customerName,
-                                                                                                'name',
+                                                                                                _model.workOrderQueryOnPage?.firstOrNull?.customerName,
+                                                                                                '00300',
                                                                                               ),
                                                                                               'technician_color': _model.technicianColor,
                                                                                               'appointment_date': supaSerialize<DateTime>(FFAppState().startTime),
@@ -2573,24 +2952,24 @@ class _WorkOrderWidgetState extends State<WorkOrderWidget> {
                                                                                                 '4343',
                                                                                               ),
                                                                                               'work_order_id': valueOrDefault<String>(
-                                                                                                widget.workOrderRow?.workOrderId,
-                                                                                                '43423',
+                                                                                                _model.workOrderQueryOnPage?.firstOrNull?.workOrderId,
+                                                                                                '00300',
                                                                                               ),
                                                                                               'title': valueOrDefault<String>(
-                                                                                                widget.workOrderRow?.customerName,
-                                                                                                'WM APPLIANCES',
+                                                                                                _model.workOrderQueryOnPage?.firstOrNull?.workOrderId,
+                                                                                                '00300',
                                                                                               ),
                                                                                               'address': valueOrDefault<String>(
-                                                                                                widget.workOrderRow?.address,
-                                                                                                'address',
+                                                                                                _model.workOrderQueryOnPage?.firstOrNull?.address,
+                                                                                                '00300',
                                                                                               ),
                                                                                               'lat': valueOrDefault<double>(
-                                                                                                widget.workOrderRow?.lat,
-                                                                                                37.68779373168945,
+                                                                                                _model.workOrderQueryOnPage?.firstOrNull?.lat,
+                                                                                                00300.0,
                                                                                               ),
                                                                                               'lng': valueOrDefault<double>(
-                                                                                                widget.workOrderRow?.lng,
-                                                                                                -122.16246032714844,
+                                                                                                _model.workOrderQueryOnPage?.firstOrNull?.lng,
+                                                                                                00300.0,
                                                                                               ),
                                                                                               'scheduled_start': supaSerialize<DateTime>(FFAppState().startTime),
                                                                                               'scheduled_end': supaSerialize<DateTime>(FFAppState().endTime),
@@ -2607,20 +2986,24 @@ class _WorkOrderWidgetState extends State<WorkOrderWidget> {
                                                                                               'stop_number': 0,
                                                                                               'technician_photo': 'https://api.wmappliances.cloud/storage/v1/object/public/photos/users/wmlogoSupabase.png',
                                                                                               'client_name': valueOrDefault<String>(
-                                                                                                widget.workOrderRow?.customerName,
-                                                                                                'WM APPLIANCES',
+                                                                                                _model.workOrderQueryOnPage?.firstOrNull?.customerName,
+                                                                                                '00300',
                                                                                               ),
-                                                                                              'items': _model.applianceValues,
+                                                                                              'items': _model.workOrderQueryOnPage?.firstOrNull?.items,
                                                                                               'appointment_date': supaSerialize<DateTime>(FFAppState().startTime),
                                                                                               'schedule_id': valueOrDefault<String>(
                                                                                                 _model.scheuduleId1?.scheduleId,
                                                                                                 '4342',
                                                                                               ),
-                                                                                              'apt': widget.workOrderRow?.apartmentNumber,
+                                                                                              'apt': _model.workOrderQueryOnPage?.firstOrNull?.apartmentNumber,
                                                                                               'appointment_status': 'Not Started',
-                                                                                              'client_phone': widget.workOrderRow?.customerPhone,
+                                                                                              'client_phone': valueOrDefault<String>(
+                                                                                                _model.workOrderQueryOnPage?.firstOrNull?.customerPhone,
+                                                                                                '00300',
+                                                                                              ),
                                                                                               'manager_review': false,
                                                                                               'helper': _model.helperTrue,
+                                                                                              'items_view': _model.workOrderQueryOnPage?.firstOrNull?.items,
                                                                                             });
                                                                                             unawaited(
                                                                                               () async {
@@ -2656,15 +3039,15 @@ class _WorkOrderWidgetState extends State<WorkOrderWidget> {
                                                                                               matchingRows: (rows) => rows.eqOrNull(
                                                                                                 'work_order_id',
                                                                                                 valueOrDefault<String>(
-                                                                                                  widget.workOrderRow?.workOrderId,
-                                                                                                  '000300',
+                                                                                                  _model.workOrderQueryOnPage?.firstOrNull?.workOrderId,
+                                                                                                  '00300',
                                                                                                 ),
                                                                                               ),
                                                                                             );
                                                                                             _model.scheduleID = await SchedulesTable().insert({
                                                                                               'work_order_id': valueOrDefault<String>(
-                                                                                                widget.workOrderRow?.workOrderId,
-                                                                                                '003006069',
+                                                                                                _model.workOrderQueryOnPage?.firstOrNull?.workOrderId,
+                                                                                                '00300',
                                                                                               ),
                                                                                               'technicians_uuid': _model.technicianUuid,
                                                                                               'technicians_name': _model.technicianName,
@@ -2672,20 +3055,20 @@ class _WorkOrderWidgetState extends State<WorkOrderWidget> {
                                                                                               'end_time': supaSerialize<DateTime>(FFAppState().endTime),
                                                                                               'helper': _model.helperTrue,
                                                                                               'customer_address': valueOrDefault<String>(
-                                                                                                widget.workOrderRow?.address,
-                                                                                                'address',
+                                                                                                _model.workOrderQueryOnPage?.firstOrNull?.address,
+                                                                                                '00300',
                                                                                               ),
                                                                                               'customer_phone': valueOrDefault<String>(
-                                                                                                widget.workOrderRow?.customerPhone,
-                                                                                                'phone',
+                                                                                                _model.workOrderQueryOnPage?.firstOrNull?.customerPhone,
+                                                                                                '00300',
                                                                                               ),
                                                                                               'itens': _model.applianceValues,
                                                                                               'appointment_type': _model.serviceTypeValue,
                                                                                               'technicians_photo': FFAppState().technicianPhoto,
                                                                                               'appointment_status': 'Not Confirmed',
                                                                                               'customer_name': valueOrDefault<String>(
-                                                                                                widget.workOrderRow?.customerName,
-                                                                                                'name',
+                                                                                                _model.workOrderQueryOnPage?.firstOrNull?.customerName,
+                                                                                                '00300',
                                                                                               ),
                                                                                               'appointment_date': supaSerialize<DateTime>(FFAppState().startTime),
                                                                                               'technician_color': _model.technicianColor,
@@ -2696,24 +3079,24 @@ class _WorkOrderWidgetState extends State<WorkOrderWidget> {
                                                                                                 '4343',
                                                                                               ),
                                                                                               'work_order_id': valueOrDefault<String>(
-                                                                                                widget.workOrderRow?.workOrderId,
-                                                                                                '43423',
+                                                                                                _model.workOrderQueryOnPage?.firstOrNull?.workOrderId,
+                                                                                                '00300',
                                                                                               ),
                                                                                               'title': valueOrDefault<String>(
-                                                                                                widget.workOrderRow?.customerName,
-                                                                                                'WM APPLIANCES',
+                                                                                                _model.workOrderQueryOnPage?.firstOrNull?.workOrderId,
+                                                                                                '00300',
                                                                                               ),
                                                                                               'address': valueOrDefault<String>(
-                                                                                                widget.workOrderRow?.address,
-                                                                                                'address',
+                                                                                                _model.workOrderQueryOnPage?.firstOrNull?.address,
+                                                                                                '00300',
                                                                                               ),
                                                                                               'lat': valueOrDefault<double>(
-                                                                                                widget.workOrderRow?.lat,
-                                                                                                37.68779373168945,
+                                                                                                _model.workOrderQueryOnPage?.firstOrNull?.lat,
+                                                                                                00300.0,
                                                                                               ),
                                                                                               'lng': valueOrDefault<double>(
-                                                                                                widget.workOrderRow?.lng,
-                                                                                                -122.16246032714844,
+                                                                                                _model.workOrderQueryOnPage?.firstOrNull?.lng,
+                                                                                                00300.0,
                                                                                               ),
                                                                                               'scheduled_start': supaSerialize<DateTime>(FFAppState().startTime),
                                                                                               'scheduled_end': supaSerialize<DateTime>(FFAppState().endTime),
@@ -2730,20 +3113,24 @@ class _WorkOrderWidgetState extends State<WorkOrderWidget> {
                                                                                               'stop_number': 0,
                                                                                               'technician_photo': 'https://api.wmappliances.cloud/storage/v1/object/public/photos/users/wmlogoSupabase.png',
                                                                                               'client_name': valueOrDefault<String>(
-                                                                                                widget.workOrderRow?.customerName,
-                                                                                                'WM APPLIANCES',
+                                                                                                _model.workOrderQueryOnPage?.firstOrNull?.customerName,
+                                                                                                '00300',
                                                                                               ),
-                                                                                              'items': _model.applianceValues,
+                                                                                              'items': _model.workOrderQueryOnPage?.firstOrNull?.items,
                                                                                               'appointment_date': supaSerialize<DateTime>(FFAppState().startTime),
                                                                                               'schedule_id': valueOrDefault<String>(
                                                                                                 _model.scheduleID?.scheduleId,
                                                                                                 '13412',
                                                                                               ),
-                                                                                              'apt': widget.workOrderRow?.apartmentNumber,
+                                                                                              'apt': _model.workOrderQueryOnPage?.firstOrNull?.apartmentNumber,
                                                                                               'appointment_status': 'Not Started',
-                                                                                              'client_phone': widget.workOrderRow?.customerPhone,
+                                                                                              'client_phone': valueOrDefault<String>(
+                                                                                                _model.workOrderQueryOnPage?.firstOrNull?.customerPhone,
+                                                                                                '00300',
+                                                                                              ),
                                                                                               'manager_review': false,
                                                                                               'helper': _model.helperTrue,
+                                                                                              'items_view': _model.workOrderQueryOnPage?.firstOrNull?.items,
                                                                                             });
                                                                                             unawaited(
                                                                                               () async {
@@ -2778,8 +3165,8 @@ class _WorkOrderWidgetState extends State<WorkOrderWidget> {
                                                                                                   .eqOrNull(
                                                                                                     'work_order_id',
                                                                                                     valueOrDefault<String>(
-                                                                                                      widget.workOrderRow?.workOrderId,
-                                                                                                      '021',
+                                                                                                      _model.workOrderQueryOnPage?.firstOrNull?.workOrderId,
+                                                                                                      '00300',
                                                                                                     ),
                                                                                                   )
                                                                                                   .eqOrNull(
@@ -2927,10 +3314,7 @@ class _WorkOrderWidgetState extends State<WorkOrderWidget> {
                                                                             queryFn: (q) => q
                                                                                 .eqOrNull(
                                                                                   'work_order_id',
-                                                                                  valueOrDefault<String>(
-                                                                                    widget.workOrderRow?.workOrderId,
-                                                                                    '003006069',
-                                                                                  ),
+                                                                                  widget.workOrderId,
                                                                                 )
                                                                                 .order('start_time'),
                                                                           ),
@@ -3452,9 +3836,9 @@ class _WorkOrderWidgetState extends State<WorkOrderWidget> {
                                                                             Padding(
                                                                               padding: EdgeInsetsDirectional.fromSTEB(8.0, 0.0, 0.0, 0.0),
                                                                               child: Switch.adaptive(
-                                                                                value: _model.switchValue3!,
+                                                                                value: _model.switchValue5!,
                                                                                 onChanged: (newValue) async {
-                                                                                  safeSetState(() => _model.switchValue3 = newValue);
+                                                                                  safeSetState(() => _model.switchValue5 = newValue);
                                                                                   if (newValue) {
                                                                                     _model.priorityNote = true;
                                                                                   } else {
@@ -3481,8 +3865,8 @@ class _WorkOrderWidgetState extends State<WorkOrderWidget> {
                                                                               : () async {
                                                                                   await NotesTable().insert({
                                                                                     'work_order_id': valueOrDefault<String>(
-                                                                                      widget.workOrderRow?.workOrderId,
-                                                                                      '003006069',
+                                                                                      _model.workOrderQueryOnPage?.firstOrNull?.workOrderId,
+                                                                                      '00300',
                                                                                     ),
                                                                                     'note_content': '${_model.textController1.text}',
                                                                                     'user_name': FFAppState().userName,
@@ -3550,10 +3934,7 @@ class _WorkOrderWidgetState extends State<WorkOrderWidget> {
                                                                         queryFn: (q) => q
                                                                             .eqOrNull(
                                                                               'work_order_id',
-                                                                              valueOrDefault<String>(
-                                                                                widget.workOrderRow?.workOrderId,
-                                                                                '003006069',
-                                                                              ),
+                                                                              widget.workOrderId,
                                                                             )
                                                                             .order('priority')
                                                                             .order('created_at'),
@@ -4096,9 +4477,9 @@ class _WorkOrderWidgetState extends State<WorkOrderWidget> {
                                                                             Padding(
                                                                               padding: EdgeInsetsDirectional.fromSTEB(8.0, 0.0, 0.0, 0.0),
                                                                               child: Switch.adaptive(
-                                                                                value: _model.switchValue4!,
+                                                                                value: _model.switchValue6!,
                                                                                 onChanged: (newValue) async {
-                                                                                  safeSetState(() => _model.switchValue4 = newValue);
+                                                                                  safeSetState(() => _model.switchValue6 = newValue);
                                                                                   if (newValue) {
                                                                                     _model.priorityNote = true;
                                                                                   } else {
@@ -4124,10 +4505,7 @@ class _WorkOrderWidgetState extends State<WorkOrderWidget> {
                                                                               ? null
                                                                               : () async {
                                                                                   _model.disptchnotes = await NotesDispatchTable().insert({
-                                                                                    'work_order_id': valueOrDefault<String>(
-                                                                                      widget.workOrderRow?.workOrderId,
-                                                                                      '003006069',
-                                                                                    ),
+                                                                                    'work_order_id': widget.workOrderId,
                                                                                     'note_content': '${_model.addNoteDispatchTextController.text}',
                                                                                     'user_name': FFAppState().userName,
                                                                                     'create_by_image': valueOrDefault<String>(
@@ -4195,10 +4573,7 @@ class _WorkOrderWidgetState extends State<WorkOrderWidget> {
                                                                         queryFn: (q) => q
                                                                             .eqOrNull(
                                                                               'work_order_id',
-                                                                              valueOrDefault<String>(
-                                                                                widget.workOrderRow?.workOrderId,
-                                                                                '003006069',
-                                                                              ),
+                                                                              widget.workOrderId,
                                                                             )
                                                                             .order('priority')
                                                                             .order('created_at'),
@@ -4724,13 +5099,8 @@ class _WorkOrderWidgetState extends State<WorkOrderWidget> {
                                                             queryFn: (q) =>
                                                                 q.eqOrNull(
                                                               'work_order_id',
-                                                              valueOrDefault<
-                                                                  String>(
-                                                                widget
-                                                                    .workOrderRow
-                                                                    ?.workOrderId,
-                                                                '003006069',
-                                                              ),
+                                                              widget
+                                                                  .workOrderId,
                                                             ),
                                                           ),
                                                           builder: (context,
@@ -4805,13 +5175,8 @@ class _WorkOrderWidgetState extends State<WorkOrderWidget> {
                                                                           (q) =>
                                                                               q.eqOrNull(
                                                                         'work_order_id',
-                                                                        valueOrDefault<
-                                                                            String>(
-                                                                          widget
-                                                                              .workOrderRow
-                                                                              ?.workOrderId,
-                                                                          '0',
-                                                                        ),
+                                                                        widget
+                                                                            .workOrderId,
                                                                       ),
                                                                     ),
                                                                     builder:
@@ -4956,10 +5321,7 @@ class _WorkOrderWidgetState extends State<WorkOrderWidget> {
                                                                                                           ? null
                                                                                                           : () async {
                                                                                                               await PartInsertionsTable().insert({
-                                                                                                                'work_order_id': valueOrDefault<String>(
-                                                                                                                  widget.workOrderRow?.workOrderId,
-                                                                                                                  '0',
-                                                                                                                ),
+                                                                                                                'work_order_id': widget.workOrderId,
                                                                                                                 'inserted_part': 1,
                                                                                                               });
                                                                                                               await PartsTable().update(
@@ -5008,7 +5370,7 @@ class _WorkOrderWidgetState extends State<WorkOrderWidget> {
                                                                                                                     child: PrintPartsArrivedWidget(
                                                                                                                       partsArrived: requestedPartItem,
                                                                                                                       partAgregate: columnPartSummaryAggregatedRow!,
-                                                                                                                      workOrder: widget.workOrderRow!,
+                                                                                                                      workOrder: _model.workOrderQueryOnPage!.firstOrNull!,
                                                                                                                     ),
                                                                                                                   ),
                                                                                                                 ),
@@ -5036,10 +5398,7 @@ class _WorkOrderWidgetState extends State<WorkOrderWidget> {
                                                                                                           ? null
                                                                                                           : () async {
                                                                                                               await PartInsertionsTable().insert({
-                                                                                                                'work_order_id': valueOrDefault<String>(
-                                                                                                                  widget.workOrderRow?.workOrderId,
-                                                                                                                  '0',
-                                                                                                                ),
+                                                                                                                'work_order_id': widget.workOrderId,
                                                                                                                 'inserted_part_arrived': 1,
                                                                                                               });
                                                                                                               await PartsTable().update(

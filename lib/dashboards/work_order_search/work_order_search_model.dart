@@ -3,45 +3,44 @@ import '/backend/supabase/supabase.dart';
 import '/components/side_menu_view_widget.dart';
 import '/flutter_flow/flutter_flow_data_table.dart';
 import '/flutter_flow/flutter_flow_util.dart';
-import 'page_part_stock_widget.dart' show PagePartStockWidget;
+import '/index.dart';
+import 'work_order_search_widget.dart' show WorkOrderSearchWidget;
 import 'package:flutter/material.dart';
 
-class PagePartStockModel extends FlutterFlowModel<PagePartStockWidget> {
+class WorkOrderSearchModel extends FlutterFlowModel<WorkOrderSearchWidget> {
   ///  Local state fields for this page.
 
   bool viewDetail = false;
 
   bool viewNotes = false;
 
-  List<StockPartsRow> partQuery = [];
-  void addToPartQuery(StockPartsRow item) => partQuery.add(item);
-  void removeFromPartQuery(StockPartsRow item) => partQuery.remove(item);
+  List<DeliveryRow> partQuery = [];
+  void addToPartQuery(DeliveryRow item) => partQuery.add(item);
+  void removeFromPartQuery(DeliveryRow item) => partQuery.remove(item);
   void removeAtIndexFromPartQuery(int index) => partQuery.removeAt(index);
-  void insertAtIndexInPartQuery(int index, StockPartsRow item) =>
+  void insertAtIndexInPartQuery(int index, DeliveryRow item) =>
       partQuery.insert(index, item);
-  void updatePartQueryAtIndex(int index, Function(StockPartsRow) updateFn) =>
+  void updatePartQueryAtIndex(int index, Function(DeliveryRow) updateFn) =>
       partQuery[index] = updateFn(partQuery[index]);
 
-  List<StockPartsRow> partQueryOnPageLoad = [];
-  void addToPartQueryOnPageLoad(StockPartsRow item) =>
+  List<DeliveryRow> partQueryOnPageLoad = [];
+  void addToPartQueryOnPageLoad(DeliveryRow item) =>
       partQueryOnPageLoad.add(item);
-  void removeFromPartQueryOnPageLoad(StockPartsRow item) =>
+  void removeFromPartQueryOnPageLoad(DeliveryRow item) =>
       partQueryOnPageLoad.remove(item);
   void removeAtIndexFromPartQueryOnPageLoad(int index) =>
       partQueryOnPageLoad.removeAt(index);
-  void insertAtIndexInPartQueryOnPageLoad(int index, StockPartsRow item) =>
+  void insertAtIndexInPartQueryOnPageLoad(int index, DeliveryRow item) =>
       partQueryOnPageLoad.insert(index, item);
   void updatePartQueryOnPageLoadAtIndex(
-          int index, Function(StockPartsRow) updateFn) =>
+          int index, Function(DeliveryRow) updateFn) =>
       partQueryOnPageLoad[index] = updateFn(partQueryOnPageLoad[index]);
 
   Color? colorSelected;
 
   Color? colorSelect2;
 
-  int? numberColunGeral = 6;
-
-  int? numColMobile = 2;
+  bool searchDate = false;
 
   ///  State fields for stateful widgets in this page.
 
@@ -52,13 +51,11 @@ class PagePartStockModel extends FlutterFlowModel<PagePartStockWidget> {
   TextEditingController? textController;
   String? Function(BuildContext, String?)? textControllerValidator;
   // State field(s) for PaginatedDataTable widget.
-  final paginatedDataTableController =
-      FlutterFlowDataTableController<StockPartsRow>();
-  bool isDataUploading = false;
-  FFUploadedFile uploadedLocalFile =
-      FFUploadedFile(bytes: Uint8List.fromList([]));
-  String uploadedFileUrl = '';
-
+  final paginatedDataTableController1 =
+      FlutterFlowDataTableController<WorkOrdersRow>();
+  // State field(s) for PaginatedDataTable widget.
+  final paginatedDataTableController2 =
+      FlutterFlowDataTableController<WorkOrdersRow>();
   // Model for NavBar1 component.
   late NavBar1Model navBar1Model;
 
@@ -74,7 +71,8 @@ class PagePartStockModel extends FlutterFlowModel<PagePartStockWidget> {
     textFieldFocusNode?.dispose();
     textController?.dispose();
 
-    paginatedDataTableController.dispose();
+    paginatedDataTableController1.dispose();
+    paginatedDataTableController2.dispose();
     navBar1Model.dispose();
   }
 }

@@ -81,12 +81,16 @@ class WorkOrderTechniciansViewModel
           int index, Function(String) updateFn) =>
       partListRemovePickUp[index] = updateFn(partListRemovePickUp[index]);
 
+  bool applianceRequested = false;
+
   ///  State fields for stateful widgets in this page.
 
   // State field(s) for Switch widget.
   bool? switchValue1;
   // State field(s) for Switch widget.
   bool? switchValue2;
+  // State field(s) for Switch widget.
+  bool? switchValue3;
   // State field(s) for SwitchListTile widget.
   bool? switchListTileValue1;
   // State field(s) for SwitchListTile widget.
@@ -100,7 +104,7 @@ class WorkOrderTechniciansViewModel
   TextEditingController? textController;
   String? Function(BuildContext, String?)? textControllerValidator;
   // State field(s) for Switch widget.
-  bool? switchValue3;
+  bool? switchValue4;
   // Stores action output result for [Backend Call - Update Row(s)] action in part_taken widget.
   List<PartsRow>? partTaken;
   // Model for NavBar1 component.
