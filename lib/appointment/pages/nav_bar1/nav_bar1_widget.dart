@@ -148,7 +148,7 @@ class _NavBar1WidgetState extends State<NavBar1Widget> {
                   ),
                   onPressed: () async {
                     context.pushNamed(
-                      TradutorWidget.routeName,
+                      ChatBotSupportWidget.routeName,
                       extra: <String, dynamic>{
                         kTransitionInfoKey: TransitionInfo(
                           hasTransition: true,
@@ -166,20 +166,14 @@ class _NavBar1WidgetState extends State<NavBar1Widget> {
                     Padding(
                       padding:
                           EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 10.0),
-                      child: FlutterFlowIconButton(
-                        borderColor: Colors.transparent,
-                        borderRadius: 25.0,
-                        borderWidth: 1.0,
-                        buttonSize: 60.0,
-                        fillColor: FlutterFlowTheme.of(context).primary,
-                        icon: Icon(
-                          Icons.shopping_bag_outlined,
-                          color: Colors.white,
-                          size: 30.0,
-                        ),
-                        onPressed: () async {
+                      child: InkWell(
+                        splashColor: Colors.transparent,
+                        focusColor: Colors.transparent,
+                        hoverColor: Colors.transparent,
+                        highlightColor: Colors.transparent,
+                        onLongPress: () async {
                           context.pushNamed(
-                            TodayListViewSchedulesWidget.routeName,
+                            ListAllJobsWidget.routeName,
                             extra: <String, dynamic>{
                               kTransitionInfoKey: TransitionInfo(
                                 hasTransition: true,
@@ -189,6 +183,30 @@ class _NavBar1WidgetState extends State<NavBar1Widget> {
                             },
                           );
                         },
+                        child: FlutterFlowIconButton(
+                          borderColor: Colors.transparent,
+                          borderRadius: 25.0,
+                          borderWidth: 1.0,
+                          buttonSize: 60.0,
+                          fillColor: FlutterFlowTheme.of(context).primary,
+                          icon: Icon(
+                            Icons.shopping_bag_outlined,
+                            color: Colors.white,
+                            size: 30.0,
+                          ),
+                          onPressed: () async {
+                            context.pushNamed(
+                              TodayListViewSchedulesWidget.routeName,
+                              extra: <String, dynamic>{
+                                kTransitionInfoKey: TransitionInfo(
+                                  hasTransition: true,
+                                  transitionType: PageTransitionType.fade,
+                                  duration: Duration(milliseconds: 0),
+                                ),
+                              },
+                            );
+                          },
+                        ),
                       ),
                     ),
                   ],

@@ -55,3 +55,6 @@ export '/appointment_today_view/appointment_today_view_widget.dart'
 export '/maps_not_user/maps_not_user_widget.dart' show MapsNotUserWidget;
 export '/stock_page/page_part_stock_mobile/page_part_stock_mobile_widget.dart'
     show PagePartStockMobileWidget;
+export '/list_all_jobs/list_all_jobs_widget.dart' show ListAllJobsWidget;
+export '/chat_bot_support/chat_bot_support_widget.dart'
+    show ChatBotSupportWidget;

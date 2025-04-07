@@ -15,7 +15,6 @@ import '/flutter_flow/custom_functions.dart' as functions;
 import '/index.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:webviewx_plus/webviewx_plus.dart';
 import 'dashboard_technician_model.dart';
@@ -277,82 +276,46 @@ class _DashboardTechnicianWidgetState extends State<DashboardTechnicianWidget> {
                                                                 ),
                                                                 Stack(
                                                                   children: [
-                                                                    if ((Theme.of(context).brightness ==
-                                                                            Brightness.light) ==
-                                                                        false)
-                                                                      Padding(
-                                                                        padding: EdgeInsetsDirectional.fromSTEB(
-                                                                            0.0,
+                                                                    Padding(
+                                                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                                                          0.0,
+                                                                          8.0,
+                                                                          8.0,
+                                                                          8.0),
+                                                                      child:
+                                                                          FlutterFlowIconButton(
+                                                                        borderColor:
+                                                                            FlutterFlowTheme.of(context).secondary,
+                                                                        borderRadius:
                                                                             8.0,
-                                                                            8.0,
-                                                                            8.0),
-                                                                        child:
-                                                                            FlutterFlowIconButton(
-                                                                          borderColor:
+                                                                        buttonSize:
+                                                                            40.0,
+                                                                        icon:
+                                                                            Icon(
+                                                                          Icons
+                                                                              .spatial_audio_off_sharp,
+                                                                          color:
                                                                               FlutterFlowTheme.of(context).secondary,
-                                                                          borderRadius:
-                                                                              8.0,
-                                                                          buttonSize:
-                                                                              40.0,
-                                                                          icon:
-                                                                              Icon(
-                                                                            Icons.sunny,
-                                                                            color:
-                                                                                FlutterFlowTheme.of(context).secondary,
-                                                                            size:
-                                                                                24.0,
-                                                                          ),
-                                                                          onPressed:
-                                                                              () async {
-                                                                            setDarkModeSetting(context,
-                                                                                ThemeMode.light);
-                                                                            FFAppState().lightMode =
-                                                                                true;
-                                                                            safeSetState(() {});
-                                                                            FFAppState().darkMode =
-                                                                                false;
-                                                                            safeSetState(() {});
-                                                                          },
+                                                                          size:
+                                                                              24.0,
                                                                         ),
+                                                                        onPressed:
+                                                                            () async {
+                                                                          context
+                                                                              .pushNamed(
+                                                                            TradutorWidget.routeName,
+                                                                            extra: <String,
+                                                                                dynamic>{
+                                                                              kTransitionInfoKey: TransitionInfo(
+                                                                                hasTransition: true,
+                                                                                transitionType: PageTransitionType.fade,
+                                                                                duration: Duration(milliseconds: 0),
+                                                                              ),
+                                                                            },
+                                                                          );
+                                                                        },
                                                                       ),
-                                                                    if ((Theme.of(context).brightness ==
-                                                                            Brightness.dark) ==
-                                                                        false)
-                                                                      Padding(
-                                                                        padding: EdgeInsetsDirectional.fromSTEB(
-                                                                            0.0,
-                                                                            8.0,
-                                                                            8.0,
-                                                                            8.0),
-                                                                        child:
-                                                                            FlutterFlowIconButton(
-                                                                          borderColor:
-                                                                              FlutterFlowTheme.of(context).secondary,
-                                                                          borderRadius:
-                                                                              8.0,
-                                                                          buttonSize:
-                                                                              40.0,
-                                                                          icon:
-                                                                              FaIcon(
-                                                                            FontAwesomeIcons.solidMoon,
-                                                                            color:
-                                                                                FlutterFlowTheme.of(context).secondary,
-                                                                            size:
-                                                                                24.0,
-                                                                          ),
-                                                                          onPressed:
-                                                                              () async {
-                                                                            setDarkModeSetting(context,
-                                                                                ThemeMode.dark);
-                                                                            FFAppState().darkMode =
-                                                                                true;
-                                                                            safeSetState(() {});
-                                                                            FFAppState().lightMode =
-                                                                                false;
-                                                                            safeSetState(() {});
-                                                                          },
-                                                                        ),
-                                                                      ),
+                                                                    ),
                                                                   ],
                                                                 ),
                                                               ].divide(SizedBox(
@@ -1057,8 +1020,35 @@ class _DashboardTechnicianWidgetState extends State<DashboardTechnicianWidget> {
                                                                                             color: FlutterFlowTheme.of(context).info,
                                                                                             size: 24.0,
                                                                                           ),
-                                                                                          onPressed: () {
-                                                                                            print('IconButton pressed ...');
+                                                                                          onPressed: () async {
+                                                                                            _model.queryWorkOrderNavigateToWo = await WorkOrdersTable().queryRows(
+                                                                                              queryFn: (q) => q.eqOrNull(
+                                                                                                'work_order_id',
+                                                                                                valueOrDefault<String>(
+                                                                                                  followUpTodayItem.workOrderId,
+                                                                                                  '12332543',
+                                                                                                ),
+                                                                                              ),
+                                                                                            );
+
+                                                                                            context.pushNamed(
+                                                                                              WorkOrderTechniciansViewWidget.routeName,
+                                                                                              queryParameters: {
+                                                                                                'workOrderRow': serializeParam(
+                                                                                                  _model.queryWorkOrderNavigateToWo?.firstOrNull,
+                                                                                                  ParamType.SupabaseRow,
+                                                                                                ),
+                                                                                              }.withoutNulls,
+                                                                                              extra: <String, dynamic>{
+                                                                                                kTransitionInfoKey: TransitionInfo(
+                                                                                                  hasTransition: true,
+                                                                                                  transitionType: PageTransitionType.fade,
+                                                                                                  duration: Duration(milliseconds: 0),
+                                                                                                ),
+                                                                                              },
+                                                                                            );
+
+                                                                                            safeSetState(() {});
                                                                                           },
                                                                                         ),
                                                                                       ],

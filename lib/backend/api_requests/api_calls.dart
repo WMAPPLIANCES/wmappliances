@@ -266,6 +266,63 @@ class GetTechniciansSchedulesByDateMapsCall {
           .toList();
 }
 
+class CallMaskToCustomerCall {
+  static Future<ApiCallResponse> call({
+    String? technicianNumber = '+1510222',
+    String? customerNumber = '+1521222',
+  }) async {
+    final ffApiRequestBody = '''
+{
+  "technicianNumber": "+15551112222",
+  "customerNumber": "+15553334444"
+}''';
+    return ApiManager.instance.makeApiCall(
+      callName: 'callMaskToCustomer',
+      apiUrl: 'https://phone.wmappliances.cloud/start-masked-call/',
+      callType: ApiCallType.POST,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      params: {},
+      body: ffApiRequestBody,
+      bodyType: BodyType.JSON,
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+}
+
+class ChatBotSupportCall {
+  static Future<ApiCallResponse> call({
+    String? chatInput = '',
+    String? userUuid = '',
+    String? chatImage = '',
+  }) async {
+    return ApiManager.instance.makeApiCall(
+      callName: 'chatBotSupport',
+      apiUrl: 'https://webhook.wmappliances.cloud/webhook/chatBotSupport',
+      callType: ApiCallType.POST,
+      headers: {},
+      params: {
+        'chatInput': chatInput,
+        'userUuid': userUuid,
+        'chatImage': chatImage,
+      },
+      bodyType: BodyType.MULTIPART,
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+}
+
 class ApiPagingParams {
   int nextPageNumber = 0;
   int numItems = 0;
@@ -308,4 +365,15 @@ String _serializeJson(dynamic jsonVar, [bool isList = false]) {
     }
     return isList ? '[]' : '{}';
   }
+}
+
+String? escapeStringForJson(String? input) {
+  if (input == null) {
+    return null;
+  }
+  return input
+      .replaceAll('\\', '\\\\')
+      .replaceAll('"', '\\"')
+      .replaceAll('\n', '\\n')
+      .replaceAll('\t', '\\t');
 }

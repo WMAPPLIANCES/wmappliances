@@ -1592,14 +1592,6 @@ class _WorkOrderWorkFlowWidgetState extends State<WorkOrderWorkFlowWidget> {
                                                                     MainAxisSize
                                                                         .max,
                                                                 children: [
-                                                                  Icon(
-                                                                    Icons
-                                                                        .remove_red_eye,
-                                                                    color: FlutterFlowTheme.of(
-                                                                            context)
-                                                                        .primary,
-                                                                    size: 20.0,
-                                                                  ),
                                                                   Text(
                                                                     'View Detail',
                                                                     style: FlutterFlowTheme.of(
@@ -1664,14 +1656,6 @@ class _WorkOrderWorkFlowWidgetState extends State<WorkOrderWorkFlowWidget> {
                                                                     MainAxisSize
                                                                         .max,
                                                                 children: [
-                                                                  Icon(
-                                                                    Icons
-                                                                        .remove_red_eye,
-                                                                    color: FlutterFlowTheme.of(
-                                                                            context)
-                                                                        .primary,
-                                                                    size: 20.0,
-                                                                  ),
                                                                   Text(
                                                                     'View Previous Job',
                                                                     style: FlutterFlowTheme.of(

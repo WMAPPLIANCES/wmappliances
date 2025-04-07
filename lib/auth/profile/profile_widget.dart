@@ -9,6 +9,7 @@ import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/index.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:webviewx_plus/webviewx_plus.dart';
 import 'profile_model.dart';
 export 'profile_model.dart';
@@ -32,6 +33,21 @@ class _ProfileWidgetState extends State<ProfileWidget> {
   void initState() {
     super.initState();
     _model = createModel(context, () => ProfileModel());
+
+    // On page load action.
+    SchedulerBinding.instance.addPostFrameCallback((_) async {
+      _model.completedJobs = await SchedulesTable().queryRows(
+        queryFn: (q) => q
+            .eqOrNull(
+              'technicians_uuid',
+              currentUserUid,
+            )
+            .eqOrNull(
+              'completed',
+              true,
+            ),
+      );
+    });
 
     WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
@@ -723,7 +739,14 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                                                                           ),
                                                                     ),
                                                                     Text(
-                                                                      '248',
+                                                                      valueOrDefault<
+                                                                          String>(
+                                                                        _model
+                                                                            .completedJobs
+                                                                            ?.length
+                                                                            .toString(),
+                                                                        '0',
+                                                                      ),
                                                                       style: FlutterFlowTheme.of(
                                                                               context)
                                                                           .headlineMedium
@@ -775,7 +798,7 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                                                                               24.0,
                                                                         ),
                                                                         Text(
-                                                                          '4.8',
+                                                                          '5.0',
                                                                           style: FlutterFlowTheme.of(context)
                                                                               .headlineMedium
                                                                               .override(

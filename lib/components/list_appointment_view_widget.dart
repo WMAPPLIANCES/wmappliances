@@ -1,6 +1,8 @@
 import '/backend/supabase/supabase.dart';
+import '/components/is_calling_widget.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
+import '/flutter_flow/flutter_flow_widgets.dart';
 import '/custom_code/widgets/index.dart' as custom_widgets;
 import '/index.dart';
 import 'package:flutter/material.dart';
@@ -305,6 +307,17 @@ class _ListAppointmentViewWidgetState extends State<ListAppointmentViewWidget> {
                                             ),
                                           ),
                                         );
+                                        _model.workOrderNavigateToWorkORder =
+                                            await WorkOrdersTable().queryRows(
+                                          queryFn: (q) => q.eqOrNull(
+                                            'work_order_id',
+                                            valueOrDefault<String>(
+                                              widget
+                                                  .scheduleParamt?.workOrderId,
+                                              'woid',
+                                            ),
+                                          ),
+                                        );
                                         await SchedulesTable().update(
                                           data: {
                                             'appointment_status': 'In Progress',
@@ -332,13 +345,35 @@ class _ListAppointmentViewWidgetState extends State<ListAppointmentViewWidget> {
                                             ),
                                           ),
                                         );
+
+                                        context.pushNamed(
+                                          WorkOrderTechniciansViewWidget
+                                              .routeName,
+                                          queryParameters: {
+                                            'workOrderRow': serializeParam(
+                                              _model
+                                                  .workOrderNavigateToWorkORder
+                                                  ?.firstOrNull,
+                                              ParamType.SupabaseRow,
+                                            ),
+                                          }.withoutNulls,
+                                          extra: <String, dynamic>{
+                                            kTransitionInfoKey: TransitionInfo(
+                                              hasTransition: true,
+                                              transitionType:
+                                                  PageTransitionType.fade,
+                                              duration:
+                                                  Duration(milliseconds: 0),
+                                            ),
+                                          },
+                                        );
+
+                                        safeSetState(() {});
                                         await launchURL(
                                             'https://www.google.com/maps/search/?api=1&query=${valueOrDefault<String>(
                                           widget.scheduleParamt?.address,
                                           '15178 Discory Rd San Leandro',
                                         )}');
-
-                                        safeSetState(() {});
                                       }
                                     } else {
                                       _model.workOrder =
@@ -612,38 +647,109 @@ class _ListAppointmentViewWidgetState extends State<ListAppointmentViewWidget> {
                                                       padding:
                                                           EdgeInsetsDirectional
                                                               .fromSTEB(
+                                                                  0.0,
                                                                   8.0,
-                                                                  4.0,
                                                                   0.0,
                                                                   0.0),
-                                                      child: Icon(
-                                                        Icons.phone_rounded,
-                                                        color:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
+                                                      child: FFButtonWidget(
+                                                        onPressed: () async {
+                                                          await showModalBottomSheet(
+                                                            isScrollControlled:
+                                                                true,
+                                                            backgroundColor:
+                                                                Colors
+                                                                    .transparent,
+                                                            enableDrag: false,
+                                                            context: context,
+                                                            builder: (context) {
+                                                              return WebViewAware(
+                                                                child: Padding(
+                                                                  padding: MediaQuery
+                                                                      .viewInsetsOf(
+                                                                          context),
+                                                                  child:
+                                                                      Container(
+                                                                    height:
+                                                                        MediaQuery.sizeOf(context).height *
+                                                                            1.0,
+                                                                    child:
+                                                                        IsCallingWidget(
+                                                                      customerNumber:
+                                                                          valueOrDefault<
+                                                                              String>(
+                                                                        widget
+                                                                            .scheduleParamt
+                                                                            ?.clientPhone,
+                                                                        '12434',
+                                                                      ),
+                                                                      customerName:
+                                                                          valueOrDefault<
+                                                                              String>(
+                                                                        widget
+                                                                            .scheduleParamt
+                                                                            ?.clientName,
+                                                                        'Jorge Cruz',
+                                                                      ),
+                                                                    ),
+                                                                  ),
+                                                                ),
+                                                              );
+                                                            },
+                                                          ).then((value) =>
+                                                              safeSetState(
+                                                                  () {}));
+                                                        },
+                                                        text: 'Call Customer',
+                                                        icon: Icon(
+                                                          Icons.phone_in_talk,
+                                                          size: 15.0,
+                                                        ),
+                                                        options:
+                                                            FFButtonOptions(
+                                                          height: 46.0,
+                                                          padding:
+                                                              EdgeInsetsDirectional
+                                                                  .fromSTEB(
+                                                                      16.0,
+                                                                      0.0,
+                                                                      16.0,
+                                                                      0.0),
+                                                          iconPadding:
+                                                              EdgeInsetsDirectional
+                                                                  .fromSTEB(
+                                                                      0.0,
+                                                                      0.0,
+                                                                      0.0,
+                                                                      0.0),
+                                                          color: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .primaryBackground,
+                                                          textStyle:
+                                                              FlutterFlowTheme.of(
+                                                                      context)
+                                                                  .titleSmall
+                                                                  .override(
+                                                                    fontFamily:
+                                                                        'Manrope',
+                                                                    color: FlutterFlowTheme.of(
+                                                                            context)
+                                                                        .primary,
+                                                                    letterSpacing:
+                                                                        0.0,
+                                                                  ),
+                                                          elevation: 0.0,
+                                                          borderSide:
+                                                              BorderSide(
+                                                            color: FlutterFlowTheme
+                                                                    .of(context)
                                                                 .primary,
-                                                        size: 20.0,
+                                                          ),
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(
+                                                                      8.0),
+                                                        ),
                                                       ),
-                                                    ),
-                                                    Text(
-                                                      '+1 ${valueOrDefault<String>(
-                                                        widget.scheduleParamt
-                                                            ?.clientPhone,
-                                                        '5109003030',
-                                                      )}',
-                                                      style:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .bodyMedium
-                                                              .override(
-                                                                fontFamily:
-                                                                    'Manrope',
-                                                                color: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .primary,
-                                                                letterSpacing:
-                                                                    0.0,
-                                                              ),
                                                     ),
                                                   ].divide(
                                                       SizedBox(width: 8.0)),

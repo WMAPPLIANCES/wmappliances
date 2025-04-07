@@ -16,3 +16,4 @@ export 'update_current_location.dart' show updateCurrentLocation;
 export 'get_all_technician_locations.dart' show getAllTechnicianLocations;
 export 'get_technician_location_action.dart' show getTechnicianLocationAction;
 export 'update_technician_location.dart' show updateTechnicianLocation;
+export 'phone_call_to_customer.dart' show phoneCallToCustomer;

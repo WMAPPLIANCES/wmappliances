@@ -12,6 +12,10 @@ class ListAppointmentViewModel
   ///  State fields for stateful widgets in this component.
 
   // Stores action output result for [Backend Call - Query Rows] action in Icon widget.
+  List<WorkOrdersRow>? workOrderNavigateToWorkORder;
+  // Stores action output result for [Backend Call - Update Row(s)] action in Icon widget.
+  List<WorkOrdersRow>? workoOrdersStartJob;
+  // Stores action output result for [Backend Call - Query Rows] action in Icon widget.
   List<WorkOrdersRow>? workOrder;
 
   @override

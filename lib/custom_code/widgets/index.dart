@@ -20,3 +20,5 @@ export 'string_to_date_time.dart' show StringToDateTime;
 export 'schedule_map_widget.dart' show ScheduleMapWidget;
 export 'live_location_timer.dart' show LiveLocationTimer;
 export 'list_of_items.dart' show ListOfItems;
+export 'make_phone_call.dart' show MakePhoneCall;
+export 'chat_bot_support.dart' show ChatBotSupport;

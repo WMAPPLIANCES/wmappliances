@@ -18,6 +18,7 @@ import 'package:flutter/scheduler.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:webviewx_plus/webviewx_plus.dart';
 import 'work_order_model.dart';
 export 'work_order_model.dart';
@@ -91,10 +92,6 @@ class _WorkOrderWidgetState extends State<WorkOrderWidget> {
                 _model.workOrderQueryOnPage?.firstOrNull?.customerEmail,
                 '00300',
               ),
-            )
-            .eqOrNull(
-              'work_order_id',
-              widget.workOrderId,
             )
             .order('created_at'),
       );
@@ -283,14 +280,19 @@ class _WorkOrderWidgetState extends State<WorkOrderWidget> {
                                                               MainAxisSize.max,
                                                           children: [
                                                             Text(
-                                                              valueOrDefault<
-                                                                  String>(
+                                                              '${valueOrDefault<String>(
                                                                 _model
                                                                     .workOrderQueryOnPage
                                                                     ?.firstOrNull
                                                                     ?.workOrderId,
                                                                 '003006069',
-                                                              ),
+                                                              )} - ${valueOrDefault<String>(
+                                                                _model
+                                                                    .workOrderQueryOnPage
+                                                                    ?.firstOrNull
+                                                                    ?.typeService,
+                                                                'Normal',
+                                                              )}',
                                                               style: FlutterFlowTheme
                                                                       .of(context)
                                                                   .titleLarge
@@ -357,132 +359,61 @@ class _WorkOrderWidgetState extends State<WorkOrderWidget> {
                                                                         ),
                                                                       ),
                                                                     ),
-                                                                    Flexible(
-                                                                      child:
-                                                                          Padding(
-                                                                        padding: EdgeInsetsDirectional.fromSTEB(
-                                                                            0.0,
-                                                                            0.0,
-                                                                            12.0,
-                                                                            0.0),
-                                                                        child:
-                                                                            Row(
-                                                                          mainAxisSize:
-                                                                              MainAxisSize.max,
-                                                                          children:
-                                                                              [
-                                                                            Icon(
-                                                                              Icons.phone,
-                                                                              color: FlutterFlowTheme.of(context).primary,
-                                                                              size: 35.0,
-                                                                            ),
-                                                                            Text(
-                                                                              '+1 ${valueOrDefault<String>(
-                                                                                _model.workOrderQueryOnPage?.firstOrNull?.customerPhone,
-                                                                                '5109003030',
-                                                                              )}',
-                                                                              style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                    fontFamily: 'Manrope',
-                                                                                    fontSize: 22.0,
-                                                                                    letterSpacing: 0.0,
-                                                                                  ),
-                                                                            ),
-                                                                          ].divide(SizedBox(width: 8.0)),
-                                                                        ),
-                                                                      ),
-                                                                    ),
                                                                   ],
                                                                 ),
                                                               ),
                                                             ),
-                                                            Expanded(
-                                                              child: Padding(
-                                                                padding:
-                                                                    EdgeInsetsDirectional
+                                                            Row(
+                                                              mainAxisSize:
+                                                                  MainAxisSize
+                                                                      .max,
+                                                              mainAxisAlignment:
+                                                                  MainAxisAlignment
+                                                                      .start,
+                                                              children: [
+                                                                Flexible(
+                                                                  child:
+                                                                      Padding(
+                                                                    padding: EdgeInsetsDirectional
                                                                         .fromSTEB(
-                                                                            0.0,
-                                                                            12.0,
-                                                                            0.0,
-                                                                            0.0),
-                                                                child: Row(
-                                                                  mainAxisSize:
-                                                                      MainAxisSize
-                                                                          .max,
-                                                                  mainAxisAlignment:
-                                                                      MainAxisAlignment
-                                                                          .spaceEvenly,
-                                                                  children: [
-                                                                    Flexible(
-                                                                      child:
-                                                                          Padding(
-                                                                        padding: EdgeInsetsDirectional.fromSTEB(
                                                                             12.0,
                                                                             0.0,
                                                                             12.0,
                                                                             0.0),
-                                                                        child:
-                                                                            Row(
-                                                                          mainAxisSize:
-                                                                              MainAxisSize.max,
-                                                                          children:
-                                                                              [
-                                                                            Icon(
-                                                                              Icons.email_sharp,
-                                                                              color: FlutterFlowTheme.of(context).primary,
-                                                                              size: 35.0,
-                                                                            ),
-                                                                            Text(
-                                                                              valueOrDefault<String>(
-                                                                                _model.workOrderQueryOnPage?.firstOrNull?.customerEmail,
-                                                                                'support@wmappliances.net',
-                                                                              ),
-                                                                              style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                    fontFamily: 'Manrope',
-                                                                                    fontSize: 22.0,
-                                                                                    letterSpacing: 0.0,
-                                                                                  ),
-                                                                            ),
-                                                                          ].divide(SizedBox(width: 8.0)),
+                                                                    child: Row(
+                                                                      mainAxisSize:
+                                                                          MainAxisSize
+                                                                              .max,
+                                                                      children:
+                                                                          [
+                                                                        Icon(
+                                                                          Icons
+                                                                              .email_sharp,
+                                                                          color:
+                                                                              FlutterFlowTheme.of(context).primary,
+                                                                          size:
+                                                                              35.0,
                                                                         ),
-                                                                      ),
-                                                                    ),
-                                                                    Expanded(
-                                                                      child:
-                                                                          Padding(
-                                                                        padding: EdgeInsetsDirectional.fromSTEB(
-                                                                            0.0,
-                                                                            0.0,
-                                                                            12.0,
-                                                                            0.0),
-                                                                        child:
-                                                                            Row(
-                                                                          mainAxisSize:
-                                                                              MainAxisSize.max,
-                                                                          children:
-                                                                              [
-                                                                            Icon(
-                                                                              Icons.calendar_month,
-                                                                              color: FlutterFlowTheme.of(context).primary,
-                                                                              size: 35.0,
+                                                                        Expanded(
+                                                                          child:
+                                                                              Text(
+                                                                            valueOrDefault<String>(
+                                                                              _model.workOrderQueryOnPage?.firstOrNull?.customerEmail,
+                                                                              'support@wmappliances.net',
                                                                             ),
-                                                                            Text(
-                                                                              valueOrDefault<String>(
-                                                                                dateTimeFormat("MMMEd", _model.workOrderQueryOnPage?.firstOrNull?.createdAt),
-                                                                                '12',
-                                                                              ),
-                                                                              style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                    fontFamily: 'Manrope',
-                                                                                    fontSize: 22.0,
-                                                                                    letterSpacing: 0.0,
-                                                                                  ),
-                                                                            ),
-                                                                          ].divide(SizedBox(width: 8.0)),
+                                                                            style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                  fontFamily: 'Manrope',
+                                                                                  fontSize: 22.0,
+                                                                                  letterSpacing: 0.0,
+                                                                                ),
+                                                                          ),
                                                                         ),
-                                                                      ),
+                                                                      ].divide(SizedBox(
+                                                                              width: 8.0)),
                                                                     ),
-                                                                  ],
+                                                                  ),
                                                                 ),
-                                                              ),
+                                                              ],
                                                             ),
                                                             Expanded(
                                                               child: Row(
@@ -557,6 +488,121 @@ class _WorkOrderWidgetState extends State<WorkOrderWidget> {
                                                                       .fromSTEB(
                                                                           12.0,
                                                                           0.0,
+                                                                          36.0,
+                                                                          0.0),
+                                                              child: Row(
+                                                                mainAxisSize:
+                                                                    MainAxisSize
+                                                                        .max,
+                                                                mainAxisAlignment:
+                                                                    MainAxisAlignment
+                                                                        .spaceBetween,
+                                                                children: [
+                                                                  InkWell(
+                                                                    splashColor:
+                                                                        Colors
+                                                                            .transparent,
+                                                                    focusColor:
+                                                                        Colors
+                                                                            .transparent,
+                                                                    hoverColor:
+                                                                        Colors
+                                                                            .transparent,
+                                                                    highlightColor:
+                                                                        Colors
+                                                                            .transparent,
+                                                                    onTap:
+                                                                        () async {
+                                                                      await launchUrl(
+                                                                          Uri(
+                                                                        scheme:
+                                                                            'tel',
+                                                                        path: valueOrDefault<
+                                                                            String>(
+                                                                          _model
+                                                                              .workOrderQueryOnPage
+                                                                              ?.firstOrNull
+                                                                              ?.customerPhone,
+                                                                          '+15109003030',
+                                                                        ),
+                                                                      ));
+                                                                    },
+                                                                    child: Row(
+                                                                      mainAxisSize:
+                                                                          MainAxisSize
+                                                                              .max,
+                                                                      children:
+                                                                          [
+                                                                        Icon(
+                                                                          Icons
+                                                                              .phone,
+                                                                          color:
+                                                                              FlutterFlowTheme.of(context).primary,
+                                                                          size:
+                                                                              35.0,
+                                                                        ),
+                                                                        Text(
+                                                                          '+1 ${valueOrDefault<String>(
+                                                                            _model.workOrderQueryOnPage?.firstOrNull?.customerPhone,
+                                                                            '5109003030',
+                                                                          )}',
+                                                                          style: FlutterFlowTheme.of(context)
+                                                                              .bodyMedium
+                                                                              .override(
+                                                                                fontFamily: 'Manrope',
+                                                                                fontSize: 22.0,
+                                                                                letterSpacing: 0.0,
+                                                                              ),
+                                                                        ),
+                                                                      ].divide(SizedBox(
+                                                                              width: 8.0)),
+                                                                    ),
+                                                                  ),
+                                                                  Row(
+                                                                    mainAxisSize:
+                                                                        MainAxisSize
+                                                                            .max,
+                                                                    mainAxisAlignment:
+                                                                        MainAxisAlignment
+                                                                            .spaceBetween,
+                                                                    children: [
+                                                                      Icon(
+                                                                        Icons
+                                                                            .calendar_month,
+                                                                        color: FlutterFlowTheme.of(context)
+                                                                            .primary,
+                                                                        size:
+                                                                            35.0,
+                                                                      ),
+                                                                      Text(
+                                                                        valueOrDefault<
+                                                                            String>(
+                                                                          dateTimeFormat(
+                                                                              "MMMEd",
+                                                                              _model.workOrderQueryOnPage?.firstOrNull?.createdAt),
+                                                                          '12',
+                                                                        ),
+                                                                        style: FlutterFlowTheme.of(context)
+                                                                            .bodyMedium
+                                                                            .override(
+                                                                              fontFamily: 'Manrope',
+                                                                              fontSize: 22.0,
+                                                                              letterSpacing: 0.0,
+                                                                            ),
+                                                                      ),
+                                                                    ],
+                                                                  ),
+                                                                ].divide(SizedBox(
+                                                                    width:
+                                                                        8.0)),
+                                                              ),
+                                                            ),
+                                                            Padding(
+                                                              padding:
+                                                                  EdgeInsetsDirectional
+                                                                      .fromSTEB(
+                                                                          12.0,
+                                                                          0.0,
                                                                           0.0,
                                                                           0.0),
                                                               child: Row(
@@ -564,14 +610,6 @@ class _WorkOrderWidgetState extends State<WorkOrderWidget> {
                                                                     MainAxisSize
                                                                         .max,
                                                                 children: [
-                                                                  Icon(
-                                                                    Icons
-                                                                        .remove_red_eye,
-                                                                    color: FlutterFlowTheme.of(
-                                                                            context)
-                                                                        .primary,
-                                                                    size: 20.0,
-                                                                  ),
                                                                   Text(
                                                                     'Previous Job                                          ',
                                                                     style: FlutterFlowTheme.of(
@@ -636,14 +674,6 @@ class _WorkOrderWidgetState extends State<WorkOrderWidget> {
                                                                     MainAxisSize
                                                                         .max,
                                                                 children: [
-                                                                  Icon(
-                                                                    Icons
-                                                                        .remove_red_eye,
-                                                                    color: FlutterFlowTheme.of(
-                                                                            context)
-                                                                        .primary,
-                                                                    size: 20.0,
-                                                                  ),
                                                                   Text(
                                                                     'Job Description                                   ',
                                                                     style: FlutterFlowTheme.of(
@@ -708,14 +738,6 @@ class _WorkOrderWidgetState extends State<WorkOrderWidget> {
                                                                     MainAxisSize
                                                                         .max,
                                                                 children: [
-                                                                  Icon(
-                                                                    Icons
-                                                                        .remove_red_eye,
-                                                                    color: FlutterFlowTheme.of(
-                                                                            context)
-                                                                        .primary,
-                                                                    size: 20.0,
-                                                                  ),
                                                                   Text(
                                                                     'Appliance Requested                     ',
                                                                     style: FlutterFlowTheme.of(
@@ -780,14 +802,6 @@ class _WorkOrderWidgetState extends State<WorkOrderWidget> {
                                                                     MainAxisSize
                                                                         .max,
                                                                 children: [
-                                                                  Icon(
-                                                                    Icons
-                                                                        .remove_red_eye,
-                                                                    color: FlutterFlowTheme.of(
-                                                                            context)
-                                                                        .primary,
-                                                                    size: 20.0,
-                                                                  ),
                                                                   Text(
                                                                     'Sugested Appointment                 ',
                                                                     style: FlutterFlowTheme.of(
@@ -840,7 +854,7 @@ class _WorkOrderWidgetState extends State<WorkOrderWidget> {
                                                               ),
                                                             ),
                                                           ].divide(SizedBox(
-                                                              height: 16.0)),
+                                                              height: 8.0)),
                                                         ),
                                                       ),
                                                     ),
@@ -1099,6 +1113,16 @@ class _WorkOrderWidgetState extends State<WorkOrderWidget> {
                                                                                           valueOrDefault<String>(
                                                                                             previusJobItem.workOrderId,
                                                                                             '00300',
+                                                                                          ),
+                                                                                          style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                                fontFamily: 'Manrope',
+                                                                                                letterSpacing: 0.0,
+                                                                                              ),
+                                                                                        ),
+                                                                                        Text(
+                                                                                          valueOrDefault<String>(
+                                                                                            previusJobItem.tenantName,
+                                                                                            'Willian Marciano',
                                                                                           ),
                                                                                           style: FlutterFlowTheme.of(context).bodyMedium.override(
                                                                                                 fontFamily: 'Manrope',
@@ -2936,7 +2960,7 @@ class _WorkOrderWidgetState extends State<WorkOrderWidget> {
                                                                                                 '00300',
                                                                                               ),
                                                                                               'itens': _model.applianceValues,
-                                                                                              'appointment_type': _model.serviceTypeValue,
+                                                                                              'appointment_type': 'Helper ',
                                                                                               'technicians_photo': FFAppState().technicianPhoto,
                                                                                               'appointment_status': 'Not Confirmed',
                                                                                               'customer_name': valueOrDefault<String>(

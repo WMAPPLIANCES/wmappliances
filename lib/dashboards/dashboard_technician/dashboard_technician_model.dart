@@ -28,6 +28,8 @@ class DashboardTechnicianModel
   List<SchedulesRow>? followUp;
   // Model for sideMenuView component.
   late SideMenuViewModel sideMenuViewModel;
+  // Stores action output result for [Backend Call - Query Rows] action in IconButton widget.
+  List<WorkOrdersRow>? queryWorkOrderNavigateToWo;
   // Model for NavBar1 component.
   late NavBar1Model navBar1Model;
 

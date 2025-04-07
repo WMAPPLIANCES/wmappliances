@@ -10,6 +10,8 @@ import 'package:flutter/material.dart';
 // Begin custom widget code
 // DO NOT REMOVE OR MODIFY THE CODE ABOVE!
 
+import 'index.dart'; // Imports other custom widgets
+
 /// Automatic FlutterFlow imports
 import 'index.dart'; // Imports other custom widgets
 
@@ -142,8 +144,8 @@ class _ScheduleMapWidgetState extends State<ScheduleMapWidget> {
     }
   }
 
-  // Substitua aqui pela sua Google Directions API Key
-  final String googleApiKey = 'AIzaSyB3J0Keewnq9l05Ys-93EYfLC5u29PbtWg';
+  // Usar a API key do AppState para maior segurança
+  String get googleApiKey => FFAppState().googleMapsApiDirectionsApi;
 
   // Um estilo escuro padrão, caso você queira
   final String _defaultDarkMapStyle = '''
@@ -1456,17 +1458,7 @@ class _ScheduleMapWidgetState extends State<ScheduleMapWidget> {
                 FloatingActionButton(
                   onPressed: () {
                     _fetchActiveTechnicians();
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text(
-                          'Updating active technicians...',
-                          style: TextStyle(color: Colors.white),
-                        ),
-                        backgroundColor: Color(0xFF2797FF),
-                        duration: Duration(seconds: 2),
-                        behavior: SnackBarBehavior.floating,
-                      ),
-                    );
+                    // Removido SnackBar para evitar notificações frequentes
                   },
                   tooltip: 'Update Technicians',
                   backgroundColor: const Color(0xFF2797FF),
@@ -1698,54 +1690,15 @@ class _ScheduleMapWidgetState extends State<ScheduleMapWidget> {
           _focusOnWorkOrderMarkers();
         }
 
-        // Mostrar feedback ao usuário
-        if (mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text(
-                'Found $validMarkers new work orders',
-                style: const TextStyle(color: Colors.white),
-              ),
-              backgroundColor: Colors.green,
-              duration: const Duration(seconds: 2),
-              behavior: SnackBarBehavior.floating,
-            ),
-          );
-        }
+        // Removidos SnackBars para evitar notificações frequentes
       } else {
         print('⚠️ No work orders found with status "New"');
-
-        if (mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              content: Text(
-                'No new work orders found',
-                style: TextStyle(color: Colors.white),
-              ),
-              backgroundColor: Colors.orange,
-              duration: Duration(seconds: 2),
-              behavior: SnackBarBehavior.floating,
-            ),
-          );
-        }
+        // Removido SnackBar de "No new work orders found"
       }
     } catch (e) {
       print('❌ ERROR fetching work orders: $e');
       print('Stack trace: ${StackTrace.current}');
-
-      if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(
-              'Error fetching orders: $e',
-              style: const TextStyle(color: Colors.white),
-            ),
-            backgroundColor: Colors.red,
-            duration: const Duration(seconds: 3),
-            behavior: SnackBarBehavior.floating,
-          ),
-        );
-      }
+      // Removido SnackBar de erro
     }
   }
 

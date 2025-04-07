@@ -317,10 +317,10 @@ class _PagePartStockWidgetState extends State<PagePartStockWidget> {
                                                                         width:
                                                                             16.0)),
                                                                   ),
-                                                                  if ((FFAppState().userRole == 'admin') &&
+                                                                  if ((FFAppState().userRole == 'admin') ||
                                                                       (FFAppState()
                                                                               .userRole ==
-                                                                          'dispatch') &&
+                                                                          'dispatch') ||
                                                                       (FFAppState()
                                                                               .userRole ==
                                                                           'office_manager'))
@@ -605,11 +605,12 @@ class _PagePartStockWidgetState extends State<PagePartStockWidget> {
                                                                                 label: DefaultTextStyle.merge(
                                                                                   softWrap: true,
                                                                                   child: Visibility(
-                                                                                    visible: responsiveVisibility(
-                                                                                      context: context,
-                                                                                      phone: false,
-                                                                                      tablet: false,
-                                                                                    ),
+                                                                                    visible: ((FFAppState().userRole == 'admin') && (FFAppState().userRole == 'dispatch') && (FFAppState().userRole == 'office_manager')) &&
+                                                                                        responsiveVisibility(
+                                                                                          context: context,
+                                                                                          phone: false,
+                                                                                          tablet: false,
+                                                                                        ),
                                                                                     child: Text(
                                                                                       'Price',
                                                                                       style: FlutterFlowTheme.of(context).labelLarge.override(
@@ -930,7 +931,7 @@ class _PagePartStockWidgetState extends State<PagePartStockWidget> {
                                                                                   ),
                                                                                 ),
                                                                                 Visibility(
-                                                                                  visible: ((FFAppState().userRole == 'admin') && (FFAppState().userRole == 'dispatch') && (FFAppState().userRole == 'office_manager')) &&
+                                                                                  visible: ((FFAppState().userRole == 'admin') || (FFAppState().userRole == 'dispatch') || (FFAppState().userRole == 'office_manager')) &&
                                                                                       responsiveVisibility(
                                                                                         context: context,
                                                                                         phone: false,

@@ -11,6 +11,7 @@ import '/components/add_part_selector_url_or_part_number_widget.dart';
 import '/components/check_list_dryer_widget.dart';
 import '/components/check_list_oven_widget.dart';
 import '/components/diagnosis_view_b_s_widget.dart';
+import '/components/is_calling_widget.dart';
 import '/components/no_internet_widget.dart';
 import '/dashboards/voice_diagnosis/voice_diagnosis_widget.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
@@ -27,7 +28,6 @@ import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'package:provider/provider.dart';
-import 'package:url_launcher/url_launcher.dart';
 import 'package:webviewx_plus/webviewx_plus.dart';
 import 'work_order_technicians_view_model.dart';
 export 'work_order_technicians_view_model.dart';
@@ -349,147 +349,6 @@ class _WorkOrderTechniciansViewWidgetState
                                                                     MainAxisAlignment
                                                                         .spaceEvenly,
                                                                 children: [
-                                                                  if (responsiveVisibility(
-                                                                    context:
-                                                                        context,
-                                                                    tabletLandscape:
-                                                                        false,
-                                                                    desktop:
-                                                                        false,
-                                                                  ))
-                                                                    Flexible(
-                                                                      child:
-                                                                          Padding(
-                                                                        padding: EdgeInsetsDirectional.fromSTEB(
-                                                                            12.0,
-                                                                            0.0,
-                                                                            12.0,
-                                                                            0.0),
-                                                                        child:
-                                                                            InkWell(
-                                                                          splashColor:
-                                                                              Colors.transparent,
-                                                                          focusColor:
-                                                                              Colors.transparent,
-                                                                          hoverColor:
-                                                                              Colors.transparent,
-                                                                          highlightColor:
-                                                                              Colors.transparent,
-                                                                          onTap:
-                                                                              () async {
-                                                                            await launchUrl(Uri(
-                                                                              scheme: 'tel',
-                                                                              path: valueOrDefault<String>(
-                                                                                widget.workOrderRow?.customerPhone,
-                                                                                '4157996123',
-                                                                              ),
-                                                                            ));
-                                                                          },
-                                                                          child:
-                                                                              Row(
-                                                                            mainAxisSize:
-                                                                                MainAxisSize.max,
-                                                                            children:
-                                                                                [
-                                                                              Icon(
-                                                                                Icons.phone,
-                                                                                color: FlutterFlowTheme.of(context).primary,
-                                                                                size: 22.0,
-                                                                              ),
-                                                                              Text(
-                                                                                '+1 ${valueOrDefault<String>(
-                                                                                  widget.workOrderRow?.customerPhone,
-                                                                                  'Phone',
-                                                                                )}',
-                                                                                style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                      fontFamily: 'Manrope',
-                                                                                      fontSize: 14.0,
-                                                                                      letterSpacing: 0.0,
-                                                                                    ),
-                                                                              ),
-                                                                            ].divide(SizedBox(width: 8.0)),
-                                                                          ),
-                                                                        ),
-                                                                      ),
-                                                                    ),
-                                                                ],
-                                                              ),
-                                                            ),
-                                                          ),
-                                                          Expanded(
-                                                            child: Padding(
-                                                              padding:
-                                                                  EdgeInsetsDirectional
-                                                                      .fromSTEB(
-                                                                          0.0,
-                                                                          4.0,
-                                                                          0.0,
-                                                                          0.0),
-                                                              child: Row(
-                                                                mainAxisSize:
-                                                                    MainAxisSize
-                                                                        .max,
-                                                                mainAxisAlignment:
-                                                                    MainAxisAlignment
-                                                                        .spaceEvenly,
-                                                                children: [
-                                                                  Flexible(
-                                                                    child:
-                                                                        Padding(
-                                                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                                                          12.0,
-                                                                          0.0,
-                                                                          12.0,
-                                                                          0.0),
-                                                                      child:
-                                                                          Row(
-                                                                        mainAxisSize:
-                                                                            MainAxisSize.max,
-                                                                        children:
-                                                                            [
-                                                                          Icon(
-                                                                            Icons.email_sharp,
-                                                                            color:
-                                                                                FlutterFlowTheme.of(context).primary,
-                                                                            size:
-                                                                                22.0,
-                                                                          ),
-                                                                          Text(
-                                                                            valueOrDefault<String>(
-                                                                              widget.workOrderRow?.customerEmail,
-                                                                              'customer_email',
-                                                                            ),
-                                                                            style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                  fontFamily: 'Manrope',
-                                                                                  fontSize: 14.0,
-                                                                                  letterSpacing: 0.0,
-                                                                                ),
-                                                                          ),
-                                                                        ].divide(SizedBox(width: 8.0)),
-                                                                      ),
-                                                                    ),
-                                                                  ),
-                                                                ],
-                                                              ),
-                                                            ),
-                                                          ),
-                                                          Expanded(
-                                                            child: Padding(
-                                                              padding:
-                                                                  EdgeInsetsDirectional
-                                                                      .fromSTEB(
-                                                                          0.0,
-                                                                          4.0,
-                                                                          0.0,
-                                                                          0.0),
-                                                              child: Row(
-                                                                mainAxisSize:
-                                                                    MainAxisSize
-                                                                        .max,
-                                                                mainAxisAlignment:
-                                                                    MainAxisAlignment
-                                                                        .spaceEvenly,
-                                                                children: [
                                                                   Flexible(
                                                                     child:
                                                                         Padding(
@@ -719,14 +578,6 @@ class _WorkOrderTechniciansViewWidgetState
                                                                   MainAxisSize
                                                                       .max,
                                                               children: [
-                                                                Icon(
-                                                                  Icons
-                                                                      .remove_red_eye,
-                                                                  color: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .primary,
-                                                                  size: 20.0,
-                                                                ),
                                                                 Text(
                                                                   'Job Description               ',
                                                                   style: FlutterFlowTheme.of(
@@ -793,14 +644,6 @@ class _WorkOrderTechniciansViewWidgetState
                                                                   MainAxisSize
                                                                       .max,
                                                               children: [
-                                                                Icon(
-                                                                  Icons
-                                                                      .remove_red_eye,
-                                                                  color: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .primary,
-                                                                  size: 20.0,
-                                                                ),
                                                                 Text(
                                                                   'Appliances Requested',
                                                                   style: FlutterFlowTheme.of(
@@ -867,14 +710,6 @@ class _WorkOrderTechniciansViewWidgetState
                                                                   MainAxisSize
                                                                       .max,
                                                               children: [
-                                                                Icon(
-                                                                  Icons
-                                                                      .remove_red_eye,
-                                                                  color: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .primary,
-                                                                  size: 20.0,
-                                                                ),
                                                                 Text(
                                                                   'Previous Job                        ',
                                                                   style: FlutterFlowTheme.of(
@@ -944,94 +779,98 @@ class _WorkOrderTechniciansViewWidgetState
                                                                   MainAxisAlignment
                                                                       .spaceEvenly,
                                                               children: [
-                                                                FFButtonWidget(
-                                                                  onPressed:
-                                                                      () async {
-                                                                    await showModalBottomSheet(
-                                                                      isScrollControlled:
-                                                                          true,
-                                                                      backgroundColor:
-                                                                          Colors
-                                                                              .transparent,
-                                                                      context:
-                                                                          context,
-                                                                      builder:
-                                                                          (context) {
-                                                                        return WebViewAware(
-                                                                          child:
-                                                                              GestureDetector(
-                                                                            onTap:
-                                                                                () {
-                                                                              FocusScope.of(context).unfocus();
-                                                                              FocusManager.instance.primaryFocus?.unfocus();
-                                                                            },
+                                                                Padding(
+                                                                  padding: EdgeInsetsDirectional
+                                                                      .fromSTEB(
+                                                                          0.0,
+                                                                          0.0,
+                                                                          8.0,
+                                                                          0.0),
+                                                                  child:
+                                                                      FFButtonWidget(
+                                                                    onPressed:
+                                                                        () async {
+                                                                      await showModalBottomSheet(
+                                                                        isScrollControlled:
+                                                                            true,
+                                                                        backgroundColor:
+                                                                            Colors.transparent,
+                                                                        context:
+                                                                            context,
+                                                                        builder:
+                                                                            (context) {
+                                                                          return WebViewAware(
                                                                             child:
-                                                                                Padding(
-                                                                              padding: MediaQuery.viewInsetsOf(context),
-                                                                              child: Container(
-                                                                                height: MediaQuery.sizeOf(context).height * 1.0,
-                                                                                child: CreateApplianceWidget(
-                                                                                  workOrderDiagnosis: widget.workOrderRow!,
+                                                                                GestureDetector(
+                                                                              onTap: () {
+                                                                                FocusScope.of(context).unfocus();
+                                                                                FocusManager.instance.primaryFocus?.unfocus();
+                                                                              },
+                                                                              child: Padding(
+                                                                                padding: MediaQuery.viewInsetsOf(context),
+                                                                                child: Container(
+                                                                                  height: MediaQuery.sizeOf(context).height * 1.0,
+                                                                                  child: CreateApplianceWidget(
+                                                                                    workOrderDiagnosis: widget.workOrderRow!,
+                                                                                  ),
                                                                                 ),
                                                                               ),
                                                                             ),
-                                                                          ),
-                                                                        );
-                                                                      },
-                                                                    ).then((value) =>
-                                                                        safeSetState(
-                                                                            () {}));
-                                                                  },
-                                                                  text:
-                                                                      'Appliance',
-                                                                  icon: Icon(
-                                                                    Icons.add,
-                                                                    color: FlutterFlowTheme.of(
-                                                                            context)
-                                                                        .primary,
-                                                                    size: 24.0,
-                                                                  ),
-                                                                  options:
-                                                                      FFButtonOptions(
-                                                                    height:
-                                                                        46.0,
-                                                                    padding: EdgeInsetsDirectional
-                                                                        .fromSTEB(
-                                                                            16.0,
-                                                                            0.0,
-                                                                            16.0,
-                                                                            0.0),
-                                                                    iconPadding:
-                                                                        EdgeInsetsDirectional.fromSTEB(
-                                                                            0.0,
-                                                                            0.0,
-                                                                            0.0,
-                                                                            0.0),
-                                                                    color: FlutterFlowTheme.of(
-                                                                            context)
-                                                                        .primaryBackground,
-                                                                    textStyle: FlutterFlowTheme.of(
-                                                                            context)
-                                                                        .titleSmall
-                                                                        .override(
-                                                                          fontFamily:
-                                                                              'Manrope',
-                                                                          color:
-                                                                              FlutterFlowTheme.of(context).primary,
-                                                                          letterSpacing:
-                                                                              0.0,
-                                                                        ),
-                                                                    elevation:
-                                                                        0.0,
-                                                                    borderSide:
-                                                                        BorderSide(
+                                                                          );
+                                                                        },
+                                                                      ).then((value) =>
+                                                                          safeSetState(
+                                                                              () {}));
+                                                                    },
+                                                                    text:
+                                                                        'Appliance',
+                                                                    icon: Icon(
+                                                                      Icons.add,
                                                                       color: FlutterFlowTheme.of(
                                                                               context)
-                                                                          .secondary,
+                                                                          .primary,
+                                                                      size:
+                                                                          24.0,
                                                                     ),
-                                                                    borderRadius:
-                                                                        BorderRadius.circular(
-                                                                            8.0),
+                                                                    options:
+                                                                        FFButtonOptions(
+                                                                      height:
+                                                                          46.0,
+                                                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                                                          16.0,
+                                                                          0.0,
+                                                                          16.0,
+                                                                          0.0),
+                                                                      iconPadding: EdgeInsetsDirectional.fromSTEB(
+                                                                          0.0,
+                                                                          0.0,
+                                                                          0.0,
+                                                                          0.0),
+                                                                      color: FlutterFlowTheme.of(
+                                                                              context)
+                                                                          .primaryBackground,
+                                                                      textStyle: FlutterFlowTheme.of(
+                                                                              context)
+                                                                          .titleSmall
+                                                                          .override(
+                                                                            fontFamily:
+                                                                                'Manrope',
+                                                                            color:
+                                                                                FlutterFlowTheme.of(context).primary,
+                                                                            letterSpacing:
+                                                                                0.0,
+                                                                          ),
+                                                                      elevation:
+                                                                          0.0,
+                                                                      borderSide:
+                                                                          BorderSide(
+                                                                        color: FlutterFlowTheme.of(context)
+                                                                            .secondary,
+                                                                      ),
+                                                                      borderRadius:
+                                                                          BorderRadius.circular(
+                                                                              8.0),
+                                                                    ),
                                                                   ),
                                                                 ),
                                                                 FFButtonWidget(
@@ -1109,6 +948,141 @@ class _WorkOrderTechniciansViewWidgetState
                                                                             8.0),
                                                                   ),
                                                                 ),
+                                                                if (responsiveVisibility(
+                                                                  context:
+                                                                      context,
+                                                                  tabletLandscape:
+                                                                      false,
+                                                                  desktop:
+                                                                      false,
+                                                                ))
+                                                                  Flexible(
+                                                                    child:
+                                                                        Padding(
+                                                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                                                          12.0,
+                                                                          0.0,
+                                                                          12.0,
+                                                                          0.0),
+                                                                      child:
+                                                                          InkWell(
+                                                                        splashColor:
+                                                                            Colors.transparent,
+                                                                        focusColor:
+                                                                            Colors.transparent,
+                                                                        hoverColor:
+                                                                            Colors.transparent,
+                                                                        highlightColor:
+                                                                            Colors.transparent,
+                                                                        onTap:
+                                                                            () async {
+                                                                          await showModalBottomSheet(
+                                                                            isScrollControlled:
+                                                                                true,
+                                                                            backgroundColor:
+                                                                                Colors.transparent,
+                                                                            enableDrag:
+                                                                                false,
+                                                                            context:
+                                                                                context,
+                                                                            builder:
+                                                                                (context) {
+                                                                              return WebViewAware(
+                                                                                child: GestureDetector(
+                                                                                  onTap: () {
+                                                                                    FocusScope.of(context).unfocus();
+                                                                                    FocusManager.instance.primaryFocus?.unfocus();
+                                                                                  },
+                                                                                  child: Padding(
+                                                                                    padding: MediaQuery.viewInsetsOf(context),
+                                                                                    child: Container(
+                                                                                      height: MediaQuery.sizeOf(context).height * 1.0,
+                                                                                      child: IsCallingWidget(
+                                                                                        customerNumber: valueOrDefault<String>(
+                                                                                          widget.workOrderRow?.customerPhone,
+                                                                                          '123',
+                                                                                        ),
+                                                                                        customerName: valueOrDefault<String>(
+                                                                                          widget.workOrderRow?.customerName,
+                                                                                          'Willian Marciano',
+                                                                                        ),
+                                                                                      ),
+                                                                                    ),
+                                                                                  ),
+                                                                                ),
+                                                                              );
+                                                                            },
+                                                                          ).then((value) =>
+                                                                              safeSetState(() {}));
+                                                                        },
+                                                                        child:
+                                                                            Row(
+                                                                          mainAxisSize:
+                                                                              MainAxisSize.max,
+                                                                          children:
+                                                                              [
+                                                                            FFButtonWidget(
+                                                                              onPressed: () async {
+                                                                                await showModalBottomSheet(
+                                                                                  isScrollControlled: true,
+                                                                                  backgroundColor: Colors.transparent,
+                                                                                  enableDrag: false,
+                                                                                  context: context,
+                                                                                  builder: (context) {
+                                                                                    return WebViewAware(
+                                                                                      child: GestureDetector(
+                                                                                        onTap: () {
+                                                                                          FocusScope.of(context).unfocus();
+                                                                                          FocusManager.instance.primaryFocus?.unfocus();
+                                                                                        },
+                                                                                        child: Padding(
+                                                                                          padding: MediaQuery.viewInsetsOf(context),
+                                                                                          child: Container(
+                                                                                            height: MediaQuery.sizeOf(context).height * 1.0,
+                                                                                            child: IsCallingWidget(
+                                                                                              customerNumber: valueOrDefault<String>(
+                                                                                                widget.workOrderRow?.customerPhone,
+                                                                                                '123',
+                                                                                              ),
+                                                                                              customerName: valueOrDefault<String>(
+                                                                                                widget.workOrderRow?.customerName,
+                                                                                                'Willian Marciano',
+                                                                                              ),
+                                                                                            ),
+                                                                                          ),
+                                                                                        ),
+                                                                                      ),
+                                                                                    );
+                                                                                  },
+                                                                                ).then((value) => safeSetState(() {}));
+                                                                              },
+                                                                              text: 'Call',
+                                                                              icon: Icon(
+                                                                                Icons.phone_in_talk,
+                                                                                size: 15.0,
+                                                                              ),
+                                                                              options: FFButtonOptions(
+                                                                                height: 46.0,
+                                                                                padding: EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
+                                                                                iconPadding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                                                                                color: FlutterFlowTheme.of(context).primaryBackground,
+                                                                                textStyle: FlutterFlowTheme.of(context).titleSmall.override(
+                                                                                      fontFamily: 'Manrope',
+                                                                                      color: FlutterFlowTheme.of(context).primary,
+                                                                                      letterSpacing: 0.0,
+                                                                                    ),
+                                                                                elevation: 0.0,
+                                                                                borderSide: BorderSide(
+                                                                                  color: FlutterFlowTheme.of(context).primary,
+                                                                                ),
+                                                                                borderRadius: BorderRadius.circular(8.0),
+                                                                              ),
+                                                                            ),
+                                                                          ].divide(SizedBox(width: 8.0)),
+                                                                        ),
+                                                                      ),
+                                                                    ),
+                                                                  ),
                                                               ],
                                                             ),
                                                           ),
@@ -3594,9 +3568,11 @@ class _WorkOrderTechniciansViewWidgetState
                                                               ),
                                                             ),
                                                           ),
-                                                        if (_model
-                                                                .showPartRequested ==
-                                                            true)
+                                                        if ((_model.showPartRequested ==
+                                                                true) &&
+                                                            (widget.workOrderRow
+                                                                    ?.technician ==
+                                                                currentUserUid))
                                                           Expanded(
                                                             child: Padding(
                                                               padding:
@@ -3725,7 +3701,7 @@ class _WorkOrderTechniciansViewWidgetState
                                                                                                           child: Text(
                                                                                                             valueOrDefault<String>(
                                                                                                               requestedPartItem.partNumber,
-                                                                                                              ' Part Number None',
+                                                                                                              ' Part Number',
                                                                                                             ).maybeHandleOverflow(
                                                                                                               maxChars: 50,
                                                                                                               replacement: '…',

@@ -280,6 +280,7 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
         FFRoute(
           name: TodayListViewSchedulesWidget.routeName,
           path: TodayListViewSchedulesWidget.routePath,
+          requireAuth: true,
           builder: (context, params) => TodayListViewSchedulesWidget(),
         ),
         FFRoute(
@@ -321,6 +322,16 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           name: PagePartStockMobileWidget.routeName,
           path: PagePartStockMobileWidget.routePath,
           builder: (context, params) => PagePartStockMobileWidget(),
+        ),
+        FFRoute(
+          name: ListAllJobsWidget.routeName,
+          path: ListAllJobsWidget.routePath,
+          builder: (context, params) => ListAllJobsWidget(),
+        ),
+        FFRoute(
+          name: ChatBotSupportWidget.routeName,
+          path: ChatBotSupportWidget.routePath,
+          builder: (context, params) => ChatBotSupportWidget(),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
       observers: [routeObserver],

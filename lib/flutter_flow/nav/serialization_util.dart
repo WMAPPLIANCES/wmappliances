@@ -228,6 +228,8 @@ dynamic deserializeParam<T>(
             return StockPartsRow(data);
           case AiActionLogsRow:
             return AiActionLogsRow(data);
+          case ChatMessagesRow:
+            return ChatMessagesRow(data);
           case CustomersRow:
             return CustomersRow(data);
           case PartsInstalledRow:
@@ -250,6 +252,8 @@ dynamic deserializeParam<T>(
             return JobTrackingRow(data);
           case NotesDispatchRow:
             return NotesDispatchRow(data);
+          case ChatSupportRow:
+            return ChatSupportRow(data);
           case StopNumbersRow:
             return StopNumbersRow(data);
           case TechnicianRoutesRow:

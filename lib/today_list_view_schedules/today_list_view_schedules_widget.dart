@@ -67,7 +67,7 @@ class _TodayListViewSchedulesWidgetState
     context.watch<FFAppState>();
 
     return Title(
-        title: 'todayListViewSchedules',
+        title: 'Schedule Today',
         color: FlutterFlowTheme.of(context).primary.withAlpha(0XFF),
         child: GestureDetector(
           onTap: () {

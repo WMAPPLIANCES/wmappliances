@@ -471,7 +471,7 @@ class _TradutorWidgetState extends State<TradutorWidget> {
                                         'tS45q0QcrDHqHoaWdCDR',
                                         _model.recordedFileBytes1,
                                         'pt',
-                                        'translate',
+                                        'translate pt-BR',
                                         'eleven_multilingual_v2',
                                       );
                                       _model.returnvoice = _model.return127889!;
