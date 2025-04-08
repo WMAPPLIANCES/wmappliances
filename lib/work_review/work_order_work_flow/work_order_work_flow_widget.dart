@@ -12,8 +12,10 @@ import '/flutter_flow/form_field_controller.dart';
 import '/part_components/part_cost_update/part_cost_update_widget.dart';
 import '/part_components/service_type_component/service_type_component_widget.dart';
 import '/work_review/work_status_notes/work_status_notes_widget.dart';
+import '/custom_code/actions/index.dart' as actions;
 import '/flutter_flow/custom_functions.dart' as functions;
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
@@ -80,6 +82,9 @@ class _WorkOrderWorkFlowWidgetState extends State<WorkOrderWorkFlowWidget> {
     _model.textFieldFocusNode ??= FocusNode();
 
     _model.switchValue4 = false;
+    _model.updateDiagnsosisTextController ??= TextEditingController();
+    _model.updateDiagnsosisFocusNode ??= FocusNode();
+
     WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
@@ -544,7 +549,7 @@ class _WorkOrderWorkFlowWidgetState extends State<WorkOrderWorkFlowWidget> {
                                                                                                               safeSetState(() {});
                                                                                                             }),
                                                                                                             Future(() async {
-                                                                                                              _model.totalPartPrice = await PartsTotalPriceTable().queryRows(
+                                                                                                              _model.totalPartPrice = await PartsSummaryTable().queryRows(
                                                                                                                 queryFn: (q) => q.eqOrNull(
                                                                                                                   'work_order_id',
                                                                                                                   valueOrDefault<String>(
@@ -1034,7 +1039,7 @@ class _WorkOrderWorkFlowWidgetState extends State<WorkOrderWorkFlowWidget> {
                                                                                                               safeSetState(() {});
                                                                                                             }),
                                                                                                             Future(() async {
-                                                                                                              _model.totalPartPrice1 = await PartsTotalPriceTable().queryRows(
+                                                                                                              _model.totalPartPrice1 = await PartsSummaryTable().queryRows(
                                                                                                                 queryFn: (q) => q.eqOrNull(
                                                                                                                   'work_order_id',
                                                                                                                   valueOrDefault<String>(
@@ -2254,8 +2259,8 @@ class _WorkOrderWorkFlowWidgetState extends State<WorkOrderWorkFlowWidget> {
                                                                 Builder(
                                                                   builder:
                                                                       (context) {
-                                                                    final totalPartPriceFinal =
-                                                                        _model.totalPartPrice?.toList() ??
+                                                                    final diagnosisPrice =
+                                                                        _model.diagnosisQuery?.toList() ??
                                                                             [];
 
                                                                     return Column(
@@ -2263,11 +2268,11 @@ class _WorkOrderWorkFlowWidgetState extends State<WorkOrderWorkFlowWidget> {
                                                                           MainAxisSize
                                                                               .max,
                                                                       children: List.generate(
-                                                                          totalPartPriceFinal
+                                                                          diagnosisPrice
                                                                               .length,
-                                                                          (totalPartPriceFinalIndex) {
-                                                                        final totalPartPriceFinalItem =
-                                                                            totalPartPriceFinal[totalPartPriceFinalIndex];
+                                                                          (diagnosisPriceIndex) {
+                                                                        final diagnosisPriceItem =
+                                                                            diagnosisPrice[diagnosisPriceIndex];
                                                                         return Expanded(
                                                                           child:
                                                                               Padding(
@@ -2284,105 +2289,139 @@ class _WorkOrderWorkFlowWidgetState extends State<WorkOrderWorkFlowWidget> {
                                                                               ),
                                                                               child: Padding(
                                                                                 padding: EdgeInsetsDirectional.fromSTEB(8.0, 16.0, 8.0, 16.0),
-                                                                                child: Row(
-                                                                                  mainAxisSize: MainAxisSize.max,
-                                                                                  mainAxisAlignment: MainAxisAlignment.center,
-                                                                                  children: [
-                                                                                    Row(
-                                                                                      mainAxisSize: MainAxisSize.max,
-                                                                                      children: [
-                                                                                        Padding(
-                                                                                          padding: EdgeInsetsDirectional.fromSTEB(12.0, 0.0, 0.0, 0.0),
-                                                                                          child: Text(
-                                                                                            valueOrDefault<String>(
-                                                                                              totalPartPriceFinalItem.iten,
-                                                                                              'Appliances',
-                                                                                            ),
-                                                                                            style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                                  fontFamily: 'Manrope',
-                                                                                                  fontSize: 22.0,
-                                                                                                  letterSpacing: 0.0,
-                                                                                                  fontWeight: FontWeight.w600,
-                                                                                                ),
-                                                                                          ),
-                                                                                        ),
-                                                                                        Padding(
-                                                                                          padding: EdgeInsetsDirectional.fromSTEB(12.0, 0.0, 0.0, 0.0),
-                                                                                          child: Text(
-                                                                                            ' |  \$: ${totalPartPriceFinalItem.totalPrice?.toString()}  | ',
-                                                                                            style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                                  fontFamily: 'Manrope',
-                                                                                                  fontSize: 20.0,
-                                                                                                  letterSpacing: 0.0,
-                                                                                                ),
-                                                                                          ),
-                                                                                        ),
-                                                                                        Padding(
-                                                                                          padding: EdgeInsetsDirectional.fromSTEB(12.0, 0.0, 0.0, 0.0),
-                                                                                          child: Text(
-                                                                                            valueOrDefault<String>(
-                                                                                              totalPartPriceFinalItem.typeService,
-                                                                                              'Normal',
-                                                                                            ),
-                                                                                            style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                                  fontFamily: 'Manrope',
-                                                                                                  fontSize: 20.0,
-                                                                                                  letterSpacing: 0.0,
-                                                                                                  fontWeight: FontWeight.w600,
-                                                                                                ),
-                                                                                          ),
-                                                                                        ),
-                                                                                      ],
-                                                                                    ),
-                                                                                    Align(
-                                                                                      alignment: AlignmentDirectional(1.0, 0.0),
-                                                                                      child: Row(
-                                                                                        mainAxisSize: MainAxisSize.max,
-                                                                                        children: [
-                                                                                          if (FFAppState().userRole == 'admin')
-                                                                                            Padding(
-                                                                                              padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 8.0, 0.0),
-                                                                                              child: FlutterFlowIconButton(
-                                                                                                borderRadius: 8.0,
-                                                                                                buttonSize: 40.0,
-                                                                                                fillColor: FlutterFlowTheme.of(context).alternate,
-                                                                                                icon: Icon(
-                                                                                                  Icons.receipt_long_outlined,
-                                                                                                  color: FlutterFlowTheme.of(context).info,
-                                                                                                  size: 24.0,
-                                                                                                ),
-                                                                                                onPressed: () async {
-                                                                                                  await showModalBottomSheet(
-                                                                                                    isScrollControlled: true,
-                                                                                                    backgroundColor: Colors.transparent,
-                                                                                                    context: context,
-                                                                                                    builder: (context) {
-                                                                                                      return WebViewAware(
-                                                                                                        child: GestureDetector(
-                                                                                                          onTap: () {
-                                                                                                            FocusScope.of(context).unfocus();
-                                                                                                            FocusManager.instance.primaryFocus?.unfocus();
-                                                                                                          },
-                                                                                                          child: Padding(
-                                                                                                            padding: MediaQuery.viewInsetsOf(context),
-                                                                                                            child: Container(
-                                                                                                              height: MediaQuery.sizeOf(context).height * 1.0,
-                                                                                                              child: ServiceTypeComponentWidget(
-                                                                                                                serviceTypeParamenter: totalPartPriceFinalItem,
-                                                                                                              ),
-                                                                                                            ),
-                                                                                                          ),
-                                                                                                        ),
-                                                                                                      );
-                                                                                                    },
-                                                                                                  ).then((value) => safeSetState(() {}));
-                                                                                                },
-                                                                                              ),
-                                                                                            ),
-                                                                                        ].divide(SizedBox(width: 16.0)),
+                                                                                child: FutureBuilder<List<PartsSummaryRow>>(
+                                                                                  future: PartsSummaryTable().querySingleRow(
+                                                                                    queryFn: (q) => q.eqOrNull(
+                                                                                      'diagnosis_id',
+                                                                                      valueOrDefault<String>(
+                                                                                        diagnosisPriceItem.diagnosisId,
+                                                                                        '432424',
                                                                                       ),
                                                                                     ),
-                                                                                  ].divide(SizedBox(width: 24.0)),
+                                                                                  ),
+                                                                                  builder: (context, snapshot) {
+                                                                                    // Customize what your widget looks like when it's loading.
+                                                                                    if (!snapshot.hasData) {
+                                                                                      return Center(
+                                                                                        child: SizedBox(
+                                                                                          width: 50.0,
+                                                                                          height: 50.0,
+                                                                                          child: CircularProgressIndicator(
+                                                                                            valueColor: AlwaysStoppedAnimation<Color>(
+                                                                                              FlutterFlowTheme.of(context).primary,
+                                                                                            ),
+                                                                                          ),
+                                                                                        ),
+                                                                                      );
+                                                                                    }
+                                                                                    List<PartsSummaryRow> rowPartsSummaryRowList = snapshot.data!;
+
+                                                                                    final rowPartsSummaryRow = rowPartsSummaryRowList.isNotEmpty ? rowPartsSummaryRowList.first : null;
+
+                                                                                    return Row(
+                                                                                      mainAxisSize: MainAxisSize.max,
+                                                                                      mainAxisAlignment: MainAxisAlignment.center,
+                                                                                      children: [
+                                                                                        Row(
+                                                                                          mainAxisSize: MainAxisSize.max,
+                                                                                          children: [
+                                                                                            Padding(
+                                                                                              padding: EdgeInsetsDirectional.fromSTEB(12.0, 0.0, 0.0, 0.0),
+                                                                                              child: Text(
+                                                                                                valueOrDefault<String>(
+                                                                                                  diagnosisPriceItem.item,
+                                                                                                  'Appliances',
+                                                                                                ),
+                                                                                                style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                                      fontFamily: 'Manrope',
+                                                                                                      fontSize: 22.0,
+                                                                                                      letterSpacing: 0.0,
+                                                                                                      fontWeight: FontWeight.w600,
+                                                                                                    ),
+                                                                                              ),
+                                                                                            ),
+                                                                                            Padding(
+                                                                                              padding: EdgeInsetsDirectional.fromSTEB(12.0, 0.0, 0.0, 0.0),
+                                                                                              child: Text(
+                                                                                                ' |  \$: ${valueOrDefault<String>(
+                                                                                                  rowPartsSummaryRow?.totalSoldPrice.toString(),
+                                                                                                  '0.00',
+                                                                                                )}  | ',
+                                                                                                style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                                      fontFamily: 'Manrope',
+                                                                                                      fontSize: 20.0,
+                                                                                                      letterSpacing: 0.0,
+                                                                                                    ),
+                                                                                              ),
+                                                                                            ),
+                                                                                            Padding(
+                                                                                              padding: EdgeInsetsDirectional.fromSTEB(12.0, 0.0, 0.0, 0.0),
+                                                                                              child: Text(
+                                                                                                valueOrDefault<String>(
+                                                                                                  diagnosisPriceItem.repairCostType,
+                                                                                                  'Normal',
+                                                                                                ),
+                                                                                                style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                                      fontFamily: 'Manrope',
+                                                                                                      fontSize: 20.0,
+                                                                                                      letterSpacing: 0.0,
+                                                                                                      fontWeight: FontWeight.w600,
+                                                                                                    ),
+                                                                                              ),
+                                                                                            ),
+                                                                                          ],
+                                                                                        ),
+                                                                                        Align(
+                                                                                          alignment: AlignmentDirectional(1.0, 0.0),
+                                                                                          child: Row(
+                                                                                            mainAxisSize: MainAxisSize.max,
+                                                                                            children: [
+                                                                                              if (FFAppState().userRole == 'admin')
+                                                                                                Padding(
+                                                                                                  padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 8.0, 0.0),
+                                                                                                  child: FlutterFlowIconButton(
+                                                                                                    borderRadius: 8.0,
+                                                                                                    buttonSize: 40.0,
+                                                                                                    fillColor: FlutterFlowTheme.of(context).alternate,
+                                                                                                    icon: Icon(
+                                                                                                      Icons.receipt_long_outlined,
+                                                                                                      color: FlutterFlowTheme.of(context).info,
+                                                                                                      size: 24.0,
+                                                                                                    ),
+                                                                                                    onPressed: () async {
+                                                                                                      await showModalBottomSheet(
+                                                                                                        isScrollControlled: true,
+                                                                                                        backgroundColor: Colors.transparent,
+                                                                                                        context: context,
+                                                                                                        builder: (context) {
+                                                                                                          return WebViewAware(
+                                                                                                            child: GestureDetector(
+                                                                                                              onTap: () {
+                                                                                                                FocusScope.of(context).unfocus();
+                                                                                                                FocusManager.instance.primaryFocus?.unfocus();
+                                                                                                              },
+                                                                                                              child: Padding(
+                                                                                                                padding: MediaQuery.viewInsetsOf(context),
+                                                                                                                child: Container(
+                                                                                                                  height: MediaQuery.sizeOf(context).height * 1.0,
+                                                                                                                  child: ServiceTypeComponentWidget(
+                                                                                                                    serviceTypeParamenter: diagnosisPriceItem,
+                                                                                                                  ),
+                                                                                                                ),
+                                                                                                              ),
+                                                                                                            ),
+                                                                                                          );
+                                                                                                        },
+                                                                                                      ).then((value) => safeSetState(() {}));
+                                                                                                    },
+                                                                                                  ),
+                                                                                                ),
+                                                                                            ].divide(SizedBox(width: 16.0)),
+                                                                                          ),
+                                                                                        ),
+                                                                                      ].divide(SizedBox(width: 24.0)),
+                                                                                    );
+                                                                                  },
                                                                                 ),
                                                                               ),
                                                                             ),
@@ -3365,6 +3404,16 @@ class _WorkOrderWorkFlowWidgetState extends State<WorkOrderWorkFlowWidget> {
                                                                       .addNoteDispatchTextController,
                                                                   focusNode: _model
                                                                       .addNoteDispatchFocusNode,
+                                                                  onChanged: (_) =>
+                                                                      EasyDebounce
+                                                                          .debounce(
+                                                                    '_model.addNoteDispatchTextController',
+                                                                    Duration(
+                                                                        milliseconds:
+                                                                            2000),
+                                                                    () => safeSetState(
+                                                                        () {}),
+                                                                  ),
                                                                   autofocus:
                                                                       false,
                                                                   obscureText:
@@ -3908,6 +3957,16 @@ class _WorkOrderWorkFlowWidgetState extends State<WorkOrderWorkFlowWidget> {
                                                                       .textController2,
                                                                   focusNode: _model
                                                                       .textFieldFocusNode,
+                                                                  onChanged: (_) =>
+                                                                      EasyDebounce
+                                                                          .debounce(
+                                                                    '_model.textController2',
+                                                                    Duration(
+                                                                        milliseconds:
+                                                                            2000),
+                                                                    () => safeSetState(
+                                                                        () {}),
+                                                                  ),
                                                                   autofocus:
                                                                       false,
                                                                   obscureText:
@@ -4860,7 +4919,7 @@ class _WorkOrderWorkFlowWidgetState extends State<WorkOrderWorkFlowWidget> {
                                                                           ),
                                                                           Text(
                                                                             valueOrDefault<String>(
-                                                                              _model.viewDiagnosis?.createBy,
+                                                                              _model.viewDiagnosis?.technicianName,
                                                                               'Willian Marciano',
                                                                             ),
                                                                             style: FlutterFlowTheme.of(context).bodyMedium.override(
@@ -5398,6 +5457,214 @@ class _WorkOrderWorkFlowWidgetState extends State<WorkOrderWorkFlowWidget> {
                                                                     ],
                                                                   ),
                                                                 ),
+                                                              ),
+                                                            ),
+                                                            Expanded(
+                                                              child: Padding(
+                                                                padding:
+                                                                    EdgeInsetsDirectional
+                                                                        .fromSTEB(
+                                                                            8.0,
+                                                                            0.0,
+                                                                            8.0,
+                                                                            0.0),
+                                                                child:
+                                                                    TextFormField(
+                                                                  controller: _model
+                                                                      .updateDiagnsosisTextController,
+                                                                  focusNode: _model
+                                                                      .updateDiagnsosisFocusNode,
+                                                                  onChanged: (_) =>
+                                                                      EasyDebounce
+                                                                          .debounce(
+                                                                    '_model.updateDiagnsosisTextController',
+                                                                    Duration(
+                                                                        milliseconds:
+                                                                            2000),
+                                                                    () => safeSetState(
+                                                                        () {}),
+                                                                  ),
+                                                                  autofocus:
+                                                                      false,
+                                                                  obscureText:
+                                                                      false,
+                                                                  decoration:
+                                                                      InputDecoration(
+                                                                    hintText:
+                                                                        'Update Diagnosis!!!',
+                                                                    hintStyle: FlutterFlowTheme.of(
+                                                                            context)
+                                                                        .bodyMedium
+                                                                        .override(
+                                                                          fontFamily:
+                                                                              'Manrope',
+                                                                          letterSpacing:
+                                                                              0.0,
+                                                                        ),
+                                                                    enabledBorder:
+                                                                        OutlineInputBorder(
+                                                                      borderSide:
+                                                                          BorderSide(
+                                                                        color: FlutterFlowTheme.of(context)
+                                                                            .primaryBackground,
+                                                                        width:
+                                                                            1.0,
+                                                                      ),
+                                                                      borderRadius:
+                                                                          BorderRadius.circular(
+                                                                              8.0),
+                                                                    ),
+                                                                    focusedBorder:
+                                                                        OutlineInputBorder(
+                                                                      borderSide:
+                                                                          BorderSide(
+                                                                        color: Color(
+                                                                            0x00000000),
+                                                                        width:
+                                                                            1.0,
+                                                                      ),
+                                                                      borderRadius:
+                                                                          BorderRadius.circular(
+                                                                              8.0),
+                                                                    ),
+                                                                    errorBorder:
+                                                                        OutlineInputBorder(
+                                                                      borderSide:
+                                                                          BorderSide(
+                                                                        color: Color(
+                                                                            0x00000000),
+                                                                        width:
+                                                                            1.0,
+                                                                      ),
+                                                                      borderRadius:
+                                                                          BorderRadius.circular(
+                                                                              8.0),
+                                                                    ),
+                                                                    focusedErrorBorder:
+                                                                        OutlineInputBorder(
+                                                                      borderSide:
+                                                                          BorderSide(
+                                                                        color: Color(
+                                                                            0x00000000),
+                                                                        width:
+                                                                            1.0,
+                                                                      ),
+                                                                      borderRadius:
+                                                                          BorderRadius.circular(
+                                                                              8.0),
+                                                                    ),
+                                                                    filled:
+                                                                        true,
+                                                                    fillColor: FlutterFlowTheme.of(
+                                                                            context)
+                                                                        .primaryBackground,
+                                                                    suffixIcon:
+                                                                        Icon(
+                                                                      Icons
+                                                                          .send,
+                                                                    ),
+                                                                  ),
+                                                                  style: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .bodyMedium
+                                                                      .override(
+                                                                        fontFamily:
+                                                                            'Manrope',
+                                                                        letterSpacing:
+                                                                            0.0,
+                                                                      ),
+                                                                  maxLines: 6,
+                                                                  minLines: 3,
+                                                                  validator: _model
+                                                                      .updateDiagnsosisTextControllerValidator
+                                                                      .asValidator(
+                                                                          context),
+                                                                ),
+                                                              ),
+                                                            ),
+                                                            Expanded(
+                                                              child: Row(
+                                                                mainAxisSize:
+                                                                    MainAxisSize
+                                                                        .max,
+                                                                mainAxisAlignment:
+                                                                    MainAxisAlignment
+                                                                        .spaceBetween,
+                                                                children: [
+                                                                  Expanded(
+                                                                    child:
+                                                                        Align(
+                                                                      alignment:
+                                                                          AlignmentDirectional(
+                                                                              0.0,
+                                                                              0.0),
+                                                                      child:
+                                                                          FFButtonWidget(
+                                                                        onPressed: (_model.updateDiagnsosisTextController.text == '')
+                                                                            ? null
+                                                                            : () async {
+                                                                                await actions.n8nApiCallDiagnosisUpdateManager(
+                                                                                  'https://webhook.wmappliances.cloud/webhook/updateDiagnosisManager',
+                                                                                  valueOrDefault<String>(
+                                                                                    _model.workOrderQuery?.workOrderId,
+                                                                                    '003002121',
+                                                                                  ),
+                                                                                  valueOrDefault<String>(
+                                                                                    _model.viewDiagnosis?.failureSymptom,
+                                                                                    'failure_symptom',
+                                                                                  ),
+                                                                                  valueOrDefault<String>(
+                                                                                    _model.viewDiagnosis?.solutionRequest,
+                                                                                    'solution_request',
+                                                                                  ),
+                                                                                  _model.updateDiagnsosisTextController.text,
+                                                                                  '',
+                                                                                  FFAppState().diagnosisId,
+                                                                                );
+                                                                                safeSetState(() {
+                                                                                  _model.updateDiagnsosisTextController?.clear();
+                                                                                });
+
+                                                                                safeSetState(() {});
+                                                                              },
+                                                                        text:
+                                                                            'Update Diagnosis',
+                                                                        options:
+                                                                            FFButtonOptions(
+                                                                          height:
+                                                                              40.0,
+                                                                          padding: EdgeInsetsDirectional.fromSTEB(
+                                                                              16.0,
+                                                                              0.0,
+                                                                              16.0,
+                                                                              0.0),
+                                                                          iconPadding: EdgeInsetsDirectional.fromSTEB(
+                                                                              0.0,
+                                                                              0.0,
+                                                                              0.0,
+                                                                              0.0),
+                                                                          color:
+                                                                              FlutterFlowTheme.of(context).secondary,
+                                                                          textStyle: FlutterFlowTheme.of(context)
+                                                                              .titleSmall
+                                                                              .override(
+                                                                                fontFamily: 'Manrope',
+                                                                                color: Colors.white,
+                                                                                letterSpacing: 0.0,
+                                                                              ),
+                                                                          elevation:
+                                                                              0.0,
+                                                                          borderRadius:
+                                                                              BorderRadius.circular(8.0),
+                                                                          disabledColor:
+                                                                              FlutterFlowTheme.of(context).secondaryText,
+                                                                          disabledTextColor:
+                                                                              FlutterFlowTheme.of(context).primaryText,
+                                                                        ),
+                                                                      ),
+                                                                    ),
+                                                                  ),
+                                                                ],
                                                               ),
                                                             ),
                                                           ].divide(SizedBox(
@@ -6365,7 +6632,6 @@ class _WorkOrderWorkFlowWidgetState extends State<WorkOrderWorkFlowWidget> {
                                                                                                       ).then((value) => safeSetState(() {}));
 
                                                                                                       safeSetState(() {});
-                                                                                                      await Future.delayed(const Duration(milliseconds: 5000));
 
                                                                                                       safeSetState(() {});
                                                                                                     },
@@ -6786,6 +7052,7 @@ class _WorkOrderWorkFlowWidgetState extends State<WorkOrderWorkFlowWidget> {
                                                                             child:
                                                                                 Column(
                                                                               mainAxisSize: MainAxisSize.max,
+                                                                              crossAxisAlignment: CrossAxisAlignment.start,
                                                                               children: [
                                                                                 Column(
                                                                                   mainAxisSize: MainAxisSize.max,
@@ -6870,6 +7137,7 @@ class _WorkOrderWorkFlowWidgetState extends State<WorkOrderWorkFlowWidget> {
                                                                             child:
                                                                                 Column(
                                                                               mainAxisSize: MainAxisSize.max,
+                                                                              crossAxisAlignment: CrossAxisAlignment.start,
                                                                               children: [
                                                                                 Column(
                                                                                   mainAxisSize: MainAxisSize.max,

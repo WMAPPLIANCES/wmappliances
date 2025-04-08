@@ -498,6 +498,48 @@ class _VoiceDiagnosisWidgetState extends State<VoiceDiagnosisWidget> {
                                   _model.dropDownValue == '')
                               ? null
                               : () async {
+                                  Navigator.pop(context);
+                                },
+                          text: 'cancel',
+                          icon: Icon(
+                            Icons.save_rounded,
+                            color: FlutterFlowTheme.of(context).info,
+                            size: 15.0,
+                          ),
+                          options: FFButtonOptions(
+                            width: 120.0,
+                            height: 40.0,
+                            padding: EdgeInsets.all(8.0),
+                            iconPadding: EdgeInsetsDirectional.fromSTEB(
+                                0.0, 0.0, 0.0, 0.0),
+                            color: FlutterFlowTheme.of(context).secondaryText,
+                            textStyle: FlutterFlowTheme.of(context)
+                                .bodyMedium
+                                .override(
+                                  fontFamily: 'Manrope',
+                                  color: FlutterFlowTheme.of(context).info,
+                                  letterSpacing: 0.0,
+                                ),
+                            elevation: 2.0,
+                            borderSide: BorderSide(
+                              color: Colors.transparent,
+                            ),
+                            borderRadius: BorderRadius.circular(20.0),
+                            disabledColor:
+                                FlutterFlowTheme.of(context).secondaryText,
+                            disabledTextColor:
+                                FlutterFlowTheme.of(context).primaryText,
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding:
+                            EdgeInsetsDirectional.fromSTEB(0.0, 16.0, 0.0, 8.0),
+                        child: FFButtonWidget(
+                          onPressed: (_model.dropDownValue == null ||
+                                  _model.dropDownValue == '')
+                              ? null
+                              : () async {
                                   await actions.n8nApiCallDiagnosis(
                                     'https://webhook.wmappliances.cloud/webhook/voiceDiagnosis',
                                     _model.choiceChipsValue,

@@ -395,16 +395,18 @@ class _WorkOrderTechniciansViewWidgetState
                                                                             Row(
                                                                               mainAxisSize: MainAxisSize.max,
                                                                               children: [
-                                                                                Text(
-                                                                                  '${valueOrDefault<String>(
-                                                                                    widget.workOrderRow?.address,
-                                                                                    'address',
-                                                                                  )}  ',
-                                                                                  style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                        fontFamily: 'Manrope',
-                                                                                        fontSize: 14.0,
-                                                                                        letterSpacing: 0.0,
-                                                                                      ),
+                                                                                Expanded(
+                                                                                  child: Text(
+                                                                                    '${valueOrDefault<String>(
+                                                                                      widget.workOrderRow?.address,
+                                                                                      'address',
+                                                                                    )}  ',
+                                                                                    style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                          fontFamily: 'Manrope',
+                                                                                          fontSize: 14.0,
+                                                                                          letterSpacing: 0.0,
+                                                                                        ),
+                                                                                  ),
                                                                                 ),
                                                                                 if (widget.workOrderRow?.apartmentNumber != null && widget.workOrderRow?.apartmentNumber != '')
                                                                                   Text(

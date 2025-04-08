@@ -488,7 +488,7 @@ class _WorkOrderWidgetState extends State<WorkOrderWidget> {
                                                                       .fromSTEB(
                                                                           12.0,
                                                                           0.0,
-                                                                          36.0,
+                                                                          12.0,
                                                                           0.0),
                                                               child: Row(
                                                                 mainAxisSize:
@@ -496,7 +496,7 @@ class _WorkOrderWidgetState extends State<WorkOrderWidget> {
                                                                         .max,
                                                                 mainAxisAlignment:
                                                                     MainAxisAlignment
-                                                                        .spaceBetween,
+                                                                        .start,
                                                                 children: [
                                                                   InkWell(
                                                                     splashColor:
@@ -541,18 +541,24 @@ class _WorkOrderWidgetState extends State<WorkOrderWidget> {
                                                                           size:
                                                                               35.0,
                                                                         ),
-                                                                        Text(
-                                                                          '+1 ${valueOrDefault<String>(
-                                                                            _model.workOrderQueryOnPage?.firstOrNull?.customerPhone,
-                                                                            '5109003030',
-                                                                          )}',
-                                                                          style: FlutterFlowTheme.of(context)
-                                                                              .bodyMedium
-                                                                              .override(
-                                                                                fontFamily: 'Manrope',
-                                                                                fontSize: 22.0,
-                                                                                letterSpacing: 0.0,
-                                                                              ),
+                                                                        Padding(
+                                                                          padding: EdgeInsetsDirectional.fromSTEB(
+                                                                              0.0,
+                                                                              0.0,
+                                                                              36.0,
+                                                                              0.0),
+                                                                          child:
+                                                                              Text(
+                                                                            '+1 ${valueOrDefault<String>(
+                                                                              _model.workOrderQueryOnPage?.firstOrNull?.customerPhone,
+                                                                              '5109003030',
+                                                                            )}',
+                                                                            style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                  fontFamily: 'Manrope',
+                                                                                  fontSize: 22.0,
+                                                                                  letterSpacing: 0.0,
+                                                                                ),
+                                                                          ),
                                                                         ),
                                                                       ].divide(SizedBox(
                                                                               width: 8.0)),
@@ -1121,8 +1127,8 @@ class _WorkOrderWidgetState extends State<WorkOrderWidget> {
                                                                                         ),
                                                                                         Text(
                                                                                           valueOrDefault<String>(
-                                                                                            previusJobItem.tenantName,
-                                                                                            'Willian Marciano',
+                                                                                            previusJobItem.technician,
+                                                                                            'Not Assing',
                                                                                           ),
                                                                                           style: FlutterFlowTheme.of(context).bodyMedium.override(
                                                                                                 fontFamily: 'Manrope',

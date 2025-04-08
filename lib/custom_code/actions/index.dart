@@ -17,3 +17,6 @@ export 'get_all_technician_locations.dart' show getAllTechnicianLocations;
 export 'get_technician_location_action.dart' show getTechnicianLocationAction;
 export 'update_technician_location.dart' show updateTechnicianLocation;
 export 'phone_call_to_customer.dart' show phoneCallToCustomer;
+export 'n8n_api_call_diagnosis_update_manager.dart'
+    show n8nApiCallDiagnosisUpdateManager;
+export 'start_background_location.dart' show startBackgroundLocation;

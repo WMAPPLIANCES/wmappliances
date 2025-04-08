@@ -168,4 +168,8 @@ class DiagnosesRow extends SupabaseDataRow {
 
   bool? get schematicView => getField<bool>('schematic_view');
   set schematicView(bool? value) => setField<bool>('schematic_view', value);
+
+  String? get repairCostType => getField<String>('repair_cost_type');
+  set repairCostType(String? value) =>
+      setField<String>('repair_cost_type', value);
 }

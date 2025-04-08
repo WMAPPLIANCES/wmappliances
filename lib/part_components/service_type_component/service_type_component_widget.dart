@@ -14,7 +14,7 @@ class ServiceTypeComponentWidget extends StatefulWidget {
     required this.serviceTypeParamenter,
   });
 
-  final PartsTotalPriceRow? serviceTypeParamenter;
+  final DiagnosesRow? serviceTypeParamenter;
 
   @override
   State<ServiceTypeComponentWidget> createState() =>
@@ -45,7 +45,7 @@ class _ServiceTypeComponentWidgetState
 
     _model.textController2 ??= TextEditingController(
         text: valueOrDefault<String>(
-      widget.serviceTypeParamenter?.iten,
+      widget.serviceTypeParamenter?.item,
       'Appliance',
     ));
     _model.textFieldFocusNode2 ??= FocusNode();
@@ -349,18 +349,6 @@ class _ServiceTypeComponentWidgetState
                             valueOrDefault<String>(
                               widget.serviceTypeParamenter?.diagnosisId,
                               '003002121',
-                            ),
-                          ),
-                        );
-                        await PartsTotalPriceTable().update(
-                          data: {
-                            'type_service': _model.choiceChipsValue,
-                          },
-                          matchingRows: (rows) => rows.eqOrNull(
-                            'diagnosis_id',
-                            valueOrDefault<String>(
-                              widget.serviceTypeParamenter?.diagnosisId,
-                              '003001212',
                             ),
                           ),
                         );

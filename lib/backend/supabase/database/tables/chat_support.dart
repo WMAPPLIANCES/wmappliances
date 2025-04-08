@@ -19,4 +19,7 @@ class ChatSupportRow extends SupabaseDataRow {
 
   DateTime? get startedAt => getField<DateTime>('started_at');
   set startedAt(DateTime? value) => setField<DateTime>('started_at', value);
+
+  String? get sessionId => getField<String>('sessionId');
+  set sessionId(String? value) => setField<String>('sessionId', value);
 }

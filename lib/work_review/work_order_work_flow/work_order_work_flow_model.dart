@@ -127,7 +127,7 @@ class WorkOrderWorkFlowModel extends FlutterFlowModel<WorkOrderWorkFlowWidget> {
   // Stores action output result for [Backend Call - Query Rows] action in Button widget.
   List<WorkOrdersRow>? workOderQuery;
   // Stores action output result for [Backend Call - Query Rows] action in Button widget.
-  List<PartsTotalPriceRow>? totalPartPrice;
+  List<PartsSummaryRow>? totalPartPrice;
   // Stores action output result for [Backend Call - Query Rows] action in Button widget.
   List<PartSummaryAggregatedRow>? partsRequestedQuery;
   // Stores action output result for [Backend Call - Query Rows] action in Button widget.
@@ -141,7 +141,7 @@ class WorkOrderWorkFlowModel extends FlutterFlowModel<WorkOrderWorkFlowWidget> {
   // Stores action output result for [Backend Call - Query Rows] action in Button widget.
   List<WorkOrdersRow>? workOderQuery1;
   // Stores action output result for [Backend Call - Query Rows] action in Button widget.
-  List<PartsTotalPriceRow>? totalPartPrice1;
+  List<PartsSummaryRow>? totalPartPrice1;
   // Stores action output result for [Backend Call - Query Rows] action in Button widget.
   List<PartSummaryAggregatedRow>? partsRequestedQuery1;
   // Stores action output result for [Backend Call - Query Rows] action in Button widget.
@@ -185,6 +185,11 @@ class WorkOrderWorkFlowModel extends FlutterFlowModel<WorkOrderWorkFlowWidget> {
   String? Function(BuildContext, String?)? textController2Validator;
   // State field(s) for Switch widget.
   bool? switchValue4;
+  // State field(s) for UpdateDiagnsosis widget.
+  FocusNode? updateDiagnsosisFocusNode;
+  TextEditingController? updateDiagnsosisTextController;
+  String? Function(BuildContext, String?)?
+      updateDiagnsosisTextControllerValidator;
   // State field(s) for Carousel widget.
   CarouselSliderController? carouselController;
   int carouselCurrentIndex = 1;
@@ -206,6 +211,9 @@ class WorkOrderWorkFlowModel extends FlutterFlowModel<WorkOrderWorkFlowWidget> {
 
     textFieldFocusNode?.dispose();
     textController2?.dispose();
+
+    updateDiagnsosisFocusNode?.dispose();
+    updateDiagnsosisTextController?.dispose();
 
     navbarBottonModel.dispose();
   }
