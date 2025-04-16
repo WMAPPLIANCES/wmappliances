@@ -195,6 +195,11 @@ class FFAppState extends ChangeNotifier {
       _numColMobile =
           await secureStorage.getInt('ff_numColMobile') ?? _numColMobile;
     });
+    await _safeInitAsync(() async {
+      _addApplianceWhUrl =
+          await secureStorage.getString('ff_addApplianceWhUrl') ??
+              _addApplianceWhUrl;
+    });
   }
 
   void update(VoidCallback callback) {
@@ -1048,6 +1053,30 @@ class FFAppState extends ChangeNotifier {
 
   void deleteNumColMobile() {
     secureStorage.delete(key: 'ff_numColMobile');
+  }
+
+  bool _isRecord = false;
+  bool get isRecord => _isRecord;
+  set isRecord(bool value) {
+    _isRecord = value;
+  }
+
+  bool _switchStartReset = false;
+  bool get switchStartReset => _switchStartReset;
+  set switchStartReset(bool value) {
+    _switchStartReset = value;
+  }
+
+  String _addApplianceWhUrl =
+      'https://webhook.wmappliances.cloud/webhook/addAppliance';
+  String get addApplianceWhUrl => _addApplianceWhUrl;
+  set addApplianceWhUrl(String value) {
+    _addApplianceWhUrl = value;
+    secureStorage.setString('ff_addApplianceWhUrl', value);
+  }
+
+  void deleteAddApplianceWhUrl() {
+    secureStorage.delete(key: 'ff_addApplianceWhUrl');
   }
 }
 

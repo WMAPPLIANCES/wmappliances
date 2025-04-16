@@ -1,3 +1,4 @@
+import '/backend/supabase/supabase.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'update_modelnumber_serial_widget.dart'
     show UpdateModelnumberSerialWidget;
@@ -20,6 +21,10 @@ class UpdateModelnumberSerialModel
   FocusNode? textFieldFocusNode3;
   TextEditingController? textController3;
   String? Function(BuildContext, String?)? textController3Validator;
+  // Stores action output result for [Backend Call - Update Row(s)] action in Button widget.
+  List<DiagnosesRow>? bottomSheetUpdated;
+  // Stores action output result for [Backend Call - Query Rows] action in Button widget.
+  List<DiagnosesRow>? queryUpdateModel;
 
   @override
   void initState(BuildContext context) {}

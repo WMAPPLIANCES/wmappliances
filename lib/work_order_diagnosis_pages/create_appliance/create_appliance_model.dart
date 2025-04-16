@@ -46,14 +46,14 @@ class CreateApplianceModel extends FlutterFlowModel<CreateApplianceWidget> {
       FFUploadedFile(bytes: Uint8List.fromList([]));
   String uploadedFileUrl1 = '';
 
-  // Stores action output result for [Gemini - Text From Image] action in Container widget.
+  // Stores action output result for [Gemini - Text From Image] action in Button widget.
   String? responseModelNumber;
   bool isDataUploading2 = false;
   FFUploadedFile uploadedLocalFile2 =
       FFUploadedFile(bytes: Uint8List.fromList([]));
   String uploadedFileUrl2 = '';
 
-  // Stores action output result for [Gemini - Text From Image] action in Container widget.
+  // Stores action output result for [Gemini - Text From Image] action in Button widget.
   String? responseAppliances;
   // State field(s) for DropDown widget.
   String? dropDownValue;

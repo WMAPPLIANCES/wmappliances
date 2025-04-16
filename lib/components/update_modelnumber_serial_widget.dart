@@ -1,9 +1,11 @@
 import '/backend/supabase/supabase.dart';
+import '/components/diagnosis_view_b_s_widget.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:webviewx_plus/webviewx_plus.dart';
 import 'update_modelnumber_serial_model.dart';
 export 'update_modelnumber_serial_model.dart';
 
@@ -71,7 +73,7 @@ class _UpdateModelnumberSerialWidgetState
     context.watch<FFAppState>();
 
     return Padding(
-      padding: EdgeInsets.all(36.0),
+      padding: EdgeInsets.all(6.0),
       child: Container(
         width: double.infinity,
         decoration: BoxDecoration(
@@ -327,7 +329,40 @@ class _UpdateModelnumberSerialWidgetState
                             ),
                           ),
                         );
+                        await Future.delayed(
+                            const Duration(milliseconds: 1000));
                         Navigator.pop(context);
+                        _model.queryUpdateModel =
+                            await DiagnosesTable().queryRows(
+                          queryFn: (q) => q.eqOrNull(
+                            'diagnosis_id',
+                            valueOrDefault<String>(
+                              widget.diagnosisIDParam?.diagnosisId,
+                              '14423',
+                            ),
+                          ),
+                        );
+                        await showModalBottomSheet(
+                          isScrollControlled: true,
+                          backgroundColor: Colors.transparent,
+                          enableDrag: false,
+                          context: context,
+                          builder: (context) {
+                            return WebViewAware(
+                              child: Padding(
+                                padding: MediaQuery.viewInsetsOf(context),
+                                child: Container(
+                                  height:
+                                      MediaQuery.sizeOf(context).height * 1.0,
+                                  child: DiagnosisViewBSWidget(
+                                    diagnosisParameterWorkId:
+                                        _model.queryUpdateModel!.firstOrNull!,
+                                  ),
+                                ),
+                              ),
+                            );
+                          },
+                        ).then((value) => safeSetState(() {}));
 
                         safeSetState(() {});
                       },

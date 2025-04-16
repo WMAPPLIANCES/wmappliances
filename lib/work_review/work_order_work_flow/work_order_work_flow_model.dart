@@ -118,6 +118,12 @@ class WorkOrderWorkFlowModel extends FlutterFlowModel<WorkOrderWorkFlowWidget> {
 
   String scheduleID = '12025';
 
+  Color diagnosisIconColor = Color(4289512480);
+
+  String diagnosisId = '1443432';
+
+  Color paymentColor = Color(4289512480);
+
   ///  State fields for stateful widgets in this page.
 
   // Model for sideMenuView component.
@@ -131,13 +137,13 @@ class WorkOrderWorkFlowModel extends FlutterFlowModel<WorkOrderWorkFlowWidget> {
   // Stores action output result for [Backend Call - Query Rows] action in Button widget.
   List<PartSummaryAggregatedRow>? partsRequestedQuery;
   // Stores action output result for [Backend Call - Query Rows] action in Button widget.
-  List<NotesDispatchRow>? notesDispatchQueryMain;
+  List<PartsRow>? partsMainQuery;
   // Stores action output result for [Backend Call - Query Rows] action in Button widget.
   List<NotesRow>? notesQueryMain;
   // Stores action output result for [Backend Call - Query Rows] action in Button widget.
-  List<PartsRow>? partsMainQuery;
+  List<NotesDispatchRow>? notesDispatchQueryMain;
   // Stores action output result for [Backend Call - Query Rows] action in Button widget.
-  List<DiagnosesRow>? diagnosisQueryDispa;
+  List<DiagnosesRow>? diagnosisQueryDispa1;
   // Stores action output result for [Backend Call - Query Rows] action in Button widget.
   List<WorkOrdersRow>? workOderQuery1;
   // Stores action output result for [Backend Call - Query Rows] action in Button widget.
@@ -160,14 +166,6 @@ class WorkOrderWorkFlowModel extends FlutterFlowModel<WorkOrderWorkFlowWidget> {
       appointmentStatusValueController?.value?.firstOrNull;
   set appointmentStatusValue(String? val) =>
       appointmentStatusValueController?.value = val != null ? [val] : [];
-  // State field(s) for SwitchListTile widget.
-  bool? switchListTileValue1;
-  // State field(s) for SwitchListTile widget.
-  bool? switchListTileValue2;
-  // State field(s) for SwitchListTile widget.
-  bool? switchListTileValue3;
-  // State field(s) for SwitchListTile widget.
-  bool? switchListTileValue4;
   // Stores action output result for [Backend Call - Query Rows] action in Diagnosis widget.
   List<PartsRow>? partsMainQueryOnUpdate;
   // State field(s) for AddNoteDispatch widget.
@@ -179,10 +177,11 @@ class WorkOrderWorkFlowModel extends FlutterFlowModel<WorkOrderWorkFlowWidget> {
   bool? switchValue3;
   // Stores action output result for [Backend Call - Insert Row] action in Button widget.
   NotesDispatchRow? disptchnotes;
-  // State field(s) for TextField widget.
-  FocusNode? textFieldFocusNode;
-  TextEditingController? textController2;
-  String? Function(BuildContext, String?)? textController2Validator;
+  // State field(s) for TextFieldAddNotesNotmal widget.
+  FocusNode? textFieldAddNotesNotmalFocusNode;
+  TextEditingController? textFieldAddNotesNotmalTextController;
+  String? Function(BuildContext, String?)?
+      textFieldAddNotesNotmalTextControllerValidator;
   // State field(s) for Switch widget.
   bool? switchValue4;
   // State field(s) for UpdateDiagnsosis widget.
@@ -190,10 +189,24 @@ class WorkOrderWorkFlowModel extends FlutterFlowModel<WorkOrderWorkFlowWidget> {
   TextEditingController? updateDiagnsosisTextController;
   String? Function(BuildContext, String?)?
       updateDiagnsosisTextControllerValidator;
+  // Stores action output result for [Backend Call - Query Rows] action in Button widget.
+  List<DiagnosesRow>? viewDiagnosisUpdateAiUpdate;
   // State field(s) for Carousel widget.
   CarouselSliderController? carouselController;
   int carouselCurrentIndex = 1;
 
+  // Stores action output result for [Backend Call - Query Rows] action in partPaidWM widget.
+  List<PartsRow>? partQueryUpdateWmPart;
+  // Stores action output result for [Backend Call - Query Rows] action in Button widget.
+  List<PartsRow>? partQueryUpdateApproved;
+  // Stores action output result for [Backend Call - Query Rows] action in Button widget.
+  List<PartsRow>? partQueryUpdateDenied;
+  // Stores action output result for [Backend Call - Update Row(s)] action in Button widget.
+  List<PartsRow>? rowUpdateParts;
+  // Stores action output result for [Backend Call - Query Rows] action in Button widget.
+  List<PartsRow>? partQueryUpdateRequested;
+  // Stores action output result for [Backend Call - Query Rows] action in Button widget.
+  List<PartsRow>? partQueryUpdateArrived;
   // Model for navbarBotton component.
   late NavbarBottonModel navbarBottonModel;
 
@@ -209,8 +222,8 @@ class WorkOrderWorkFlowModel extends FlutterFlowModel<WorkOrderWorkFlowWidget> {
     addNoteDispatchFocusNode?.dispose();
     addNoteDispatchTextController?.dispose();
 
-    textFieldFocusNode?.dispose();
-    textController2?.dispose();
+    textFieldAddNotesNotmalFocusNode?.dispose();
+    textFieldAddNotesNotmalTextController?.dispose();
 
     updateDiagnsosisFocusNode?.dispose();
     updateDiagnsosisTextController?.dispose();

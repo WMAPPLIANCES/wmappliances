@@ -20,3 +20,4 @@ export 'phone_call_to_customer.dart' show phoneCallToCustomer;
 export 'n8n_api_call_diagnosis_update_manager.dart'
     show n8nApiCallDiagnosisUpdateManager;
 export 'start_background_location.dart' show startBackgroundLocation;
+export 'send_customer_form_data_to_n8n.dart' show sendCustomerFormDataToN8n;

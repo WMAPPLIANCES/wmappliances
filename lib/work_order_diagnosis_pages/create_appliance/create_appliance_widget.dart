@@ -59,7 +59,7 @@ class _CreateApplianceWidgetState extends State<CreateApplianceWidget> {
     return Align(
       alignment: AlignmentDirectional(0.0, 0.0),
       child: Padding(
-        padding: EdgeInsets.all(24.0),
+        padding: EdgeInsetsDirectional.fromSTEB(8.0, 24.0, 8.0, 24.0),
         child: Material(
           color: Colors.transparent,
           elevation: 2.0,
@@ -157,12 +157,60 @@ class _CreateApplianceWidgetState extends State<CreateApplianceWidget> {
                                 ),
                               ),
                               Expanded(
-                                child: InkWell(
-                                  splashColor: Colors.transparent,
-                                  focusColor: Colors.transparent,
-                                  hoverColor: Colors.transparent,
-                                  highlightColor: Colors.transparent,
-                                  onTap: () async {
+                                child: Material(
+                                  color: Colors.transparent,
+                                  elevation: 2.0,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(8.0),
+                                  ),
+                                  child: Container(
+                                    width: 130.0,
+                                    height: 150.0,
+                                    decoration: BoxDecoration(
+                                      color: FlutterFlowTheme.of(context)
+                                          .alternate,
+                                      borderRadius: BorderRadius.circular(8.0),
+                                      border: Border.all(
+                                        color: FlutterFlowTheme.of(context)
+                                            .primaryText,
+                                        width: 1.0,
+                                      ),
+                                    ),
+                                    child: Stack(
+                                      children: [
+                                        if (_model.uploadedFileUrl1 != '')
+                                          ClipRRect(
+                                            borderRadius:
+                                                BorderRadius.circular(8.0),
+                                            child: Image.network(
+                                              _model.uploadedFileUrl1,
+                                              width: 200.0,
+                                              height: 200.0,
+                                              fit: BoxFit.cover,
+                                            ),
+                                          ),
+                                        if (_model.uploadedFileUrl1 == '')
+                                          Align(
+                                            alignment:
+                                                AlignmentDirectional(0.0, 0.0),
+                                            child: Icon(
+                                              Icons.add_a_photo,
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .primaryText,
+                                              size: 40.0,
+                                            ),
+                                          ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              Padding(
+                                padding: EdgeInsetsDirectional.fromSTEB(
+                                    0.0, 8.0, 0.0, 0.0),
+                                child: FFButtonWidget(
+                                  onPressed: () async {
                                     if (FFAppState().isOffline == false) {
                                       final selectedMedia =
                                           await selectMediaWithSourceBottomSheet(
@@ -231,32 +279,33 @@ class _CreateApplianceWidgetState extends State<CreateApplianceWidget> {
                                                 generatedText);
                                       });
 
-                                      _model.addToUpdaloadModel(
-                                          _model.uploadedFileUrl1);
-                                      _model.addToAiDiagnosis(
-                                          _model.responseModelNumber!);
-                                      safeSetState(() {});
-                                      ScaffoldMessenger.of(context)
-                                          .showSnackBar(
-                                        SnackBar(
-                                          content: Text(
-                                            'Photo upload successful!',
-                                            style: TextStyle(
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .primaryText,
+                                      if (_model.responseModelNumber != null &&
+                                          _model.responseModelNumber != '') {
+                                        _model.addToAiDiagnosis(
+                                            _model.responseModelNumber!);
+                                        safeSetState(() {});
+                                        ScaffoldMessenger.of(context)
+                                            .showSnackBar(
+                                          SnackBar(
+                                            content: Text(
+                                              'Photo upload successful!',
+                                              style: TextStyle(
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .primaryText,
+                                              ),
                                             ),
+                                            duration:
+                                                Duration(milliseconds: 4000),
+                                            backgroundColor:
+                                                FlutterFlowTheme.of(context)
+                                                    .success,
                                           ),
-                                          duration:
-                                              Duration(milliseconds: 4000),
-                                          backgroundColor:
-                                              FlutterFlowTheme.of(context)
-                                                  .success,
-                                        ),
-                                      );
-                                      FFAppState().responseModelNumberAI =
-                                          _model.responseModelNumber!;
-                                      safeSetState(() {});
+                                        );
+                                        FFAppState().responseModelNumberAI =
+                                            _model.responseModelNumber!;
+                                        safeSetState(() {});
+                                      }
                                     } else {
                                       await showDialog(
                                         context: context,
@@ -283,54 +332,23 @@ class _CreateApplianceWidgetState extends State<CreateApplianceWidget> {
 
                                     safeSetState(() {});
                                   },
-                                  child: Material(
-                                    color: Colors.transparent,
-                                    elevation: 2.0,
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(8.0),
-                                    ),
-                                    child: Container(
-                                      width: 130.0,
-                                      height: 150.0,
-                                      decoration: BoxDecoration(
-                                        color: FlutterFlowTheme.of(context)
-                                            .alternate,
-                                        borderRadius:
-                                            BorderRadius.circular(8.0),
-                                        border: Border.all(
-                                          color: FlutterFlowTheme.of(context)
-                                              .primaryText,
-                                          width: 1.0,
+                                  text: 'Browse File',
+                                  options: FFButtonOptions(
+                                    height: 40.0,
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        16.0, 0.0, 16.0, 0.0),
+                                    iconPadding: EdgeInsetsDirectional.fromSTEB(
+                                        0.0, 0.0, 0.0, 0.0),
+                                    color: FlutterFlowTheme.of(context).primary,
+                                    textStyle: FlutterFlowTheme.of(context)
+                                        .titleSmall
+                                        .override(
+                                          fontFamily: 'Manrope',
+                                          color: Colors.white,
+                                          letterSpacing: 0.0,
                                         ),
-                                      ),
-                                      child: Stack(
-                                        children: [
-                                          if (_model.uploadedFileUrl1 != '')
-                                            ClipRRect(
-                                              borderRadius:
-                                                  BorderRadius.circular(8.0),
-                                              child: Image.network(
-                                                _model.uploadedFileUrl1,
-                                                width: 200.0,
-                                                height: 200.0,
-                                                fit: BoxFit.cover,
-                                              ),
-                                            ),
-                                          if (_model.uploadedFileUrl1 == '')
-                                            Align(
-                                              alignment: AlignmentDirectional(
-                                                  0.0, 0.0),
-                                              child: Icon(
-                                                Icons.add_a_photo,
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .primaryText,
-                                                size: 40.0,
-                                              ),
-                                            ),
-                                        ],
-                                      ),
-                                    ),
+                                    elevation: 0.0,
+                                    borderRadius: BorderRadius.circular(22.0),
                                   ),
                                 ),
                               ),
@@ -356,201 +374,227 @@ class _CreateApplianceWidgetState extends State<CreateApplianceWidget> {
                                       ),
                                 ),
                               ),
-                              InkWell(
-                                splashColor: Colors.transparent,
-                                focusColor: Colors.transparent,
-                                hoverColor: Colors.transparent,
-                                highlightColor: Colors.transparent,
-                                onTap: () async {
-                                  if (FFAppState().isOffline == false) {
-                                    final selectedMedia =
-                                        await selectMediaWithSourceBottomSheet(
-                                      context: context,
-                                      storageFolderPath: 'images',
-                                      maxWidth: 800.00,
-                                      maxHeight: 800.00,
-                                      allowPhoto: true,
-                                    );
-                                    if (selectedMedia != null &&
-                                        selectedMedia.every((m) =>
-                                            validateFileFormat(
-                                                m.storagePath, context))) {
-                                      safeSetState(
-                                          () => _model.isDataUploading2 = true);
-                                      var selectedUploadedFiles =
-                                          <FFUploadedFile>[];
-
-                                      var downloadUrls = <String>[];
-                                      try {
-                                        selectedUploadedFiles = selectedMedia
-                                            .map((m) => FFUploadedFile(
-                                                  name: m.storagePath
-                                                      .split('/')
-                                                      .last,
-                                                  bytes: m.bytes,
-                                                  height: m.dimensions?.height,
-                                                  width: m.dimensions?.width,
-                                                  blurHash: m.blurHash,
-                                                ))
-                                            .toList();
-
-                                        downloadUrls =
-                                            await uploadSupabaseStorageFiles(
-                                          bucketName: 'photos',
-                                          selectedFiles: selectedMedia,
-                                        );
-                                      } finally {
-                                        _model.isDataUploading2 = false;
-                                      }
-                                      if (selectedUploadedFiles.length ==
-                                              selectedMedia.length &&
-                                          downloadUrls.length ==
-                                              selectedMedia.length) {
-                                        safeSetState(() {
-                                          _model.uploadedLocalFile2 =
-                                              selectedUploadedFiles.first;
-                                          _model.uploadedFileUrl2 =
-                                              downloadUrls.first;
-                                        });
-                                      } else {
-                                        safeSetState(() {});
-                                        return;
-                                      }
-                                    }
-
-                                    await geminiTextFromImage(
-                                      context,
-                                      'Task: Extract detailed visible damage information from the provided appliance image.  Instructions:  Prioritize Damage Analysis: Focus on identifying and meticulously describing all visible damage to the appliance.  Appliance Type: Identify the appliance type (e.g., refrigerator, washing machine, oven, etc.).  Location: Briefly describe the appliance\'s location in the image (e.g., kitchen, laundry room, etc.).  Detailed Damage Report (CRUCIAL): Thoroughly inspect the appliance and provide a complete, detailed description of all visible damage. For each damage instance, specify:  Damage Type: (e.g., dent, scratch, crack, broken, rust, wear, discoloration, etc.)  Exact Location: Where is the damage located on the appliance? (e.g., lower front door, top right corner, side panel, etc.)  Severity: (e.g., minor, moderate, severe, superficial, deep, affects functionality, etc.)  If no damage is visible, explicitly state: \"No visible damage detected.\"  Additional Damage-Related Observations: Note any other relevant observations directly related to damage or potential issues stemming from the damage. This may include:  Missing parts potentially related to or resulting from damage.  Signs of improper installation that may have caused or worsened damage.  Any other detail indicating the extent of damage or potential future problems due to damage.  Prompt Summary:  Analyze the appliance image, intensely focusing on identifying and describing all visible damage (type, location, severity). If no damage, state it. Note additional damage-relevant observations.  Key improvements for conciseness and assertiveness:  Direct and Strong Language: Using words like \"Prioritize,\" \"CRUCIAL,\" \"Thoroughly inspect,\" \"meticulously,\" and \"all\" emphasizes the importance of damage analysis.  Concise Phrasing: Removed redundant words and phrases, making the instructions more direct.  Focused Instructions: Streamlined the instructions to directly address the core task of damage extraction.  Clear Emphasis on \"No Damage\": Explicitly instructs to state \"No visible damage detected\" if applicable.  Targeted Additional Observations: Clarified that additional observations should be directly related to damage.  This revised prompt is shorter, more assertive, and clearly prioritizes the extraction of detailed damage information, while staying within the token limit and maintaining clarity.',
-                                      imageNetworkUrl: _model.uploadedFileUrl2,
-                                    ).then((generatedText) {
-                                      safeSetState(() => _model
-                                          .responseAppliances = generatedText);
-                                    });
-
-                                    _model.addToUpdaloadModel(
-                                        _model.uploadedFileUrl1);
-                                    safeSetState(() {});
-                                    _model.addToUpdaloadModel(
-                                        _model.uploadedFileUrl2);
-                                    safeSetState(() {});
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                      SnackBar(
-                                        content: Text(
-                                          'Photo upload successful!',
-                                          style: TextStyle(
-                                            color: FlutterFlowTheme.of(context)
-                                                .primaryText,
+                              Material(
+                                color: Colors.transparent,
+                                elevation: 2.0,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(8.0),
+                                ),
+                                child: Container(
+                                  width: 130.0,
+                                  height: 150.0,
+                                  decoration: BoxDecoration(
+                                    color:
+                                        FlutterFlowTheme.of(context).alternate,
+                                    borderRadius: BorderRadius.circular(8.0),
+                                    border: Border.all(
+                                      color: FlutterFlowTheme.of(context)
+                                          .primaryText,
+                                      width: 1.0,
+                                    ),
+                                  ),
+                                  child: Stack(
+                                    children: [
+                                      if (_model.uploadedFileUrl2 != '')
+                                        InkWell(
+                                          splashColor: Colors.transparent,
+                                          focusColor: Colors.transparent,
+                                          hoverColor: Colors.transparent,
+                                          highlightColor: Colors.transparent,
+                                          onTap: () async {
+                                            await Navigator.push(
+                                              context,
+                                              PageTransition(
+                                                type: PageTransitionType.fade,
+                                                child:
+                                                    FlutterFlowExpandedImageView(
+                                                  image: Image.network(
+                                                    _model.uploadedFileUrl2,
+                                                    fit: BoxFit.contain,
+                                                  ),
+                                                  allowRotation: false,
+                                                  tag: _model.uploadedFileUrl2,
+                                                  useHeroAnimation: true,
+                                                ),
+                                              ),
+                                            );
+                                          },
+                                          child: Hero(
+                                            tag: _model.uploadedFileUrl2,
+                                            transitionOnUserGestures: true,
+                                            child: ClipRRect(
+                                              borderRadius:
+                                                  BorderRadius.circular(8.0),
+                                              child: Image.network(
+                                                _model.uploadedFileUrl2,
+                                                width: 200.0,
+                                                height: 200.0,
+                                                fit: BoxFit.cover,
+                                              ),
+                                            ),
                                           ),
                                         ),
-                                        duration: Duration(milliseconds: 4000),
-                                        backgroundColor:
-                                            FlutterFlowTheme.of(context)
-                                                .success,
-                                      ),
-                                    );
-                                    FFAppState().responseApplianceAi =
-                                        _model.responseAppliances!;
-                                    safeSetState(() {});
-                                  } else {
-                                    await showDialog(
-                                      context: context,
-                                      builder: (alertDialogContext) {
-                                        return WebViewAware(
-                                          child: AlertDialog(
-                                            title: Text(
-                                                '🌐 No Internet Connection'),
+                                      if (_model.uploadedFileUrl2 == '')
+                                        Align(
+                                          alignment:
+                                              AlignmentDirectional(0.0, 0.0),
+                                          child: Icon(
+                                            Icons.add_a_photo,
+                                            color: FlutterFlowTheme.of(context)
+                                                .primaryText,
+                                            size: 40.0,
+                                          ),
+                                        ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                              Padding(
+                                padding: EdgeInsetsDirectional.fromSTEB(
+                                    0.0, 8.0, 0.0, 0.0),
+                                child: FFButtonWidget(
+                                  onPressed: () async {
+                                    if (FFAppState().isOffline == false) {
+                                      final selectedMedia =
+                                          await selectMediaWithSourceBottomSheet(
+                                        context: context,
+                                        storageFolderPath: 'images',
+                                        maxWidth: 800.00,
+                                        maxHeight: 800.00,
+                                        allowPhoto: true,
+                                      );
+                                      if (selectedMedia != null &&
+                                          selectedMedia.every((m) =>
+                                              validateFileFormat(
+                                                  m.storagePath, context))) {
+                                        safeSetState(() =>
+                                            _model.isDataUploading2 = true);
+                                        var selectedUploadedFiles =
+                                            <FFUploadedFile>[];
+
+                                        var downloadUrls = <String>[];
+                                        try {
+                                          selectedUploadedFiles = selectedMedia
+                                              .map((m) => FFUploadedFile(
+                                                    name: m.storagePath
+                                                        .split('/')
+                                                        .last,
+                                                    bytes: m.bytes,
+                                                    height:
+                                                        m.dimensions?.height,
+                                                    width: m.dimensions?.width,
+                                                    blurHash: m.blurHash,
+                                                  ))
+                                              .toList();
+
+                                          downloadUrls =
+                                              await uploadSupabaseStorageFiles(
+                                            bucketName: 'photos',
+                                            selectedFiles: selectedMedia,
+                                          );
+                                        } finally {
+                                          _model.isDataUploading2 = false;
+                                        }
+                                        if (selectedUploadedFiles.length ==
+                                                selectedMedia.length &&
+                                            downloadUrls.length ==
+                                                selectedMedia.length) {
+                                          safeSetState(() {
+                                            _model.uploadedLocalFile2 =
+                                                selectedUploadedFiles.first;
+                                            _model.uploadedFileUrl2 =
+                                                downloadUrls.first;
+                                          });
+                                        } else {
+                                          safeSetState(() {});
+                                          return;
+                                        }
+                                      }
+
+                                      await geminiTextFromImage(
+                                        context,
+                                        'Task: Extract detailed visible damage information from the provided appliance image.  Instructions:  Prioritize Damage Analysis: Focus on identifying and meticulously describing all visible damage to the appliance.  Appliance Type: Identify the appliance type (e.g., refrigerator, washing machine, oven, etc.).  Location: Briefly describe the appliance\'s location in the image (e.g., kitchen, laundry room, etc.).  Detailed Damage Report (CRUCIAL): Thoroughly inspect the appliance and provide a complete, detailed description of all visible damage. For each damage instance, specify:  Damage Type: (e.g., dent, scratch, crack, broken, rust, wear, discoloration, etc.)  Exact Location: Where is the damage located on the appliance? (e.g., lower front door, top right corner, side panel, etc.)  Severity: (e.g., minor, moderate, severe, superficial, deep, affects functionality, etc.)  If no damage is visible, explicitly state: \"No visible damage detected.\"  Additional Damage-Related Observations: Note any other relevant observations directly related to damage or potential issues stemming from the damage. This may include:  Missing parts potentially related to or resulting from damage.  Signs of improper installation that may have caused or worsened damage.  Any other detail indicating the extent of damage or potential future problems due to damage.  Prompt Summary:  Analyze the appliance image, intensely focusing on identifying and describing all visible damage (type, location, severity). If no damage, state it. Note additional damage-relevant observations.  Key improvements for conciseness and assertiveness:  Direct and Strong Language: Using words like \"Prioritize,\" \"CRUCIAL,\" \"Thoroughly inspect,\" \"meticulously,\" and \"all\" emphasizes the importance of damage analysis.  Concise Phrasing: Removed redundant words and phrases, making the instructions more direct.  Focused Instructions: Streamlined the instructions to directly address the core task of damage extraction.  Clear Emphasis on \"No Damage\": Explicitly instructs to state \"No visible damage detected\" if applicable.  Targeted Additional Observations: Clarified that additional observations should be directly related to damage.  This revised prompt is shorter, more assertive, and clearly prioritizes the extraction of detailed damage information, while staying within the token limit and maintaining clarity.',
+                                        imageNetworkUrl:
+                                            _model.uploadedFileUrl1,
+                                      ).then((generatedText) {
+                                        safeSetState(() =>
+                                            _model.responseAppliances =
+                                                generatedText);
+                                      });
+
+                                      if (_model.responseAppliances != null &&
+                                          _model.responseAppliances != '') {
+                                        _model.addToUpdaloadModel(
+                                            _model.uploadedFileUrl1);
+                                        safeSetState(() {});
+                                        _model.addToUpdaloadModel(
+                                            _model.uploadedFileUrl1);
+                                        safeSetState(() {});
+                                        ScaffoldMessenger.of(context)
+                                            .showSnackBar(
+                                          SnackBar(
                                             content: Text(
-                                                'It looks like you\'re offline! This feature requires an internet connection to work properly. Please check your connection and try again. '),
-                                            actions: [
-                                              TextButton(
-                                                onPressed: () => Navigator.pop(
-                                                    alertDialogContext),
-                                                child: Text('🚀 Ok'),
+                                              'Photo upload successful!',
+                                              style: TextStyle(
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .primaryText,
                                               ),
-                                            ],
+                                            ),
+                                            duration:
+                                                Duration(milliseconds: 4000),
+                                            backgroundColor:
+                                                FlutterFlowTheme.of(context)
+                                                    .success,
                                           ),
                                         );
-                                      },
-                                    );
-                                  }
+                                        FFAppState().responseApplianceAi =
+                                            _model.responseAppliances!;
+                                        safeSetState(() {});
+                                      }
+                                    } else {
+                                      await showDialog(
+                                        context: context,
+                                        builder: (alertDialogContext) {
+                                          return WebViewAware(
+                                            child: AlertDialog(
+                                              title: Text(
+                                                  '🌐 No Internet Connection'),
+                                              content: Text(
+                                                  'It looks like you\'re offline! This feature requires an internet connection to work properly. Please check your connection and try again. '),
+                                              actions: [
+                                                TextButton(
+                                                  onPressed: () =>
+                                                      Navigator.pop(
+                                                          alertDialogContext),
+                                                  child: Text('🚀 Ok'),
+                                                ),
+                                              ],
+                                            ),
+                                          );
+                                        },
+                                      );
+                                    }
 
-                                  safeSetState(() {});
-                                },
-                                child: Material(
-                                  color: Colors.transparent,
-                                  elevation: 2.0,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(8.0),
-                                  ),
-                                  child: Container(
-                                    width: 130.0,
-                                    height: 150.0,
-                                    decoration: BoxDecoration(
-                                      color: FlutterFlowTheme.of(context)
-                                          .alternate,
-                                      borderRadius: BorderRadius.circular(8.0),
-                                      border: Border.all(
-                                        color: FlutterFlowTheme.of(context)
-                                            .primaryText,
-                                        width: 1.0,
-                                      ),
-                                    ),
-                                    child: Stack(
-                                      children: [
-                                        if (_model.uploadedFileUrl2 != '')
-                                          InkWell(
-                                            splashColor: Colors.transparent,
-                                            focusColor: Colors.transparent,
-                                            hoverColor: Colors.transparent,
-                                            highlightColor: Colors.transparent,
-                                            onTap: () async {
-                                              await Navigator.push(
-                                                context,
-                                                PageTransition(
-                                                  type: PageTransitionType.fade,
-                                                  child:
-                                                      FlutterFlowExpandedImageView(
-                                                    image: Image.network(
-                                                      _model.uploadedFileUrl2,
-                                                      fit: BoxFit.contain,
-                                                    ),
-                                                    allowRotation: false,
-                                                    tag:
-                                                        _model.uploadedFileUrl2,
-                                                    useHeroAnimation: true,
-                                                  ),
-                                                ),
-                                              );
-                                            },
-                                            child: Hero(
-                                              tag: _model.uploadedFileUrl2,
-                                              transitionOnUserGestures: true,
-                                              child: ClipRRect(
-                                                borderRadius:
-                                                    BorderRadius.circular(8.0),
-                                                child: Image.network(
-                                                  _model.uploadedFileUrl2,
-                                                  width: 200.0,
-                                                  height: 200.0,
-                                                  fit: BoxFit.cover,
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        if (_model.uploadedFileUrl2 == '')
-                                          Align(
-                                            alignment:
-                                                AlignmentDirectional(0.0, 0.0),
-                                            child: Icon(
-                                              Icons.add_a_photo,
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .primaryText,
-                                              size: 40.0,
-                                            ),
-                                          ),
-                                      ],
-                                    ),
+                                    safeSetState(() {});
+                                  },
+                                  text: 'Browse File',
+                                  options: FFButtonOptions(
+                                    height: 40.0,
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        16.0, 0.0, 16.0, 0.0),
+                                    iconPadding: EdgeInsetsDirectional.fromSTEB(
+                                        0.0, 0.0, 0.0, 0.0),
+                                    color: FlutterFlowTheme.of(context).primary,
+                                    textStyle: FlutterFlowTheme.of(context)
+                                        .titleSmall
+                                        .override(
+                                          fontFamily: 'Manrope',
+                                          color: Colors.white,
+                                          letterSpacing: 0.0,
+                                        ),
+                                    elevation: 0.0,
+                                    borderRadius: BorderRadius.circular(24.0),
                                   ),
                                 ),
                               ),
@@ -601,7 +645,7 @@ class _CreateApplianceWidgetState extends State<CreateApplianceWidget> {
                             FormFieldController<String>(null),
                         options: [
                           'Dishwasher',
-                          'Washer M',
+                          'Washer',
                           'Dryer',
                           'Refrigerator',
                           'Oven',
@@ -642,7 +686,11 @@ class _CreateApplianceWidgetState extends State<CreateApplianceWidget> {
                         padding:
                             EdgeInsetsDirectional.fromSTEB(0.0, 8.0, 0.0, 0.0),
                         child: FlutterFlowChoiceChips(
-                          options: [ChipData('Diagnosis'), ChipData('Update')],
+                          options: [
+                            ChipData('Diagnosis'),
+                            ChipData('Follow Up\n'),
+                            ChipData('Update')
+                          ],
                           onChanged: (val) => safeSetState(
                               () => _model.choiceChipsValue = val?.firstOrNull),
                           selectedChipStyle: ChipStyle(
@@ -708,26 +756,14 @@ class _CreateApplianceWidgetState extends State<CreateApplianceWidget> {
                                     widget.workOrderDiagnosis?.workOrderId,
                                     '123',
                                   ),
-                                  'ai_notes': valueOrDefault<String>(
-                                    _model.responseAppliances,
-                                    'ai_response',
-                                  ),
+                                  'ai_notes': _model.responseAppliances,
                                   'create_by': valueOrDefault<String>(
                                     currentUserUid,
                                     '13223',
                                   ),
-                                  'photo_url': _model.updaloadModel,
                                   'item': valueOrDefault<String>(
                                     _model.dropDownValue,
-                                    'https://api.wmappliances.cloud/storage/v1/object/public/photos/users/LOGO%20WM%20APPLIANCE%20NOVA%20casa%20alta%20reso.png',
-                                  ),
-                                  'failure_part': valueOrDefault<String>(
-                                    _model.responseModelNumber,
-                                    'test',
-                                  ),
-                                  'diagnosis_voice': valueOrDefault<String>(
-                                    _model.responseAppliances,
-                                    'test',
+                                    'Appliance',
                                   ),
                                   'technician_name': valueOrDefault<String>(
                                     FFAppState().userName,
@@ -737,10 +773,8 @@ class _CreateApplianceWidgetState extends State<CreateApplianceWidget> {
                                     FFAppState().userPhoto,
                                     'https://api.wmappliances.cloud/storage/v1/object/public/photos/users/LOGO%20WM%20APPLIANCE%20NOVA%20casa%20alta%20reso.png',
                                   ),
-                                  'ocr_model_number': valueOrDefault<String>(
-                                    _model.responseModelNumber,
-                                    '123',
-                                  ),
+                                  'ocr_model_number':
+                                      _model.responseModelNumber,
                                   'status': valueOrDefault<String>(
                                     _model.choiceChipsValue,
                                     '123',
@@ -749,12 +783,13 @@ class _CreateApplianceWidgetState extends State<CreateApplianceWidget> {
                                     currentUserUid,
                                     '123232',
                                   ),
-                                  'created_at': supaSerialize<DateTime>(
-                                      getCurrentTimestamp),
                                   'pending': false,
+                                  'payment_created': false,
+                                  'visit_type': _model.choiceChipsValue,
+                                  'photo_url': _model.updaloadModel,
                                 });
                                 await actions.n8nApiCallDiagnosis(
-                                  'https://webhook.wmappliances.cloud/webhook/addAppliance',
+                                  FFAppState().addApplianceWhUrl,
                                   valueOrDefault<String>(
                                     _model.dropDownValue,
                                     'tesdt',
@@ -763,22 +798,13 @@ class _CreateApplianceWidgetState extends State<CreateApplianceWidget> {
                                     widget.workOrderDiagnosis?.workOrderId,
                                     'workOderID',
                                   ),
-                                  valueOrDefault<String>(
-                                    _model.responseAppliances,
-                                    'test',
-                                  ),
-                                  valueOrDefault<String>(
-                                    _model.responseModelNumber,
-                                    'test',
-                                  ),
+                                  _model.responseAppliances,
+                                  _model.responseModelNumber,
                                   valueOrDefault<String>(
                                     FFAppState().userName,
                                     'test',
                                   ),
-                                  valueOrDefault<String>(
-                                    _model.uploadedFileUrl2,
-                                    'https://api.wmappliances.cloud/storage/v1/object/public/photos/users/LOGO%20WM%20APPLIANCE%20NOVA%20casa%20alta%20reso.png',
-                                  ),
+                                  _model.uploadedFileUrl1,
                                   'test',
                                   'test',
                                   valueOrDefault<String>(
@@ -809,6 +835,7 @@ class _CreateApplianceWidgetState extends State<CreateApplianceWidget> {
                                       letterSpacing: 0.0,
                                     ),
                                 elevation: 0.0,
+                                borderRadius: BorderRadius.circular(24.0),
                               ),
                             ),
                           ),

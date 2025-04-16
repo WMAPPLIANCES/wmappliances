@@ -3,13 +3,13 @@ import '/auth/supabase_auth/auth_util.dart';
 import '/backend/supabase/supabase.dart';
 import '/components/diagnosis_view_b_s_widget.dart';
 import '/components/side_menu_view_widget.dart';
+import '/components/voice_diagnosis2_widget.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/stock_page/add_part_stock/add_part_stock_widget.dart';
 import '/stock_page/print_stock_parts/print_stock_parts_widget.dart';
-import '/custom_code/actions/index.dart' as actions;
 import '/custom_code/widgets/index.dart' as custom_widgets;
 import '/flutter_flow/custom_functions.dart' as functions;
 import '/index.dart';
@@ -93,8 +93,8 @@ class _DashboardTechnicianWidgetState extends State<DashboardTechnicianWidget> {
               'Follow Up',
             )
             .eqOrNull(
-              'technician_name',
-              FFAppState().userName,
+              'technician_uuid',
+              currentUserUid,
             ),
       );
       _model.followUp = await SchedulesTable().queryRows(
@@ -733,7 +733,29 @@ class _DashboardTechnicianWidgetState extends State<DashboardTechnicianWidget> {
                                                                           FFButtonWidget(
                                                                             onPressed:
                                                                                 () async {
-                                                                              await actions.updateTechnicianLocation();
+                                                                              await showModalBottomSheet(
+                                                                                isScrollControlled: true,
+                                                                                backgroundColor: Colors.transparent,
+                                                                                enableDrag: false,
+                                                                                context: context,
+                                                                                builder: (context) {
+                                                                                  return WebViewAware(
+                                                                                    child: GestureDetector(
+                                                                                      onTap: () {
+                                                                                        FocusScope.of(context).unfocus();
+                                                                                        FocusManager.instance.primaryFocus?.unfocus();
+                                                                                      },
+                                                                                      child: Padding(
+                                                                                        padding: MediaQuery.viewInsetsOf(context),
+                                                                                        child: Container(
+                                                                                          height: MediaQuery.sizeOf(context).height * 1.0,
+                                                                                          child: VoiceDiagnosis2Widget(),
+                                                                                        ),
+                                                                                      ),
+                                                                                    ),
+                                                                                  );
+                                                                                },
+                                                                              ).then((value) => safeSetState(() {}));
                                                                             },
                                                                             text:
                                                                                 'Add Task',
@@ -969,7 +991,7 @@ class _DashboardTechnicianWidgetState extends State<DashboardTechnicianWidget> {
                                                                         builder:
                                                                             (context) {
                                                                           final followUpToday =
-                                                                              _model.followUp?.toList() ?? [];
+                                                                              dashboardTechnicianAppointmentsRowList.toList();
 
                                                                           return Column(
                                                                             mainAxisSize:
@@ -977,81 +999,102 @@ class _DashboardTechnicianWidgetState extends State<DashboardTechnicianWidget> {
                                                                             children:
                                                                                 List.generate(followUpToday.length, (followUpTodayIndex) {
                                                                               final followUpTodayItem = followUpToday[followUpTodayIndex];
-                                                                              return Padding(
-                                                                                padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 8.0),
-                                                                                child: Container(
-                                                                                  width: MediaQuery.sizeOf(context).width * 1.0,
-                                                                                  decoration: BoxDecoration(
-                                                                                    color: FlutterFlowTheme.of(context).primaryBackground,
-                                                                                    borderRadius: BorderRadius.circular(8.0),
-                                                                                  ),
-                                                                                  child: Padding(
-                                                                                    padding: EdgeInsetsDirectional.fromSTEB(12.0, 12.0, 12.0, 12.0),
-                                                                                    child: Row(
-                                                                                      mainAxisSize: MainAxisSize.max,
-                                                                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                                                      children: [
-                                                                                        Column(
-                                                                                          mainAxisSize: MainAxisSize.max,
-                                                                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                                                                          children: [
-                                                                                            Text(
-                                                                                              valueOrDefault<String>(
-                                                                                                followUpTodayItem.customerName,
-                                                                                                'Name',
-                                                                                              ).maybeHandleOverflow(
-                                                                                                maxChars: 14,
-                                                                                              ),
-                                                                                              style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                                    fontFamily: 'Manrope',
-                                                                                                    fontSize: 16.0,
-                                                                                                    letterSpacing: 0.0,
-                                                                                                    fontWeight: FontWeight.bold,
+                                                                              return Visibility(
+                                                                                visible: (followUpTodayItem.status == 'Follow Up') && (followUpTodayItem.followUp == false),
+                                                                                child: Padding(
+                                                                                  padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 8.0),
+                                                                                  child: Container(
+                                                                                    width: MediaQuery.sizeOf(context).width * 1.0,
+                                                                                    decoration: BoxDecoration(
+                                                                                      color: FlutterFlowTheme.of(context).primaryBackground,
+                                                                                      borderRadius: BorderRadius.circular(8.0),
+                                                                                    ),
+                                                                                    child: Padding(
+                                                                                      padding: EdgeInsetsDirectional.fromSTEB(12.0, 12.0, 12.0, 12.0),
+                                                                                      child: Row(
+                                                                                        mainAxisSize: MainAxisSize.max,
+                                                                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                                                        children: [
+                                                                                          Column(
+                                                                                            mainAxisSize: MainAxisSize.max,
+                                                                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                                                                            children: [
+                                                                                              Column(
+                                                                                                mainAxisSize: MainAxisSize.max,
+                                                                                                children: [
+                                                                                                  Text(
+                                                                                                    valueOrDefault<String>(
+                                                                                                      followUpTodayItem.clientName,
+                                                                                                      'Name',
+                                                                                                    ).maybeHandleOverflow(
+                                                                                                      maxChars: 14,
+                                                                                                    ),
+                                                                                                    style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                                          fontFamily: 'Manrope',
+                                                                                                          fontSize: 16.0,
+                                                                                                          letterSpacing: 0.0,
+                                                                                                          fontWeight: FontWeight.bold,
+                                                                                                        ),
                                                                                                   ),
-                                                                                            ),
-                                                                                          ],
-                                                                                        ),
-                                                                                        FlutterFlowIconButton(
-                                                                                          borderRadius: 8.0,
-                                                                                          buttonSize: 40.0,
-                                                                                          fillColor: FlutterFlowTheme.of(context).warning,
-                                                                                          icon: Icon(
-                                                                                            Icons.shelves,
-                                                                                            color: FlutterFlowTheme.of(context).info,
-                                                                                            size: 24.0,
-                                                                                          ),
-                                                                                          onPressed: () async {
-                                                                                            _model.queryWorkOrderNavigateToWo = await WorkOrdersTable().queryRows(
-                                                                                              queryFn: (q) => q.eqOrNull(
-                                                                                                'work_order_id',
-                                                                                                valueOrDefault<String>(
-                                                                                                  followUpTodayItem.workOrderId,
-                                                                                                  '12332543',
-                                                                                                ),
+                                                                                                ],
                                                                                               ),
-                                                                                            );
-
-                                                                                            context.pushNamed(
-                                                                                              WorkOrderTechniciansViewWidget.routeName,
-                                                                                              queryParameters: {
-                                                                                                'workOrderRow': serializeParam(
-                                                                                                  _model.queryWorkOrderNavigateToWo?.firstOrNull,
-                                                                                                  ParamType.SupabaseRow,
+                                                                                            ],
+                                                                                          ),
+                                                                                          FlutterFlowIconButton(
+                                                                                            borderRadius: 8.0,
+                                                                                            buttonSize: 40.0,
+                                                                                            fillColor: FlutterFlowTheme.of(context).warning,
+                                                                                            icon: Icon(
+                                                                                              Icons.shelves,
+                                                                                              color: FlutterFlowTheme.of(context).info,
+                                                                                              size: 24.0,
+                                                                                            ),
+                                                                                            onPressed: () async {
+                                                                                              _model.queryWorkOrderNavigateToWo = await WorkOrdersTable().queryRows(
+                                                                                                queryFn: (q) => q.eqOrNull(
+                                                                                                  'work_order_id',
+                                                                                                  valueOrDefault<String>(
+                                                                                                    followUpTodayItem.workOrderId,
+                                                                                                    '12332543',
+                                                                                                  ),
                                                                                                 ),
-                                                                                              }.withoutNulls,
-                                                                                              extra: <String, dynamic>{
-                                                                                                kTransitionInfoKey: TransitionInfo(
-                                                                                                  hasTransition: true,
-                                                                                                  transitionType: PageTransitionType.fade,
-                                                                                                  duration: Duration(milliseconds: 0),
-                                                                                                ),
-                                                                                              },
-                                                                                            );
+                                                                                              );
 
-                                                                                            safeSetState(() {});
-                                                                                          },
-                                                                                        ),
-                                                                                      ],
+                                                                                              context.pushNamed(
+                                                                                                WorkOrderTechniciansViewWidget.routeName,
+                                                                                                queryParameters: {
+                                                                                                  'workOrderRow': serializeParam(
+                                                                                                    _model.queryWorkOrderNavigateToWo?.firstOrNull,
+                                                                                                    ParamType.SupabaseRow,
+                                                                                                  ),
+                                                                                                }.withoutNulls,
+                                                                                                extra: <String, dynamic>{
+                                                                                                  kTransitionInfoKey: TransitionInfo(
+                                                                                                    hasTransition: true,
+                                                                                                    transitionType: PageTransitionType.fade,
+                                                                                                    duration: Duration(milliseconds: 0),
+                                                                                                  ),
+                                                                                                },
+                                                                                              );
+
+                                                                                              await AppointmentsTable().update(
+                                                                                                data: {
+                                                                                                  'follow_up': true,
+                                                                                                },
+                                                                                                matchingRows: (rows) => rows.eqOrNull(
+                                                                                                  'appointment_id',
+                                                                                                  valueOrDefault<String>(
+                                                                                                    followUpTodayItem.appointmentId,
+                                                                                                    '23423',
+                                                                                                  ),
+                                                                                                ),
+                                                                                              );
+
+                                                                                              safeSetState(() {});
+                                                                                            },
+                                                                                          ),
+                                                                                        ],
+                                                                                      ),
                                                                                     ),
                                                                                   ),
                                                                                 ),

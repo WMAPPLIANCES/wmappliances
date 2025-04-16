@@ -1,6 +1,6 @@
 import '/backend/supabase/supabase.dart';
+import '/components/diagnosis_view_b_s_widget.dart';
 import '/flutter_flow/flutter_flow_util.dart';
-import '/flutter_flow/form_field_controller.dart';
 import 'diagnosis_view_b_s_widget.dart' show DiagnosisViewBSWidget;
 import 'package:flutter/material.dart';
 
@@ -29,9 +29,8 @@ class DiagnosisViewBSModel extends FlutterFlowModel<DiagnosisViewBSWidget> {
   List<DiagnosesRow>? queryDiagnosis;
   // Stores action output result for [Backend Call - Query Rows] action in diagnosisViewBS widget.
   List<StockPartsRow>? queryStockParts;
-  // State field(s) for DropDown widget.
-  String? dropDownValue;
-  FormFieldController<String>? dropDownValueController;
+  // Stores action output result for [Backend Call - Query Rows] action in Button widget.
+  List<DiagnosesRow>? updateQuery;
 
   @override
   void initState(BuildContext context) {}

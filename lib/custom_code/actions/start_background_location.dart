@@ -47,7 +47,7 @@ Future<void> startBackgroundLocation(String technicianId) async {
   // 2. Configurar o Listener de Localização
   bg.BackgroundGeolocation.onLocation((bg.Location location) async {
     print(
-        '[location] - ${location.toJson()}'); // Use toJson() para ver todos os dados
+        '[location] - ${location.toString()}'); // Use toString() to see all data
 
     // Recuperar o ID do técnico salvo (importante para headless)
     final prefs = await SharedPreferences.getInstance();
@@ -90,19 +90,19 @@ Future<void> startBackgroundLocation(String technicianId) async {
 
   // Outros Listeners (Opcionais, mas úteis para debug)
   bg.BackgroundGeolocation.onMotionChange((bg.Location location) {
-    print('[motionchange] - ${location.toJson()}');
+    print('[motionchange] - ${location.toString()}');
   });
 
   bg.BackgroundGeolocation.onProviderChange((bg.ProviderChangeEvent event) {
-    print('[providerchange] - ${event.toJson()}');
+    print('[providerchange] - ${event.toString()}');
   });
 
   bg.BackgroundGeolocation.onHttp((bg.HttpEvent event) {
     print('[http] success? ${event.success}, status? ${event.status}');
   });
 
-  bg.BackgroundGeolocation.onError((bg.Error error) {
-    print('[error] - ${error.toString()}');
+  bg.BackgroundGeolocation.onActivityChange((bg.ActivityChangeEvent event) {
+    print('[activitychange] - ${event.toString()}');
   });
 
   // 3. Configurar o Plugin
@@ -220,10 +220,10 @@ void backgroundGeolocationHeadlessTask(bg.HeadlessEvent headlessEvent) async {
   // Tratar eventos específicos que podem conter localização
   if (headlessEvent.name == bg.Event.LOCATION) {
     location = headlessEvent.event as bg.Location;
-    print('📬 Headless Location: ${location.toJson()}');
+    print('📬 Headless Location: ${location.toString()}');
   } else if (headlessEvent.name == bg.Event.MOTIONCHANGE) {
     location = headlessEvent.event as bg.Location;
-    print('📬 Headless MotionChange Location: ${location.toJson()}');
+    print('📬 Headless MotionChange Location: ${location.toString()}');
   } else if (headlessEvent.name == bg.Event.HEARTBEAT) {
     print('📬 Headless Heartbeat. Tentando obter localização atual...');
     try {
@@ -233,7 +233,7 @@ void backgroundGeolocationHeadlessTask(bg.HeadlessEvent headlessEvent) async {
           timeout: 10, // Timeout de 10 segundos
           extras: {"event": "heartbeat", "headless": true});
       print(
-          '📬 Headless Heartbeat - Localização obtida: ${location?.toJson()}');
+          '📬 Headless Heartbeat - Localização obtida: ${location?.toString()}');
     } catch (e) {
       print('📬 Headless Heartbeat - Erro ao obter localização: $e');
     }
@@ -249,7 +249,7 @@ void backgroundGeolocationHeadlessTask(bg.HeadlessEvent headlessEvent) async {
             persist: true, // Persiste essa última localização
             extras: {"event": "terminate", "headless": true});
         print(
-            '📬 Headless Terminate - Localização obtida: ${location?.toJson()}');
+            '📬 Headless Terminate - Localização obtida: ${location?.toString()}');
       } else {
         print(
             '📬 Headless Terminate - Configurado para parar, sem obter localização.');
@@ -290,4 +290,12 @@ void backgroundGeolocationHeadlessTask(bg.HeadlessEvent headlessEvent) async {
       // Considere implementar uma fila offline ou retry mechanism aqui
     }
   }
+}
+
+void main() {
+  // Registrar o callback headless
+  bg.BackgroundGeolocation.registerHeadlessTask(
+      backgroundGeolocationHeadlessTask);
+
+  // ... resto do código main
 }

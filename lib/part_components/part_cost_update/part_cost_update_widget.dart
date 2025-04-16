@@ -52,7 +52,9 @@ class _PartCostUpdateWidgetState extends State<PartCostUpdateWidget> {
       child: Padding(
         padding: EdgeInsets.all(64.0),
         child: Container(
-          width: double.infinity,
+          constraints: BoxConstraints(
+            maxWidth: 600.0,
+          ),
           decoration: BoxDecoration(
             color: FlutterFlowTheme.of(context).primaryBackground,
             boxShadow: [

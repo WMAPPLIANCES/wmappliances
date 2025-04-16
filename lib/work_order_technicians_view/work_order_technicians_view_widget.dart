@@ -13,7 +13,7 @@ import '/components/check_list_oven_widget.dart';
 import '/components/diagnosis_view_b_s_widget.dart';
 import '/components/is_calling_widget.dart';
 import '/components/no_internet_widget.dart';
-import '/dashboards/voice_diagnosis/voice_diagnosis_widget.dart';
+import '/components/voice_diagnosis2_widget.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -392,35 +392,39 @@ class _WorkOrderTechniciansViewWidgetState
                                                                               color: FlutterFlowTheme.of(context).primary,
                                                                               size: 22.0,
                                                                             ),
-                                                                            Row(
-                                                                              mainAxisSize: MainAxisSize.max,
-                                                                              children: [
-                                                                                Expanded(
-                                                                                  child: Text(
-                                                                                    '${valueOrDefault<String>(
-                                                                                      widget.workOrderRow?.address,
-                                                                                      'address',
-                                                                                    )}  ',
-                                                                                    style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                          fontFamily: 'Manrope',
-                                                                                          fontSize: 14.0,
-                                                                                          letterSpacing: 0.0,
-                                                                                        ),
+                                                                            Expanded(
+                                                                              child: Row(
+                                                                                mainAxisSize: MainAxisSize.max,
+                                                                                children: [
+                                                                                  Expanded(
+                                                                                    child: Text(
+                                                                                      '${valueOrDefault<String>(
+                                                                                        widget.workOrderRow?.address,
+                                                                                        'address',
+                                                                                      )}  ',
+                                                                                      style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                            fontFamily: 'Manrope',
+                                                                                            fontSize: 14.0,
+                                                                                            letterSpacing: 0.0,
+                                                                                          ),
+                                                                                    ),
                                                                                   ),
-                                                                                ),
-                                                                                if (widget.workOrderRow?.apartmentNumber != null && widget.workOrderRow?.apartmentNumber != '')
-                                                                                  Text(
-                                                                                    'APT: ${valueOrDefault<String>(
-                                                                                      widget.workOrderRow?.apartmentNumber,
-                                                                                      'apartment_number',
-                                                                                    )}',
-                                                                                    style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                          fontFamily: 'Manrope',
-                                                                                          fontSize: 14.0,
-                                                                                          letterSpacing: 0.0,
-                                                                                        ),
-                                                                                  ),
-                                                                              ],
+                                                                                  if (widget.workOrderRow?.apartmentNumber != null && widget.workOrderRow?.apartmentNumber != '')
+                                                                                    Expanded(
+                                                                                      child: Text(
+                                                                                        'APT: ${valueOrDefault<String>(
+                                                                                          widget.workOrderRow?.apartmentNumber,
+                                                                                          'apartment_number',
+                                                                                        )}',
+                                                                                        style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                              fontFamily: 'Manrope',
+                                                                                              fontSize: 14.0,
+                                                                                              letterSpacing: 0.0,
+                                                                                            ),
+                                                                                      ),
+                                                                                    ),
+                                                                                ],
+                                                                              ),
                                                                             ),
                                                                           ].divide(SizedBox(width: 8.0)),
                                                                         ),
@@ -3105,7 +3109,6 @@ class _WorkOrderTechniciansViewWidgetState
                                                                                                           await showModalBottomSheet(
                                                                                                             isScrollControlled: true,
                                                                                                             backgroundColor: Colors.transparent,
-                                                                                                            enableDrag: false,
                                                                                                             context: context,
                                                                                                             builder: (context) {
                                                                                                               return WebViewAware(
@@ -3118,8 +3121,8 @@ class _WorkOrderTechniciansViewWidgetState
                                                                                                                     padding: MediaQuery.viewInsetsOf(context),
                                                                                                                     child: Container(
                                                                                                                       height: MediaQuery.sizeOf(context).height * 1.0,
-                                                                                                                      child: VoiceDiagnosisWidget(
-                                                                                                                        diagnosisVoice: appliancesListItem,
+                                                                                                                      child: VoiceDiagnosis2Widget(
+                                                                                                                        diagnosisId: appliancesListItem,
                                                                                                                       ),
                                                                                                                     ),
                                                                                                                   ),
@@ -3570,11 +3573,9 @@ class _WorkOrderTechniciansViewWidgetState
                                                               ),
                                                             ),
                                                           ),
-                                                        if ((_model.showPartRequested ==
-                                                                true) &&
-                                                            (widget.workOrderRow
-                                                                    ?.technician ==
-                                                                currentUserUid))
+                                                        if (_model
+                                                                .showPartRequested ==
+                                                            true)
                                                           Expanded(
                                                             child: Padding(
                                                               padding:

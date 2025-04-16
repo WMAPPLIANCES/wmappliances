@@ -4,6 +4,7 @@ import '/components/diagnosis_view_b_s_widget.dart';
 import '/components/print_parts_arrived_widget.dart';
 import '/components/side_menu_view_widget.dart';
 import '/components/work_order_status_widget.dart';
+import '/components/work_order_status_work_order_widget.dart';
 import '/flutter_flow/flutter_flow_choice_chips.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
@@ -11,6 +12,7 @@ import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/flutter_flow/form_field_controller.dart';
 import '/work_order_diagnosis_pages/add_part_botton_sheet/add_part_botton_sheet_widget.dart';
+import '/work_order_diagnosis_pages/create_appliance/create_appliance_widget.dart';
 import 'dart:async';
 import '/custom_code/widgets/index.dart' as custom_widgets;
 import 'package:flutter/material.dart';
@@ -339,10 +341,43 @@ class _WorkOrderWidgetState extends State<WorkOrderWidget> {
                                                                               MainAxisSize.max,
                                                                           children:
                                                                               [
-                                                                            Icon(
-                                                                              Icons.person_rounded,
-                                                                              color: FlutterFlowTheme.of(context).primary,
-                                                                              size: 35.0,
+                                                                            InkWell(
+                                                                              splashColor: Colors.transparent,
+                                                                              focusColor: Colors.transparent,
+                                                                              hoverColor: Colors.transparent,
+                                                                              highlightColor: Colors.transparent,
+                                                                              onTap: () async {
+                                                                                await showModalBottomSheet(
+                                                                                  isScrollControlled: true,
+                                                                                  backgroundColor: Colors.transparent,
+                                                                                  enableDrag: false,
+                                                                                  context: context,
+                                                                                  builder: (context) {
+                                                                                    return WebViewAware(
+                                                                                      child: GestureDetector(
+                                                                                        onTap: () {
+                                                                                          FocusScope.of(context).unfocus();
+                                                                                          FocusManager.instance.primaryFocus?.unfocus();
+                                                                                        },
+                                                                                        child: Padding(
+                                                                                          padding: MediaQuery.viewInsetsOf(context),
+                                                                                          child: Container(
+                                                                                            height: MediaQuery.sizeOf(context).height * 1.0,
+                                                                                            child: CreateApplianceWidget(
+                                                                                              workOrderDiagnosis: _model.workOrderQueryOnPage!.firstOrNull!,
+                                                                                            ),
+                                                                                          ),
+                                                                                        ),
+                                                                                      ),
+                                                                                    );
+                                                                                  },
+                                                                                ).then((value) => safeSetState(() {}));
+                                                                              },
+                                                                              child: Icon(
+                                                                                Icons.person_rounded,
+                                                                                color: FlutterFlowTheme.of(context).primary,
+                                                                                size: 35.0,
+                                                                              ),
                                                                             ),
                                                                             Text(
                                                                               valueOrDefault<String>(
@@ -1501,7 +1536,7 @@ class _WorkOrderWidgetState extends State<WorkOrderWidget> {
                                                                                 Text(
                                                                               valueOrDefault<String>(
                                                                                 _model.workOrderQueryOnPage?.firstOrNull?.workOrderStatus,
-                                                                                '0',
+                                                                                'Not Confirmed',
                                                                               ),
                                                                               style: FlutterFlowTheme.of(context).headlineSmall.override(
                                                                                     fontFamily: 'Outfit',
@@ -1545,11 +1580,8 @@ class _WorkOrderWidgetState extends State<WorkOrderWidget> {
                                                                                             padding: MediaQuery.viewInsetsOf(context),
                                                                                             child: Container(
                                                                                               height: MediaQuery.sizeOf(context).height * 1.0,
-                                                                                              child: WorkOrderStatusWidget(
-                                                                                                workOrderString: valueOrDefault<String>(
-                                                                                                  _model.workOrderQueryOnPage?.firstOrNull?.workOrderId,
-                                                                                                  '00300',
-                                                                                                ),
+                                                                                              child: WorkOrderStatusWorkOrderWidget(
+                                                                                                workOrderString: widget.workOrderId,
                                                                                               ),
                                                                                             ),
                                                                                           ),
@@ -2447,7 +2479,7 @@ class _WorkOrderWidgetState extends State<WorkOrderWidget> {
                                                                                       options: [
                                                                                         ChipData('Refrigerator', Icons.kitchen),
                                                                                         ChipData('Dishwasher', Icons.local_laundry_service),
-                                                                                        ChipData('Washer M', Icons.local_laundry_service),
+                                                                                        ChipData('Washer', Icons.local_laundry_service),
                                                                                         ChipData('Dryer', Icons.local_laundry_service),
                                                                                         ChipData('Range', Icons.microwave_sharp),
                                                                                         ChipData('Cooktop', Icons.microwave_sharp),
@@ -3051,6 +3083,35 @@ class _WorkOrderWidgetState extends State<WorkOrderWidget> {
                                                                                             );
                                                                                             _model.appointmeAppliancesList = _model.applianceValues!.toList().cast<String>();
                                                                                             safeSetState(() {});
+                                                                                            await showModalBottomSheet(
+                                                                                              isScrollControlled: true,
+                                                                                              backgroundColor: Colors.transparent,
+                                                                                              enableDrag: false,
+                                                                                              context: context,
+                                                                                              builder: (context) {
+                                                                                                return WebViewAware(
+                                                                                                  child: GestureDetector(
+                                                                                                    onTap: () {
+                                                                                                      FocusScope.of(context).unfocus();
+                                                                                                      FocusManager.instance.primaryFocus?.unfocus();
+                                                                                                    },
+                                                                                                    child: Padding(
+                                                                                                      padding: MediaQuery.viewInsetsOf(context),
+                                                                                                      child: Container(
+                                                                                                        height: MediaQuery.sizeOf(context).height * 1.0,
+                                                                                                        child: WorkOrderStatusWidget(
+                                                                                                          workOrderString: valueOrDefault<String>(
+                                                                                                            _model.workOrderQueryOnPage?.firstOrNull?.workOrderId,
+                                                                                                            '00300',
+                                                                                                          ),
+                                                                                                        ),
+                                                                                                      ),
+                                                                                                    ),
+                                                                                                  ),
+                                                                                                );
+                                                                                              },
+                                                                                            ).then((value) => safeSetState(() {}));
+
                                                                                             if (_model.showAppointment) {
                                                                                               _model.showAppointment = false;
                                                                                               safeSetState(() {});
@@ -3058,6 +3119,23 @@ class _WorkOrderWidgetState extends State<WorkOrderWidget> {
                                                                                               _model.showAppointment = true;
                                                                                               safeSetState(() {});
                                                                                             }
+
+                                                                                            context.pushNamed(
+                                                                                              WorkOrderWidget.routeName,
+                                                                                              queryParameters: {
+                                                                                                'workOrderId': serializeParam(
+                                                                                                  widget.workOrderId,
+                                                                                                  ParamType.String,
+                                                                                                ),
+                                                                                              }.withoutNulls,
+                                                                                              extra: <String, dynamic>{
+                                                                                                kTransitionInfoKey: TransitionInfo(
+                                                                                                  hasTransition: true,
+                                                                                                  transitionType: PageTransitionType.fade,
+                                                                                                  duration: Duration(milliseconds: 0),
+                                                                                                ),
+                                                                                              },
+                                                                                            );
                                                                                           } else {
                                                                                             await WorkOrdersTable().update(
                                                                                               data: {
@@ -3178,6 +3256,35 @@ class _WorkOrderWidgetState extends State<WorkOrderWidget> {
                                                                                             );
                                                                                             _model.appointmeAppliancesList = _model.applianceValues!.toList().cast<String>();
                                                                                             safeSetState(() {});
+                                                                                            await showModalBottomSheet(
+                                                                                              isScrollControlled: true,
+                                                                                              backgroundColor: Colors.transparent,
+                                                                                              enableDrag: false,
+                                                                                              context: context,
+                                                                                              builder: (context) {
+                                                                                                return WebViewAware(
+                                                                                                  child: GestureDetector(
+                                                                                                    onTap: () {
+                                                                                                      FocusScope.of(context).unfocus();
+                                                                                                      FocusManager.instance.primaryFocus?.unfocus();
+                                                                                                    },
+                                                                                                    child: Padding(
+                                                                                                      padding: MediaQuery.viewInsetsOf(context),
+                                                                                                      child: Container(
+                                                                                                        height: MediaQuery.sizeOf(context).height * 1.0,
+                                                                                                        child: WorkOrderStatusWidget(
+                                                                                                          workOrderString: valueOrDefault<String>(
+                                                                                                            _model.workOrderQueryOnPage?.firstOrNull?.workOrderId,
+                                                                                                            '00300',
+                                                                                                          ),
+                                                                                                        ),
+                                                                                                      ),
+                                                                                                    ),
+                                                                                                  ),
+                                                                                                );
+                                                                                              },
+                                                                                            ).then((value) => safeSetState(() {}));
+
                                                                                             if (_model.showAppointment) {
                                                                                               _model.showAppointment = false;
                                                                                               safeSetState(() {});
@@ -3186,7 +3293,24 @@ class _WorkOrderWidgetState extends State<WorkOrderWidget> {
                                                                                               safeSetState(() {});
                                                                                             }
 
-                                                                                            await Future.delayed(const Duration(milliseconds: 10000));
+                                                                                            context.pushNamed(
+                                                                                              WorkOrderWidget.routeName,
+                                                                                              queryParameters: {
+                                                                                                'workOrderId': serializeParam(
+                                                                                                  widget.workOrderId,
+                                                                                                  ParamType.String,
+                                                                                                ),
+                                                                                              }.withoutNulls,
+                                                                                              extra: <String, dynamic>{
+                                                                                                kTransitionInfoKey: TransitionInfo(
+                                                                                                  hasTransition: true,
+                                                                                                  transitionType: PageTransitionType.fade,
+                                                                                                  duration: Duration(milliseconds: 0),
+                                                                                                ),
+                                                                                              },
+                                                                                            );
+
+                                                                                            await Future.delayed(const Duration(milliseconds: 5000));
                                                                                             await DiagnosesTable().update(
                                                                                               data: {
                                                                                                 'created_at': supaSerialize<DateTime>(FFAppState().startTime),
@@ -3580,8 +3704,9 @@ class _WorkOrderWidgetState extends State<WorkOrderWidget> {
                                                                                                                         ),
                                                                                                                         style: FlutterFlowTheme.of(context).labelSmall.override(
                                                                                                                               fontFamily: 'Manrope',
-                                                                                                                              color: FlutterFlowTheme.of(context).primary,
+                                                                                                                              color: FlutterFlowTheme.of(context).primaryText,
                                                                                                                               letterSpacing: 0.0,
+                                                                                                                              fontWeight: FontWeight.w600,
                                                                                                                             ),
                                                                                                                       ),
                                                                                                                     ),
@@ -4940,167 +5065,155 @@ class _WorkOrderWidgetState extends State<WorkOrderWidget> {
                                                                                 appliancesList[appliancesListIndex];
                                                                             return Padding(
                                                                               padding: EdgeInsetsDirectional.fromSTEB(0.0, 8.0, 0.0, 8.0),
-                                                                              child: Container(
-                                                                                decoration: BoxDecoration(
-                                                                                  color: FlutterFlowTheme.of(context).accent1,
-                                                                                  borderRadius: BorderRadius.circular(20.0),
-                                                                                ),
-                                                                                child: Padding(
-                                                                                  padding: EdgeInsetsDirectional.fromSTEB(8.0, 16.0, 8.0, 16.0),
-                                                                                  child: Row(
-                                                                                    mainAxisSize: MainAxisSize.max,
-                                                                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                                                    children: [
-                                                                                      Row(
-                                                                                        mainAxisSize: MainAxisSize.max,
-                                                                                        children: [
-                                                                                          Padding(
-                                                                                            padding: EdgeInsetsDirectional.fromSTEB(20.0, 0.0, 0.0, 0.0),
-                                                                                            child: InkWell(
-                                                                                              splashColor: Colors.transparent,
-                                                                                              focusColor: Colors.transparent,
-                                                                                              hoverColor: Colors.transparent,
-                                                                                              highlightColor: Colors.transparent,
-                                                                                              onTap: () async {
-                                                                                                await showModalBottomSheet(
-                                                                                                  isScrollControlled: true,
-                                                                                                  backgroundColor: Colors.transparent,
-                                                                                                  enableDrag: false,
-                                                                                                  context: context,
-                                                                                                  builder: (context) {
-                                                                                                    return WebViewAware(
-                                                                                                      child: GestureDetector(
-                                                                                                        onTap: () {
-                                                                                                          FocusScope.of(context).unfocus();
-                                                                                                          FocusManager.instance.primaryFocus?.unfocus();
-                                                                                                        },
-                                                                                                        child: Padding(
-                                                                                                          padding: MediaQuery.viewInsetsOf(context),
-                                                                                                          child: AddPartBottonSheetWidget(
-                                                                                                            partFromDiagnosisParameter: appliancesListItem,
-                                                                                                          ),
-                                                                                                        ),
-                                                                                                      ),
-                                                                                                    );
-                                                                                                  },
-                                                                                                ).then((value) => safeSetState(() {}));
-
-                                                                                                FFAppState().openFab = false;
-                                                                                                safeSetState(() {});
-                                                                                              },
-                                                                                              child: Icon(
-                                                                                                Icons.kitchen,
-                                                                                                color: FlutterFlowTheme.of(context).primary,
-                                                                                                size: 40.0,
+                                                                              child: InkWell(
+                                                                                splashColor: Colors.transparent,
+                                                                                focusColor: Colors.transparent,
+                                                                                hoverColor: Colors.transparent,
+                                                                                highlightColor: Colors.transparent,
+                                                                                onTap: () async {
+                                                                                  await showModalBottomSheet(
+                                                                                    isScrollControlled: true,
+                                                                                    backgroundColor: Colors.transparent,
+                                                                                    context: context,
+                                                                                    builder: (context) {
+                                                                                      return WebViewAware(
+                                                                                        child: GestureDetector(
+                                                                                          onTap: () {
+                                                                                            FocusScope.of(context).unfocus();
+                                                                                            FocusManager.instance.primaryFocus?.unfocus();
+                                                                                          },
+                                                                                          child: Padding(
+                                                                                            padding: MediaQuery.viewInsetsOf(context),
+                                                                                            child: Container(
+                                                                                              height: MediaQuery.sizeOf(context).height * 1.0,
+                                                                                              child: DiagnosisViewBSWidget(
+                                                                                                diagnosisParameterWorkId: appliancesListItem,
                                                                                               ),
                                                                                             ),
                                                                                           ),
-                                                                                          Padding(
-                                                                                            padding: EdgeInsetsDirectional.fromSTEB(24.0, 0.0, 0.0, 0.0),
-                                                                                            child: Text(
-                                                                                              valueOrDefault<String>(
-                                                                                                appliancesListItem.item,
-                                                                                                'Appliances',
-                                                                                              ),
-                                                                                              style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                                    fontFamily: 'Manrope',
-                                                                                                    fontSize: 20.0,
-                                                                                                    letterSpacing: 0.0,
-                                                                                                  ),
-                                                                                            ),
-                                                                                          ),
-                                                                                        ],
-                                                                                      ),
-                                                                                      Align(
-                                                                                        alignment: AlignmentDirectional(1.0, 0.0),
-                                                                                        child: Row(
+                                                                                        ),
+                                                                                      );
+                                                                                    },
+                                                                                  ).then((value) => safeSetState(() {}));
+                                                                                },
+                                                                                child: Container(
+                                                                                  decoration: BoxDecoration(
+                                                                                    color: FlutterFlowTheme.of(context).accent1,
+                                                                                    borderRadius: BorderRadius.circular(20.0),
+                                                                                  ),
+                                                                                  child: Padding(
+                                                                                    padding: EdgeInsetsDirectional.fromSTEB(36.0, 16.0, 36.0, 16.0),
+                                                                                    child: Row(
+                                                                                      mainAxisSize: MainAxisSize.max,
+                                                                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                                                      children: [
+                                                                                        Row(
                                                                                           mainAxisSize: MainAxisSize.max,
                                                                                           children: [
-                                                                                            FlutterFlowIconButton(
-                                                                                              borderRadius: 8.0,
-                                                                                              buttonSize: 40.0,
-                                                                                              fillColor: FlutterFlowTheme.of(context).alternate,
-                                                                                              icon: Icon(
-                                                                                                Icons.receipt_long_outlined,
-                                                                                                color: FlutterFlowTheme.of(context).info,
-                                                                                                size: 24.0,
-                                                                                              ),
-                                                                                              onPressed: () async {
-                                                                                                await showModalBottomSheet(
-                                                                                                  isScrollControlled: true,
-                                                                                                  backgroundColor: Colors.transparent,
-                                                                                                  context: context,
-                                                                                                  builder: (context) {
-                                                                                                    return WebViewAware(
-                                                                                                      child: GestureDetector(
-                                                                                                        onTap: () {
-                                                                                                          FocusScope.of(context).unfocus();
-                                                                                                          FocusManager.instance.primaryFocus?.unfocus();
-                                                                                                        },
-                                                                                                        child: Padding(
-                                                                                                          padding: MediaQuery.viewInsetsOf(context),
-                                                                                                          child: Container(
-                                                                                                            height: MediaQuery.sizeOf(context).height * 1.0,
-                                                                                                            child: DiagnosisViewBSWidget(
-                                                                                                              diagnosisParameterWorkId: appliancesListItem,
+                                                                                            Padding(
+                                                                                              padding: EdgeInsetsDirectional.fromSTEB(20.0, 0.0, 0.0, 0.0),
+                                                                                              child: InkWell(
+                                                                                                splashColor: Colors.transparent,
+                                                                                                focusColor: Colors.transparent,
+                                                                                                hoverColor: Colors.transparent,
+                                                                                                highlightColor: Colors.transparent,
+                                                                                                onTap: () async {
+                                                                                                  await showModalBottomSheet(
+                                                                                                    isScrollControlled: true,
+                                                                                                    backgroundColor: Colors.transparent,
+                                                                                                    enableDrag: false,
+                                                                                                    context: context,
+                                                                                                    builder: (context) {
+                                                                                                      return WebViewAware(
+                                                                                                        child: GestureDetector(
+                                                                                                          onTap: () {
+                                                                                                            FocusScope.of(context).unfocus();
+                                                                                                            FocusManager.instance.primaryFocus?.unfocus();
+                                                                                                          },
+                                                                                                          child: Padding(
+                                                                                                            padding: MediaQuery.viewInsetsOf(context),
+                                                                                                            child: AddPartBottonSheetWidget(
+                                                                                                              partFromDiagnosisParameter: appliancesListItem,
                                                                                                             ),
                                                                                                           ),
                                                                                                         ),
-                                                                                                      ),
-                                                                                                    );
-                                                                                                  },
-                                                                                                ).then((value) => safeSetState(() {}));
-                                                                                              },
-                                                                                            ),
-                                                                                            if (FFAppState().dispatch == 'dispatch')
-                                                                                              FlutterFlowIconButton(
-                                                                                                borderRadius: 8.0,
-                                                                                                buttonSize: 40.0,
-                                                                                                fillColor: FlutterFlowTheme.of(context).tertiary,
-                                                                                                disabledColor: FlutterFlowTheme.of(context).secondaryText,
-                                                                                                disabledIconColor: FlutterFlowTheme.of(context).primaryText,
-                                                                                                icon: Icon(
-                                                                                                  Icons.done_outline,
-                                                                                                  color: FlutterFlowTheme.of(context).info,
-                                                                                                  size: 24.0,
-                                                                                                ),
-                                                                                                onPressed: (appliancesListItem.completed == true)
-                                                                                                    ? null
-                                                                                                    : () async {
-                                                                                                        await DiagnosesTable().update(
-                                                                                                          data: {
-                                                                                                            'completed': true,
-                                                                                                          },
-                                                                                                          matchingRows: (rows) => rows.eqOrNull(
-                                                                                                            'diagnosis_id',
-                                                                                                            valueOrDefault<String>(
-                                                                                                              appliancesListItem.diagnosisId,
-                                                                                                              '0',
-                                                                                                            ),
-                                                                                                          ),
-                                                                                                        );
+                                                                                                      );
+                                                                                                    },
+                                                                                                  ).then((value) => safeSetState(() {}));
 
-                                                                                                        safeSetState(() {});
-                                                                                                      },
-                                                                                              ),
-                                                                                            if (appliancesListItem.helper == true)
-                                                                                              FlutterFlowIconButton(
-                                                                                                borderRadius: 8.0,
-                                                                                                buttonSize: 40.0,
-                                                                                                fillColor: FlutterFlowTheme.of(context).primary,
-                                                                                                icon: Icon(
-                                                                                                  Icons.hail,
-                                                                                                  color: FlutterFlowTheme.of(context).info,
-                                                                                                  size: 24.0,
-                                                                                                ),
-                                                                                                onPressed: () {
-                                                                                                  print('Arrived pressed ...');
+                                                                                                  FFAppState().openFab = false;
+                                                                                                  safeSetState(() {});
                                                                                                 },
+                                                                                                child: Icon(
+                                                                                                  Icons.kitchen,
+                                                                                                  color: FlutterFlowTheme.of(context).primary,
+                                                                                                  size: 40.0,
+                                                                                                ),
                                                                                               ),
-                                                                                          ].divide(SizedBox(width: 16.0)),
+                                                                                            ),
+                                                                                            Padding(
+                                                                                              padding: EdgeInsetsDirectional.fromSTEB(2.0, 0.0, 0.0, 0.0),
+                                                                                              child: Column(
+                                                                                                mainAxisSize: MainAxisSize.max,
+                                                                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                                                                children: [
+                                                                                                  Padding(
+                                                                                                    padding: EdgeInsetsDirectional.fromSTEB(24.0, 0.0, 0.0, 0.0),
+                                                                                                    child: Text(
+                                                                                                      valueOrDefault<String>(
+                                                                                                        appliancesListItem.item,
+                                                                                                        'Appliances',
+                                                                                                      ),
+                                                                                                      style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                                            fontFamily: 'Manrope',
+                                                                                                            fontSize: 20.0,
+                                                                                                            letterSpacing: 0.0,
+                                                                                                          ),
+                                                                                                    ),
+                                                                                                  ),
+                                                                                                  Padding(
+                                                                                                    padding: EdgeInsetsDirectional.fromSTEB(24.0, 0.0, 0.0, 0.0),
+                                                                                                    child: Text(
+                                                                                                      valueOrDefault<String>(
+                                                                                                        dateTimeFormat("MMMEd", appliancesListItem.createdAt),
+                                                                                                        'TODAY',
+                                                                                                      ),
+                                                                                                      style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                                            fontFamily: 'Manrope',
+                                                                                                            fontSize: 16.0,
+                                                                                                            letterSpacing: 0.0,
+                                                                                                          ),
+                                                                                                    ),
+                                                                                                  ),
+                                                                                                ],
+                                                                                              ),
+                                                                                            ),
+                                                                                          ],
                                                                                         ),
-                                                                                      ),
-                                                                                    ].divide(SizedBox(width: 8.0)),
+                                                                                        Align(
+                                                                                          alignment: AlignmentDirectional(1.0, 0.0),
+                                                                                          child: Row(
+                                                                                            mainAxisSize: MainAxisSize.max,
+                                                                                            children: [
+                                                                                              if (appliancesListItem.helper == true)
+                                                                                                FlutterFlowIconButton(
+                                                                                                  borderRadius: 8.0,
+                                                                                                  buttonSize: 40.0,
+                                                                                                  fillColor: FlutterFlowTheme.of(context).primary,
+                                                                                                  icon: Icon(
+                                                                                                    Icons.hail,
+                                                                                                    color: FlutterFlowTheme.of(context).info,
+                                                                                                    size: 24.0,
+                                                                                                  ),
+                                                                                                  onPressed: () {
+                                                                                                    print('helper pressed ...');
+                                                                                                  },
+                                                                                                ),
+                                                                                            ].divide(SizedBox(width: 16.0)),
+                                                                                          ),
+                                                                                        ),
+                                                                                      ].divide(SizedBox(width: 8.0)),
+                                                                                    ),
                                                                                   ),
                                                                                 ),
                                                                               ),
@@ -5273,7 +5386,7 @@ class _WorkOrderWidgetState extends State<WorkOrderWidget> {
                                                                                         borderRadius: BorderRadius.circular(20.0),
                                                                                       ),
                                                                                       child: Padding(
-                                                                                        padding: EdgeInsetsDirectional.fromSTEB(8.0, 16.0, 8.0, 16.0),
+                                                                                        padding: EdgeInsetsDirectional.fromSTEB(36.0, 16.0, 36.0, 16.0),
                                                                                         child: Row(
                                                                                           mainAxisSize: MainAxisSize.max,
                                                                                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -5335,7 +5448,7 @@ class _WorkOrderWidgetState extends State<WorkOrderWidget> {
                                                                                                       ),
                                                                                                     ),
                                                                                                   ),
-                                                                                                  if (FFAppState().dispatch == 'dispatch')
+                                                                                                  if (FFAppState().officeManager == 'officeManager')
                                                                                                     FlutterFlowIconButton(
                                                                                                       borderRadius: 8.0,
                                                                                                       buttonSize: 40.0,
@@ -5370,7 +5483,7 @@ class _WorkOrderWidgetState extends State<WorkOrderWidget> {
                                                                                                               safeSetState(() {});
                                                                                                             },
                                                                                                     ),
-                                                                                                  if ((requestedPartItem.arrived == true) && (FFAppState().dispatch == 'dispatch'))
+                                                                                                  if ((requestedPartItem.arrived == true) && (FFAppState().officeManager == 'officeManager'))
                                                                                                     FlutterFlowIconButton(
                                                                                                       borderRadius: 8.0,
                                                                                                       buttonSize: 40.0,
@@ -5412,7 +5525,7 @@ class _WorkOrderWidgetState extends State<WorkOrderWidget> {
                                                                                                         Navigator.pop(context);
                                                                                                       },
                                                                                                     ),
-                                                                                                  if ((requestedPartItem.arrived == false) && (FFAppState().dispatch == 'dispatch'))
+                                                                                                  if ((requestedPartItem.arrived == false) && (FFAppState().officeManager == 'officeManager'))
                                                                                                     FlutterFlowIconButton(
                                                                                                       borderRadius: 8.0,
                                                                                                       buttonSize: 40.0,

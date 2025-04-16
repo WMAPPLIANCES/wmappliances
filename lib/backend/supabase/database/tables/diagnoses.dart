@@ -172,4 +172,20 @@ class DiagnosesRow extends SupabaseDataRow {
   String? get repairCostType => getField<String>('repair_cost_type');
   set repairCostType(String? value) =>
       setField<String>('repair_cost_type', value);
+
+  bool? get paymentAutorized => getField<bool>('payment_autorized');
+  set paymentAutorized(bool? value) =>
+      setField<bool>('payment_autorized', value);
+
+  String? get visitType => getField<String>('visit_type');
+  set visitType(String? value) => setField<String>('visit_type', value);
+
+  double? get baseAmount => getField<double>('base_amount');
+  set baseAmount(double? value) => setField<double>('base_amount', value);
+
+  bool? get paymentCreated => getField<bool>('payment_created');
+  set paymentCreated(bool? value) => setField<bool>('payment_created', value);
+
+  String? get payCategory => getField<String>('pay_category');
+  set payCategory(String? value) => setField<String>('pay_category', value);
 }

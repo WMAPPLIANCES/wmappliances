@@ -9,13 +9,16 @@ import 'package:flutter/material.dart';
 // Begin custom action code
 // DO NOT REMOVE OR MODIFY THE CODE ABOVE!
 
-import 'dart:convert';
+// Imports other custom actions
+// Imports custom functions
+
 import 'package:http/http.dart' as http;
 
 Future<String> audioTranscription(
   String model,
   String apiKey,
   FFUploadedFile? file, // Make file nullable to handle potential null values
+  String? language, // Parâmetro de idioma (ex: 'pt', 'en')
 ) async {
   if (file == null || file.bytes == null || file.name == null) {
     return 'Error: Audio file is missing or invalid.'; // Handle null file case
@@ -31,6 +34,11 @@ Future<String> audioTranscription(
 
   request.fields['model'] = model;
   request.fields['response_format'] = 'verbose_json';
+
+  // Adiciona o idioma se fornecido
+  if (language != null && language.isNotEmpty) {
+    request.fields['language'] = language;
+  }
 
   request.files.add(http.MultipartFile.fromBytes(
     'file', // This should match the API's expected field name for the file

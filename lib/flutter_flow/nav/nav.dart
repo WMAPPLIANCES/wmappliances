@@ -9,6 +9,7 @@ import '/backend/supabase/supabase.dart';
 
 import '/auth/base_auth_user_provider.dart';
 
+import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 
 import '/index.dart';
@@ -332,6 +333,16 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           name: ChatBotSupportWidget.routeName,
           path: ChatBotSupportWidget.routePath,
           builder: (context, params) => ChatBotSupportWidget(),
+        ),
+        FFRoute(
+          name: VoiceDiagnosisN8nWidget.routeName,
+          path: VoiceDiagnosisN8nWidget.routePath,
+          builder: (context, params) => VoiceDiagnosisN8nWidget(),
+        ),
+        FFRoute(
+          name: PaymentsWidget.routeName,
+          path: PaymentsWidget.routePath,
+          builder: (context, params) => PaymentsWidget(),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
       observers: [routeObserver],
@@ -518,7 +529,7 @@ class FFRoute {
               : builder(context, ffParams);
           final child = appStateNotifier.loading
               ? Container(
-                  color: Colors.transparent,
+                  color: FlutterFlowTheme.of(context).primaryText,
                   child: Image.asset(
                     'assets/images/wmappliancescasa512x512.png',
                     fit: BoxFit.contain,

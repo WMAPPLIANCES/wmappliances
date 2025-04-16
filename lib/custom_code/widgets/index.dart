@@ -22,3 +22,7 @@ export 'live_location_timer.dart' show LiveLocationTimer;
 export 'list_of_items.dart' show ListOfItems;
 export 'make_phone_call.dart' show MakePhoneCall;
 export 'chat_bot_support.dart' show ChatBotSupport;
+export 'is_record.dart' show IsRecord;
+export 'payment_dashboard.dart' show PaymentDashboard;
+export 'apply_update.dart' show ApplyUpdate;
+export 'create_payment_form.dart' show CreatePaymentForm;

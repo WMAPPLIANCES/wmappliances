@@ -15,6 +15,8 @@ class SelectRolePageModel extends FlutterFlowModel<SelectRolePageWidget> {
 
   bool officeComputer = false;
 
+  String role = 'user';
+
   ///  State fields for stateful widgets in this page.
 
   // State field(s) for technician widget.

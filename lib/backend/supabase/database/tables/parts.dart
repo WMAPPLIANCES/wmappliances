@@ -113,4 +113,7 @@ class PartsRow extends SupabaseDataRow {
 
   bool? get secondReview => getField<bool>('second_review');
   set secondReview(bool? value) => setField<bool>('second_review', value);
+
+  String? get updateBy => getField<String>('update_by');
+  set updateBy(String? value) => setField<String>('update_by', value);
 }

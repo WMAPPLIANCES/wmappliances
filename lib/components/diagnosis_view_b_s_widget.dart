@@ -1,12 +1,10 @@
 import '/backend/supabase/supabase.dart';
 import '/components/update_modelnumber_serial_widget.dart';
-import '/flutter_flow/flutter_flow_drop_down.dart';
 import '/flutter_flow/flutter_flow_expanded_image_view.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
-import '/flutter_flow/form_field_controller.dart';
 import '/custom_code/actions/index.dart' as actions;
 import '/custom_code/widgets/index.dart' as custom_widgets;
 import 'package:cached_network_image/cached_network_image.dart';
@@ -86,7 +84,7 @@ class _DiagnosisViewBSWidgetState extends State<DiagnosisViewBSWidget> {
       children: [
         Container(
           constraints: BoxConstraints(
-            maxWidth: 900.0,
+            maxWidth: 1200.0,
           ),
           decoration: BoxDecoration(
             color: FlutterFlowTheme.of(context).primaryBackground,
@@ -166,92 +164,6 @@ class _DiagnosisViewBSWidgetState extends State<DiagnosisViewBSWidget> {
                                           letterSpacing: 0.0,
                                         ),
                                   ),
-                                  if (responsiveVisibility(
-                                    context: context,
-                                    phone: false,
-                                    tablet: false,
-                                    tabletLandscape: false,
-                                  ))
-                                    Align(
-                                      alignment: AlignmentDirectional(0.0, 0.0),
-                                      child: FlutterFlowDropDown<String>(
-                                        controller:
-                                            _model.dropDownValueController ??=
-                                                FormFieldController<String>(
-                                          _model.dropDownValue ??=
-                                              valueOrDefault<String>(
-                                            widget.diagnosisParameterWorkId
-                                                ?.typeService,
-                                            'Select Type...',
-                                          ),
-                                        ),
-                                        options: [
-                                          'HALF',
-                                          'HOUR',
-                                          'MINIMAL ',
-                                          'GENERAL',
-                                          'HIGH',
-                                          'DOUBLE HOUR',
-                                          'DOUBLE MINIMAL',
-                                          'DOUBLE GENERAL',
-                                          'DOUBLE HIGH'
-                                        ],
-                                        onChanged: (val) async {
-                                          safeSetState(
-                                              () => _model.dropDownValue = val);
-                                          await DiagnosesTable().update(
-                                            data: {
-                                              'type_service':
-                                                  _model.dropDownValue,
-                                            },
-                                            matchingRows: (rows) =>
-                                                rows.eqOrNull(
-                                              'diagnosis_id',
-                                              valueOrDefault<String>(
-                                                widget.diagnosisParameterWorkId
-                                                    ?.diagnosisId,
-                                                'diagnosis_id',
-                                              ),
-                                            ),
-                                          );
-
-                                          safeSetState(() {});
-                                        },
-                                        width: 400.0,
-                                        height: 60.0,
-                                        textStyle: FlutterFlowTheme.of(context)
-                                            .bodyMedium
-                                            .override(
-                                              fontFamily: 'Manrope',
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .primary,
-                                              fontSize: 24.0,
-                                              letterSpacing: 0.0,
-                                            ),
-                                        hintText: 'Select Type...',
-                                        icon: Icon(
-                                          Icons.keyboard_arrow_down_rounded,
-                                          color: FlutterFlowTheme.of(context)
-                                              .primaryText,
-                                          size: 24.0,
-                                        ),
-                                        fillColor: FlutterFlowTheme.of(context)
-                                            .primaryBackground,
-                                        elevation: 2.0,
-                                        borderColor:
-                                            FlutterFlowTheme.of(context)
-                                                .primaryBackground,
-                                        borderWidth: 0.0,
-                                        borderRadius: 8.0,
-                                        margin: EdgeInsetsDirectional.fromSTEB(
-                                            12.0, 0.0, 12.0, 0.0),
-                                        hidesUnderline: true,
-                                        isOverButton: false,
-                                        isSearchable: false,
-                                        isMultiSelect: false,
-                                      ),
-                                    ),
                                 ],
                               ),
                             ],
@@ -747,6 +659,7 @@ class _DiagnosisViewBSWidgetState extends State<DiagnosisViewBSWidget> {
 
                                                         FFAppState()
                                                             .update(() {});
+                                                        Navigator.pop(context);
                                                       },
                                                       text: 'Updated',
                                                       options: FFButtonOptions(
@@ -1278,6 +1191,8 @@ class _DiagnosisViewBSWidgetState extends State<DiagnosisViewBSWidget> {
                                                                     0.0),
                                                         child: FFButtonWidget(
                                                           onPressed: () async {
+                                                            Navigator.pop(
+                                                                context);
                                                             await showModalBottomSheet(
                                                               isScrollControlled:
                                                                   true,
@@ -1405,14 +1320,12 @@ class _DiagnosisViewBSWidgetState extends State<DiagnosisViewBSWidget> {
                                                                 'id',
                                                               ),
                                                             );
-                                                            Navigator.pop(
-                                                                context);
                                                             ScaffoldMessenger
                                                                     .of(context)
                                                                 .showSnackBar(
                                                               SnackBar(
                                                                 content: Text(
-                                                                  'We are looking for Schematic update in a few seconds.',
+                                                                  'We are looking for Schematic we will update in a few seconds.',
                                                                   style:
                                                                       TextStyle(
                                                                     color: FlutterFlowTheme.of(
@@ -1429,25 +1342,63 @@ class _DiagnosisViewBSWidgetState extends State<DiagnosisViewBSWidget> {
                                                                         .secondary,
                                                               ),
                                                             );
-                                                            await DiagnosesTable()
-                                                                .update(
-                                                              data: {
-                                                                'schematic_view':
-                                                                    true,
-                                                              },
-                                                              matchingRows:
-                                                                  (rows) => rows
-                                                                      .eqOrNull(
+                                                            await Future.delayed(
+                                                                const Duration(
+                                                                    milliseconds:
+                                                                        7000));
+                                                            Navigator.pop(
+                                                                context);
+                                                            _model.updateQuery =
+                                                                await DiagnosesTable()
+                                                                    .queryRows(
+                                                              queryFn: (q) =>
+                                                                  q.eqOrNull(
                                                                 'diagnosis_id',
                                                                 valueOrDefault<
                                                                     String>(
                                                                   widget
                                                                       .diagnosisParameterWorkId
                                                                       ?.diagnosisId,
-                                                                  '2414',
+                                                                  '424',
                                                                 ),
                                                               ),
                                                             );
+                                                            await showModalBottomSheet(
+                                                              isScrollControlled:
+                                                                  true,
+                                                              backgroundColor:
+                                                                  Colors
+                                                                      .transparent,
+                                                              enableDrag: false,
+                                                              context: context,
+                                                              builder:
+                                                                  (context) {
+                                                                return WebViewAware(
+                                                                  child:
+                                                                      Padding(
+                                                                    padding: MediaQuery
+                                                                        .viewInsetsOf(
+                                                                            context),
+                                                                    child:
+                                                                        Container(
+                                                                      height:
+                                                                          MediaQuery.sizeOf(context).height *
+                                                                              1.0,
+                                                                      child:
+                                                                          DiagnosisViewBSWidget(
+                                                                        diagnosisParameterWorkId: _model
+                                                                            .updateQuery!
+                                                                            .firstOrNull!,
+                                                                      ),
+                                                                    ),
+                                                                  ),
+                                                                );
+                                                              },
+                                                            ).then((value) =>
+                                                                safeSetState(
+                                                                    () {}));
+
+                                                            safeSetState(() {});
 
                                                             safeSetState(() {});
                                                           },
@@ -1511,513 +1462,216 @@ class _DiagnosisViewBSWidgetState extends State<DiagnosisViewBSWidget> {
                                     ),
                                   ),
                                 ),
-                                Expanded(
-                                  child: Row(
-                                    mainAxisSize: MainAxisSize.max,
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Row(
-                                        mainAxisSize: MainAxisSize.max,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.start,
-                                        children: [
-                                          if (responsiveVisibility(
-                                            context: context,
-                                            phone: false,
-                                            tablet: false,
-                                            tabletLandscape: false,
-                                          ))
-                                            Row(
-                                              mainAxisSize: MainAxisSize.max,
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
-                                              children: [
-                                                Align(
-                                                  alignment:
-                                                      AlignmentDirectional(
-                                                          0.0, 0.0),
-                                                  child: Padding(
-                                                    padding:
-                                                        EdgeInsetsDirectional
-                                                            .fromSTEB(12.0, 0.0,
-                                                                12.0, 0.0),
-                                                    child:
-                                                        FlutterFlowIconButton(
-                                                      borderRadius: 8.0,
-                                                      buttonSize: 40.0,
-                                                      fillColor:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .primary,
-                                                      disabledColor:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .tertiary,
-                                                      disabledIconColor:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .primaryBackground,
-                                                      icon: Icon(
-                                                        Icons.hail,
-                                                        color:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
+                                if (FFAppState().dispatch == 'dispatch')
+                                  Expanded(
+                                    child: Row(
+                                      mainAxisSize: MainAxisSize.max,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Row(
+                                          mainAxisSize: MainAxisSize.max,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.start,
+                                          children: [
+                                            if (responsiveVisibility(
+                                              context: context,
+                                              phone: false,
+                                              tablet: false,
+                                              tabletLandscape: false,
+                                            ))
+                                              Row(
+                                                mainAxisSize: MainAxisSize.max,
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
+                                                children: [
+                                                  if (widget
+                                                          .diagnosisParameterWorkId
+                                                          ?.helper ==
+                                                      true)
+                                                    Align(
+                                                      alignment:
+                                                          AlignmentDirectional(
+                                                              0.0, 0.0),
+                                                      child: Padding(
+                                                        padding:
+                                                            EdgeInsetsDirectional
+                                                                .fromSTEB(
+                                                                    12.0,
+                                                                    0.0,
+                                                                    12.0,
+                                                                    0.0),
+                                                        child:
+                                                            FlutterFlowIconButton(
+                                                          borderRadius: 8.0,
+                                                          buttonSize: 40.0,
+                                                          fillColor:
+                                                              FlutterFlowTheme.of(
+                                                                      context)
+                                                                  .primary,
+                                                          disabledColor:
+                                                              FlutterFlowTheme.of(
+                                                                      context)
+                                                                  .tertiary,
+                                                          disabledIconColor:
+                                                              FlutterFlowTheme.of(
+                                                                      context)
+                                                                  .primaryBackground,
+                                                          icon: Icon(
+                                                            Icons.hail,
+                                                            color: FlutterFlowTheme
+                                                                    .of(context)
                                                                 .info,
-                                                        size: 26.0,
-                                                      ),
-                                                      onPressed: (widget
-                                                                  .diagnosisParameterWorkId
-                                                                  ?.helper ==
-                                                              true)
-                                                          ? null
-                                                          : () async {
-                                                              await DiagnosesTable()
-                                                                  .update(
-                                                                data: {
-                                                                  'helper':
-                                                                      true,
-                                                                },
-                                                                matchingRows:
-                                                                    (rows) => rows
-                                                                        .eqOrNull(
-                                                                  'diagnosis_id',
-                                                                  valueOrDefault<
-                                                                      String>(
-                                                                    widget
-                                                                        .diagnosisParameterWorkId
-                                                                        ?.diagnosisId,
-                                                                    'diagnosis_id',
-                                                                  ),
-                                                                ),
-                                                              );
+                                                            size: 26.0,
+                                                          ),
+                                                          onPressed: (widget
+                                                                      .diagnosisParameterWorkId
+                                                                      ?.helper ==
+                                                                  true)
+                                                              ? null
+                                                              : () async {
+                                                                  await DiagnosesTable()
+                                                                      .update(
+                                                                    data: {
+                                                                      'helper':
+                                                                          true,
+                                                                    },
+                                                                    matchingRows:
+                                                                        (rows) =>
+                                                                            rows.eqOrNull(
+                                                                      'diagnosis_id',
+                                                                      valueOrDefault<
+                                                                          String>(
+                                                                        widget
+                                                                            .diagnosisParameterWorkId
+                                                                            ?.diagnosisId,
+                                                                        'diagnosis_id',
+                                                                      ),
+                                                                    ),
+                                                                  );
 
-                                                              safeSetState(
-                                                                  () {});
-                                                            },
+                                                                  safeSetState(
+                                                                      () {});
+                                                                },
+                                                        ),
+                                                      ),
                                                     ),
+                                                  Row(
+                                                    mainAxisSize:
+                                                        MainAxisSize.max,
+                                                    children: [
+                                                      if ((FFAppState()
+                                                                  .userRole ==
+                                                              'partDepartment') &&
+                                                          responsiveVisibility(
+                                                            context: context,
+                                                            phone: false,
+                                                            tablet: false,
+                                                            tabletLandscape:
+                                                                false,
+                                                          ))
+                                                        Align(
+                                                          alignment:
+                                                              AlignmentDirectional(
+                                                                  0.0, 0.0),
+                                                          child: Padding(
+                                                            padding:
+                                                                EdgeInsetsDirectional
+                                                                    .fromSTEB(
+                                                                        0.0,
+                                                                        0.0,
+                                                                        0.0,
+                                                                        16.0),
+                                                            child:
+                                                                FFButtonWidget(
+                                                              onPressed: (widget
+                                                                          .diagnosisParameterWorkId
+                                                                          ?.completed ==
+                                                                      true)
+                                                                  ? null
+                                                                  : () async {
+                                                                      await DiagnosesTable()
+                                                                          .update(
+                                                                        data: {
+                                                                          'completed':
+                                                                              true,
+                                                                          'status':
+                                                                              'Completed',
+                                                                        },
+                                                                        matchingRows:
+                                                                            (rows) =>
+                                                                                rows.eqOrNull(
+                                                                          'diagnosis_id',
+                                                                          valueOrDefault<
+                                                                              String>(
+                                                                            widget.diagnosisParameterWorkId?.diagnosisId,
+                                                                            'diagnosis_id',
+                                                                          ),
+                                                                        ),
+                                                                      );
+
+                                                                      safeSetState(
+                                                                          () {});
+                                                                    },
+                                                              text: 'Completed',
+                                                              options:
+                                                                  FFButtonOptions(
+                                                                width: 200.0,
+                                                                height: 36.0,
+                                                                padding:
+                                                                    EdgeInsets
+                                                                        .all(
+                                                                            8.0),
+                                                                iconPadding:
+                                                                    EdgeInsetsDirectional
+                                                                        .fromSTEB(
+                                                                            0.0,
+                                                                            0.0,
+                                                                            0.0,
+                                                                            0.0),
+                                                                color: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .tertiary,
+                                                                textStyle: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .bodySmall
+                                                                    .override(
+                                                                      fontFamily:
+                                                                          'Manrope',
+                                                                      color: FlutterFlowTheme.of(
+                                                                              context)
+                                                                          .info,
+                                                                      letterSpacing:
+                                                                          0.0,
+                                                                    ),
+                                                                elevation: 0.0,
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            18.0),
+                                                                disabledColor:
+                                                                    FlutterFlowTheme.of(
+                                                                            context)
+                                                                        .secondaryText,
+                                                                disabledTextColor:
+                                                                    FlutterFlowTheme.of(
+                                                                            context)
+                                                                        .primaryText,
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                    ].divide(
+                                                        SizedBox(width: 12.0)),
                                                   ),
-                                                ),
-                                                Row(
-                                                  mainAxisSize:
-                                                      MainAxisSize.max,
-                                                  children: [
-                                                    if (responsiveVisibility(
-                                                      context: context,
-                                                      phone: false,
-                                                      tablet: false,
-                                                      tabletLandscape: false,
-                                                    ))
-                                                      Align(
-                                                        alignment:
-                                                            AlignmentDirectional(
-                                                                0.0, 0.0),
-                                                        child: FFButtonWidget(
-                                                          onPressed: (widget
-                                                                      .diagnosisParameterWorkId
-                                                                      ?.requested ==
-                                                                  true)
-                                                              ? null
-                                                              : () async {
-                                                                  await DiagnosesTable()
-                                                                      .update(
-                                                                    data: {
-                                                                      'requested':
-                                                                          true,
-                                                                      'status':
-                                                                          'Requested',
-                                                                    },
-                                                                    matchingRows:
-                                                                        (rows) =>
-                                                                            rows.eqOrNull(
-                                                                      'diagnosis_id',
-                                                                      valueOrDefault<
-                                                                          String>(
-                                                                        widget
-                                                                            .diagnosisParameterWorkId
-                                                                            ?.diagnosisId,
-                                                                        'diagnosis_id',
-                                                                      ),
-                                                                    ),
-                                                                  );
-
-                                                                  safeSetState(
-                                                                      () {});
-                                                                },
-                                                          text: 'Requested',
-                                                          options:
-                                                              FFButtonOptions(
-                                                            width: 100.0,
-                                                            height: 36.0,
-                                                            padding:
-                                                                EdgeInsets.all(
-                                                                    8.0),
-                                                            iconPadding:
-                                                                EdgeInsetsDirectional
-                                                                    .fromSTEB(
-                                                                        0.0,
-                                                                        0.0,
-                                                                        0.0,
-                                                                        0.0),
-                                                            color: FlutterFlowTheme
-                                                                    .of(context)
-                                                                .warning,
-                                                            textStyle:
-                                                                FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .bodySmall
-                                                                    .override(
-                                                                      fontFamily:
-                                                                          'Manrope',
-                                                                      color: FlutterFlowTheme.of(
-                                                                              context)
-                                                                          .info,
-                                                                      letterSpacing:
-                                                                          0.0,
-                                                                    ),
-                                                            elevation: 0.0,
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        18.0),
-                                                            disabledColor:
-                                                                FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .secondaryText,
-                                                            disabledTextColor:
-                                                                FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .primaryText,
-                                                          ),
-                                                        ),
-                                                      ),
-                                                    if (responsiveVisibility(
-                                                      context: context,
-                                                      phone: false,
-                                                      tablet: false,
-                                                      tabletLandscape: false,
-                                                    ))
-                                                      Align(
-                                                        alignment:
-                                                            AlignmentDirectional(
-                                                                0.0, 0.0),
-                                                        child: FFButtonWidget(
-                                                          onPressed: (widget
-                                                                      .diagnosisParameterWorkId
-                                                                      ?.completed ==
-                                                                  true)
-                                                              ? null
-                                                              : () async {
-                                                                  await DiagnosesTable()
-                                                                      .update(
-                                                                    data: {
-                                                                      'completed':
-                                                                          true,
-                                                                      'status':
-                                                                          'Completed',
-                                                                    },
-                                                                    matchingRows:
-                                                                        (rows) =>
-                                                                            rows.eqOrNull(
-                                                                      'diagnosis_id',
-                                                                      valueOrDefault<
-                                                                          String>(
-                                                                        widget
-                                                                            .diagnosisParameterWorkId
-                                                                            ?.diagnosisId,
-                                                                        'diagnosis_id',
-                                                                      ),
-                                                                    ),
-                                                                  );
-
-                                                                  safeSetState(
-                                                                      () {});
-                                                                },
-                                                          text: 'Completed',
-                                                          options:
-                                                              FFButtonOptions(
-                                                            width: 100.0,
-                                                            height: 36.0,
-                                                            padding:
-                                                                EdgeInsets.all(
-                                                                    8.0),
-                                                            iconPadding:
-                                                                EdgeInsetsDirectional
-                                                                    .fromSTEB(
-                                                                        0.0,
-                                                                        0.0,
-                                                                        0.0,
-                                                                        0.0),
-                                                            color: FlutterFlowTheme
-                                                                    .of(context)
-                                                                .tertiary,
-                                                            textStyle:
-                                                                FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .bodySmall
-                                                                    .override(
-                                                                      fontFamily:
-                                                                          'Manrope',
-                                                                      color: FlutterFlowTheme.of(
-                                                                              context)
-                                                                          .info,
-                                                                      letterSpacing:
-                                                                          0.0,
-                                                                    ),
-                                                            elevation: 0.0,
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        18.0),
-                                                            disabledColor:
-                                                                FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .secondaryText,
-                                                            disabledTextColor:
-                                                                FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .primaryText,
-                                                          ),
-                                                        ),
-                                                      ),
-                                                    FFButtonWidget(
-                                                      onPressed: (widget
-                                                                  .diagnosisParameterWorkId
-                                                                  ?.approved ==
-                                                              true)
-                                                          ? null
-                                                          : () async {
-                                                              await DiagnosesTable()
-                                                                  .update(
-                                                                data: {
-                                                                  'approved':
-                                                                      true,
-                                                                  'status':
-                                                                      'Approved',
-                                                                },
-                                                                matchingRows:
-                                                                    (rows) => rows
-                                                                        .eqOrNull(
-                                                                  'diagnosis_id',
-                                                                  valueOrDefault<
-                                                                      String>(
-                                                                    widget
-                                                                        .diagnosisParameterWorkId
-                                                                        ?.diagnosisId,
-                                                                    'diagnosis_id',
-                                                                  ),
-                                                                ),
-                                                              );
-
-                                                              safeSetState(
-                                                                  () {});
-                                                            },
-                                                      text: 'Approved',
-                                                      options: FFButtonOptions(
-                                                        width: 100.0,
-                                                        height: 36.0,
-                                                        padding:
-                                                            EdgeInsets.all(8.0),
-                                                        iconPadding:
-                                                            EdgeInsetsDirectional
-                                                                .fromSTEB(
-                                                                    0.0,
-                                                                    0.0,
-                                                                    0.0,
-                                                                    0.0),
-                                                        color:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .success,
-                                                        textStyle:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .bodySmall
-                                                                .override(
-                                                                  fontFamily:
-                                                                      'Manrope',
-                                                                  color: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .info,
-                                                                  letterSpacing:
-                                                                      0.0,
-                                                                ),
-                                                        elevation: 0.0,
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(18.0),
-                                                        disabledColor:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .secondaryText,
-                                                        disabledTextColor:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .primaryText,
-                                                      ),
-                                                    ),
-                                                    FFButtonWidget(
-                                                      onPressed: (widget
-                                                                  .diagnosisParameterWorkId
-                                                                  ?.denied ==
-                                                              true)
-                                                          ? null
-                                                          : () async {
-                                                              await DiagnosesTable()
-                                                                  .update(
-                                                                data: {
-                                                                  'denied':
-                                                                      true,
-                                                                  'status':
-                                                                      'Denied',
-                                                                },
-                                                                matchingRows:
-                                                                    (rows) => rows
-                                                                        .eqOrNull(
-                                                                  'diagnosis_id',
-                                                                  valueOrDefault<
-                                                                      String>(
-                                                                    widget
-                                                                        .diagnosisParameterWorkId
-                                                                        ?.diagnosisId,
-                                                                    'diagnosis_id',
-                                                                  ),
-                                                                ),
-                                                              );
-
-                                                              safeSetState(
-                                                                  () {});
-                                                            },
-                                                      text: 'Denied',
-                                                      options: FFButtonOptions(
-                                                        width: 100.0,
-                                                        height: 36.0,
-                                                        padding:
-                                                            EdgeInsets.all(8.0),
-                                                        iconPadding:
-                                                            EdgeInsetsDirectional
-                                                                .fromSTEB(
-                                                                    0.0,
-                                                                    0.0,
-                                                                    0.0,
-                                                                    0.0),
-                                                        color:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .error,
-                                                        textStyle:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .bodySmall
-                                                                .override(
-                                                                  fontFamily:
-                                                                      'Manrope',
-                                                                  color: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .info,
-                                                                  letterSpacing:
-                                                                      0.0,
-                                                                ),
-                                                        elevation: 0.0,
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(18.0),
-                                                        disabledColor:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .secondaryText,
-                                                        disabledTextColor:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .primaryText,
-                                                      ),
-                                                    ),
-                                                    FFButtonWidget(
-                                                      onPressed: (widget
-                                                                  .diagnosisParameterWorkId
-                                                                  ?.pending ==
-                                                              true)
-                                                          ? null
-                                                          : () async {
-                                                              await DiagnosesTable()
-                                                                  .update(
-                                                                data: {
-                                                                  'pending':
-                                                                      true,
-                                                                  'status':
-                                                                      'Pending',
-                                                                },
-                                                                matchingRows:
-                                                                    (rows) => rows
-                                                                        .eqOrNull(
-                                                                  'diagnosis_id',
-                                                                  valueOrDefault<
-                                                                      String>(
-                                                                    widget
-                                                                        .diagnosisParameterWorkId
-                                                                        ?.diagnosisId,
-                                                                    'diagnosis_id',
-                                                                  ),
-                                                                ),
-                                                              );
-
-                                                              safeSetState(
-                                                                  () {});
-                                                            },
-                                                      text: 'Pending',
-                                                      options: FFButtonOptions(
-                                                        width: 100.0,
-                                                        height: 36.0,
-                                                        padding:
-                                                            EdgeInsets.all(8.0),
-                                                        iconPadding:
-                                                            EdgeInsetsDirectional
-                                                                .fromSTEB(
-                                                                    0.0,
-                                                                    0.0,
-                                                                    0.0,
-                                                                    0.0),
-                                                        color:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .primaryText,
-                                                        textStyle:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .bodySmall
-                                                                .override(
-                                                                  fontFamily:
-                                                                      'Manrope',
-                                                                  color: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .warning,
-                                                                  letterSpacing:
-                                                                      0.0,
-                                                                ),
-                                                        elevation: 0.0,
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(18.0),
-                                                        disabledColor:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .secondaryText,
-                                                        disabledTextColor:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .primaryText,
-                                                      ),
-                                                    ),
-                                                  ].divide(
-                                                      SizedBox(width: 12.0)),
-                                                ),
-                                              ].divide(SizedBox(width: 60.0)),
-                                            ),
-                                        ],
-                                      ),
-                                    ].divide(SizedBox(width: 42.0)),
+                                                ].divide(SizedBox(width: 60.0)),
+                                              ),
+                                          ],
+                                        ),
+                                      ].divide(SizedBox(width: 42.0)),
+                                    ),
                                   ),
-                                ),
                               ].divide(SizedBox(height: 16.0)),
                             ),
                           ),
@@ -3254,11 +2908,7 @@ class _DiagnosisViewBSWidgetState extends State<DiagnosisViewBSWidget> {
                                                                       onPressed:
                                                                           () async {
                                                                         await launchURL(
-                                                                            valueOrDefault<String>(
-                                                                          listViewPartsRow
-                                                                              .tutorial,
-                                                                          'https://wmappliances.net/',
-                                                                        ));
+                                                                            'https://www.youtube.com/results?search_query=replacement+${listViewPartsRow.partNumber}');
                                                                       },
                                                                       text:
                                                                           'Tutorial',
@@ -3422,12 +3072,14 @@ class _DiagnosisViewBSWidgetState extends State<DiagnosisViewBSWidget> {
                                                     ],
                                                   ),
                                                 ),
-                                                if (responsiveVisibility(
-                                                  context: context,
-                                                  phone: false,
-                                                  tablet: false,
-                                                  tabletLandscape: false,
-                                                ))
+                                                if ((FFAppState().dispatch ==
+                                                        'dispatch') &&
+                                                    responsiveVisibility(
+                                                      context: context,
+                                                      phone: false,
+                                                      tablet: false,
+                                                      tabletLandscape: false,
+                                                    ))
                                                   Row(
                                                     mainAxisSize:
                                                         MainAxisSize.max,
@@ -3435,433 +3087,106 @@ class _DiagnosisViewBSWidgetState extends State<DiagnosisViewBSWidget> {
                                                         MainAxisAlignment
                                                             .spaceBetween,
                                                     children: [
-                                                      Row(
-                                                        mainAxisSize:
-                                                            MainAxisSize.max,
-                                                        children: [
-                                                          if (responsiveVisibility(
-                                                            context: context,
-                                                            phone: false,
-                                                            tablet: false,
-                                                            tabletLandscape:
-                                                                false,
-                                                          ))
-                                                            Align(
-                                                              alignment:
-                                                                  AlignmentDirectional(
-                                                                      0.0, 0.0),
-                                                              child: Padding(
-                                                                padding:
-                                                                    EdgeInsetsDirectional
-                                                                        .fromSTEB(
-                                                                            12.0,
-                                                                            0.0,
-                                                                            0.0,
-                                                                            0.0),
-                                                                child:
-                                                                    FFButtonWidget(
-                                                                  onPressed:
-                                                                      () async {
-                                                                    await PartsTable()
-                                                                        .update(
-                                                                      data: {
-                                                                        'part_paid':
-                                                                            'WM Appliances',
-                                                                      },
-                                                                      matchingRows:
-                                                                          (rows) =>
-                                                                              rows.eqOrNull(
-                                                                        'part_id',
-                                                                        listViewPartsRow
-                                                                            .partId,
-                                                                      ),
-                                                                    );
-
-                                                                    safeSetState(
-                                                                        () {});
-                                                                  },
-                                                                  text: 'WM',
-                                                                  options:
-                                                                      FFButtonOptions(
-                                                                    width: 60.0,
-                                                                    height:
-                                                                        48.0,
-                                                                    padding:
-                                                                        EdgeInsets.all(
-                                                                            8.0),
-                                                                    iconPadding:
-                                                                        EdgeInsetsDirectional.fromSTEB(
-                                                                            0.0,
-                                                                            0.0,
+                                                      if ((FFAppState()
+                                                                  .userRole ==
+                                                              'admin') ||
+                                                          (FFAppState()
+                                                                  .userRole ==
+                                                              'officeManager') ||
+                                                          (FFAppState()
+                                                                  .userRole ==
+                                                              'manager'))
+                                                        Expanded(
+                                                          child: Align(
+                                                            alignment:
+                                                                AlignmentDirectional(
+                                                                    0.0, 0.0),
+                                                            child: Padding(
+                                                              padding:
+                                                                  EdgeInsetsDirectional
+                                                                      .fromSTEB(
+                                                                          12.0,
+                                                                          0.0,
+                                                                          0.0,
+                                                                          0.0),
+                                                              child: Row(
+                                                                mainAxisSize:
+                                                                    MainAxisSize
+                                                                        .max,
+                                                                mainAxisAlignment:
+                                                                    MainAxisAlignment
+                                                                        .center,
+                                                                children: [
+                                                                  if (responsiveVisibility(
+                                                                    context:
+                                                                        context,
+                                                                    phone:
+                                                                        false,
+                                                                    tablet:
+                                                                        false,
+                                                                    tabletLandscape:
+                                                                        false,
+                                                                  ))
+                                                                    Expanded(
+                                                                      child:
+                                                                          Align(
+                                                                        alignment: AlignmentDirectional(
                                                                             0.0,
                                                                             0.0),
-                                                                    color: FlutterFlowTheme.of(
-                                                                            context)
-                                                                        .accent1,
-                                                                    textStyle: FlutterFlowTheme.of(
-                                                                            context)
-                                                                        .bodySmall
-                                                                        .override(
-                                                                          fontFamily:
-                                                                              'Manrope',
-                                                                          color:
-                                                                              FlutterFlowTheme.of(context).info,
-                                                                          letterSpacing:
+                                                                        child:
+                                                                            Padding(
+                                                                          padding: EdgeInsetsDirectional.fromSTEB(
                                                                               0.0,
+                                                                              0.0,
+                                                                              0.0,
+                                                                              16.0),
+                                                                          child:
+                                                                              FFButtonWidget(
+                                                                            onPressed: (listViewPartsRow.arrived == true)
+                                                                                ? null
+                                                                                : () async {
+                                                                                    await PartsTable().update(
+                                                                                      data: {
+                                                                                        'arrived': true,
+                                                                                        'arrived_date': supaSerialize<DateTime>(getCurrentTimestamp),
+                                                                                        'update_by': FFAppState().userName,
+                                                                                      },
+                                                                                      matchingRows: (rows) => rows.eqOrNull(
+                                                                                        'part_id',
+                                                                                        listViewPartsRow.partId,
+                                                                                      ),
+                                                                                    );
+
+                                                                                    safeSetState(() {});
+                                                                                  },
+                                                                            text:
+                                                                                'Arrived',
+                                                                            options:
+                                                                                FFButtonOptions(
+                                                                              width: 200.0,
+                                                                              height: 36.0,
+                                                                              padding: EdgeInsets.all(8.0),
+                                                                              iconPadding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                                                                              color: FlutterFlowTheme.of(context).tertiary,
+                                                                              textStyle: FlutterFlowTheme.of(context).bodySmall.override(
+                                                                                    fontFamily: 'Manrope',
+                                                                                    color: FlutterFlowTheme.of(context).info,
+                                                                                    letterSpacing: 0.0,
+                                                                                  ),
+                                                                              elevation: 0.0,
+                                                                              borderRadius: BorderRadius.circular(18.0),
+                                                                            ),
+                                                                          ),
                                                                         ),
-                                                                    elevation:
-                                                                        0.0,
-                                                                    borderRadius:
-                                                                        BorderRadius.circular(
-                                                                            18.0),
-                                                                  ),
-                                                                ),
-                                                              ),
-                                                            ),
-                                                          if (responsiveVisibility(
-                                                            context: context,
-                                                            phone: false,
-                                                            tablet: false,
-                                                            tabletLandscape:
-                                                                false,
-                                                          ))
-                                                            Align(
-                                                              alignment:
-                                                                  AlignmentDirectional(
-                                                                      0.0, 0.0),
-                                                              child:
-                                                                  FFButtonWidget(
-                                                                onPressed:
-                                                                    () async {
-                                                                  await PartsTable()
-                                                                      .update(
-                                                                    data: {
-                                                                      'part_paid':
-                                                                          'AHS',
-                                                                    },
-                                                                    matchingRows:
-                                                                        (rows) =>
-                                                                            rows.eqOrNull(
-                                                                      'part_id',
-                                                                      listViewPartsRow
-                                                                          .partId,
+                                                                      ),
                                                                     ),
-                                                                  );
-
-                                                                  safeSetState(
-                                                                      () {});
-                                                                },
-                                                                text: 'AHS',
-                                                                options:
-                                                                    FFButtonOptions(
-                                                                  width: 60.0,
-                                                                  height: 48.0,
-                                                                  padding:
-                                                                      EdgeInsets
-                                                                          .all(
-                                                                              8.0),
-                                                                  iconPadding: EdgeInsetsDirectional
-                                                                      .fromSTEB(
-                                                                          0.0,
-                                                                          0.0,
-                                                                          0.0,
-                                                                          0.0),
-                                                                  color: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .accent2,
-                                                                  textStyle: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .bodySmall
-                                                                      .override(
-                                                                        fontFamily:
-                                                                            'Manrope',
-                                                                        color: FlutterFlowTheme.of(context)
-                                                                            .info,
-                                                                        letterSpacing:
-                                                                            0.0,
-                                                                      ),
-                                                                  elevation:
-                                                                      0.0,
-                                                                  borderRadius:
-                                                                      BorderRadius
-                                                                          .circular(
-                                                                              18.0),
-                                                                ),
+                                                                ].divide(SizedBox(
+                                                                    width:
+                                                                        12.0)),
                                                               ),
-                                                            ),
-                                                        ].divide(SizedBox(
-                                                            width: 12.0)),
-                                                      ),
-                                                      Row(
-                                                        mainAxisSize:
-                                                            MainAxisSize.max,
-                                                        children: [
-                                                          FFButtonWidget(
-                                                            onPressed:
-                                                                () async {
-                                                              await PartsTable()
-                                                                  .update(
-                                                                data: {
-                                                                  'approved':
-                                                                      true,
-                                                                },
-                                                                matchingRows:
-                                                                    (rows) => rows
-                                                                        .eqOrNull(
-                                                                  'part_id',
-                                                                  listViewPartsRow
-                                                                      .partId,
-                                                                ),
-                                                              );
-
-                                                              safeSetState(
-                                                                  () {});
-                                                            },
-                                                            text: 'Approve',
-                                                            options:
-                                                                FFButtonOptions(
-                                                              width: 100.0,
-                                                              height: 36.0,
-                                                              padding:
-                                                                  EdgeInsets
-                                                                      .all(8.0),
-                                                              iconPadding:
-                                                                  EdgeInsetsDirectional
-                                                                      .fromSTEB(
-                                                                          0.0,
-                                                                          0.0,
-                                                                          0.0,
-                                                                          0.0),
-                                                              color: FlutterFlowTheme
-                                                                      .of(context)
-                                                                  .success,
-                                                              textStyle:
-                                                                  FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .bodySmall
-                                                                      .override(
-                                                                        fontFamily:
-                                                                            'Manrope',
-                                                                        color: FlutterFlowTheme.of(context)
-                                                                            .info,
-                                                                        letterSpacing:
-                                                                            0.0,
-                                                                      ),
-                                                              elevation: 0.0,
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          18.0),
                                                             ),
                                                           ),
-                                                          FFButtonWidget(
-                                                            onPressed:
-                                                                () async {
-                                                              await PartsTable()
-                                                                  .update(
-                                                                data: {
-                                                                  'denied':
-                                                                      true,
-                                                                },
-                                                                matchingRows:
-                                                                    (rows) => rows
-                                                                        .eqOrNull(
-                                                                  'part_id',
-                                                                  listViewPartsRow
-                                                                      .partId,
-                                                                ),
-                                                              );
-
-                                                              safeSetState(
-                                                                  () {});
-                                                            },
-                                                            text: 'Denied',
-                                                            options:
-                                                                FFButtonOptions(
-                                                              width: 100.0,
-                                                              height: 36.0,
-                                                              padding:
-                                                                  EdgeInsets
-                                                                      .all(8.0),
-                                                              iconPadding:
-                                                                  EdgeInsetsDirectional
-                                                                      .fromSTEB(
-                                                                          0.0,
-                                                                          0.0,
-                                                                          0.0,
-                                                                          0.0),
-                                                              color: FlutterFlowTheme
-                                                                      .of(context)
-                                                                  .error,
-                                                              textStyle:
-                                                                  FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .bodySmall
-                                                                      .override(
-                                                                        fontFamily:
-                                                                            'Manrope',
-                                                                        color: FlutterFlowTheme.of(context)
-                                                                            .info,
-                                                                        letterSpacing:
-                                                                            0.0,
-                                                                      ),
-                                                              elevation: 0.0,
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          18.0),
-                                                            ),
-                                                          ),
-                                                          if (responsiveVisibility(
-                                                            context: context,
-                                                            phone: false,
-                                                            tablet: false,
-                                                            tabletLandscape:
-                                                                false,
-                                                          ))
-                                                            Align(
-                                                              alignment:
-                                                                  AlignmentDirectional(
-                                                                      0.0, 0.0),
-                                                              child:
-                                                                  FFButtonWidget(
-                                                                onPressed: (listViewPartsRow
-                                                                            .requested ==
-                                                                        true)
-                                                                    ? null
-                                                                    : () async {
-                                                                        await PartsTable()
-                                                                            .update(
-                                                                          data: {
-                                                                            'requested':
-                                                                                true,
-                                                                          },
-                                                                          matchingRows: (rows) =>
-                                                                              rows.eqOrNull(
-                                                                            'part_id',
-                                                                            listViewPartsRow.partId,
-                                                                          ),
-                                                                        );
-
-                                                                        safeSetState(
-                                                                            () {});
-                                                                      },
-                                                                text:
-                                                                    'Requested',
-                                                                options:
-                                                                    FFButtonOptions(
-                                                                  width: 100.0,
-                                                                  height: 36.0,
-                                                                  padding:
-                                                                      EdgeInsets
-                                                                          .all(
-                                                                              8.0),
-                                                                  iconPadding: EdgeInsetsDirectional
-                                                                      .fromSTEB(
-                                                                          0.0,
-                                                                          0.0,
-                                                                          0.0,
-                                                                          0.0),
-                                                                  color: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .warning,
-                                                                  textStyle: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .bodySmall
-                                                                      .override(
-                                                                        fontFamily:
-                                                                            'Manrope',
-                                                                        color: FlutterFlowTheme.of(context)
-                                                                            .info,
-                                                                        letterSpacing:
-                                                                            0.0,
-                                                                      ),
-                                                                  elevation:
-                                                                      0.0,
-                                                                  borderRadius:
-                                                                      BorderRadius
-                                                                          .circular(
-                                                                              18.0),
-                                                                ),
-                                                              ),
-                                                            ),
-                                                          if (responsiveVisibility(
-                                                            context: context,
-                                                            phone: false,
-                                                            tablet: false,
-                                                            tabletLandscape:
-                                                                false,
-                                                          ))
-                                                            Align(
-                                                              alignment:
-                                                                  AlignmentDirectional(
-                                                                      0.0, 0.0),
-                                                              child:
-                                                                  FFButtonWidget(
-                                                                onPressed: (listViewPartsRow
-                                                                            .arrived ==
-                                                                        true)
-                                                                    ? null
-                                                                    : () async {
-                                                                        await PartsTable()
-                                                                            .update(
-                                                                          data: {
-                                                                            'arrived':
-                                                                                true,
-                                                                            'arrived_date':
-                                                                                supaSerialize<DateTime>(getCurrentTimestamp),
-                                                                          },
-                                                                          matchingRows: (rows) =>
-                                                                              rows.eqOrNull(
-                                                                            'part_id',
-                                                                            listViewPartsRow.partId,
-                                                                          ),
-                                                                        );
-
-                                                                        safeSetState(
-                                                                            () {});
-                                                                      },
-                                                                text: 'Arrived',
-                                                                options:
-                                                                    FFButtonOptions(
-                                                                  width: 100.0,
-                                                                  height: 36.0,
-                                                                  padding:
-                                                                      EdgeInsets
-                                                                          .all(
-                                                                              8.0),
-                                                                  iconPadding: EdgeInsetsDirectional
-                                                                      .fromSTEB(
-                                                                          0.0,
-                                                                          0.0,
-                                                                          0.0,
-                                                                          0.0),
-                                                                  color: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .tertiary,
-                                                                  textStyle: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .bodySmall
-                                                                      .override(
-                                                                        fontFamily:
-                                                                            'Manrope',
-                                                                        color: FlutterFlowTheme.of(context)
-                                                                            .info,
-                                                                        letterSpacing:
-                                                                            0.0,
-                                                                      ),
-                                                                  elevation:
-                                                                      0.0,
-                                                                  borderRadius:
-                                                                      BorderRadius
-                                                                          .circular(
-                                                                              18.0),
-                                                                ),
-                                                              ),
-                                                            ),
-                                                        ].divide(SizedBox(
-                                                            width: 12.0)),
-                                                      ),
+                                                        ),
                                                     ],
                                                   ),
                                               ].divide(SizedBox(height: 16.0)),

@@ -212,7 +212,7 @@ class _DispatchTodayViewWidgetState extends State<DispatchTodayViewWidget> {
                                                               officeMarkerUrl:
                                                                   'https://api.wmappliances.cloud/storage/v1/object/public/photos/users/wmlogoSupabase.png',
                                                               markerImageSize:
-                                                                  24.0,
+                                                                  18.0,
                                                               markerBorderSize:
                                                                   2.0,
                                                               selectedDate: _model
@@ -226,9 +226,15 @@ class _DispatchTodayViewWidgetState extends State<DispatchTodayViewWidget> {
                                                                   FFAppState()
                                                                       .showNewWorkOrders,
                                                               newWorkOrderMarkerUrl:
-                                                                  'https://api.wmappliances.cloud/storage/v1/object/public/photos/stopNumbers/pinNewJob.png',
+                                                                  'https://api.wmappliances.cloud/storage/v1/object/public/photos/stopNumbers/PinNewWorkOrder.png',
                                                               pollIntervalSeconds:
-                                                                  60,
+                                                                  600,
+                                                              officeMarkerSize:
+                                                                  36.0,
+                                                              newWorkOrderMarkerSize:
+                                                                  22.0,
+                                                              customPinMarkerSize:
+                                                                  22.0,
                                                             ),
                                                           ),
                                                         ],

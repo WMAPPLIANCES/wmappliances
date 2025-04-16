@@ -120,6 +120,7 @@ class _SelectRolePageWidgetState extends State<SelectRolePageWidget> {
                                             _model.technicianValue = newValue);
                                         if (newValue) {
                                           _model.technician = 'technician';
+                                          _model.role = 'technician';
                                           safeSetState(() {});
                                         } else {
                                           _model.technician = 'user';
@@ -162,6 +163,7 @@ class _SelectRolePageWidgetState extends State<SelectRolePageWidget> {
                                             _model.dispatchValue = newValue);
                                         if (newValue) {
                                           _model.dispatch = 'dispatch';
+                                          _model.role = 'dispatch';
                                           safeSetState(() {});
                                         } else {
                                           _model.dispatch = 'user';
@@ -204,6 +206,7 @@ class _SelectRolePageWidgetState extends State<SelectRolePageWidget> {
                                             _model.managerValue = newValue);
                                         if (newValue) {
                                           _model.manager = 'manager';
+                                          _model.role = 'manager';
                                           safeSetState(() {});
                                         } else {
                                           _model.manager = 'user';
@@ -248,6 +251,7 @@ class _SelectRolePageWidgetState extends State<SelectRolePageWidget> {
                                         if (newValue) {
                                           _model.officeManager =
                                               'officemanager';
+                                          _model.role = 'officemanager';
                                           safeSetState(() {});
                                         } else {
                                           _model.officeManager = 'user';
@@ -350,6 +354,7 @@ class _SelectRolePageWidgetState extends State<SelectRolePageWidget> {
                                       ),
                                       'verified': true,
                                       'office_computer': _model.officeComputer,
+                                      'role': _model.role,
                                     },
                                     matchingRows: (rows) => rows.eqOrNull(
                                       'user_id',

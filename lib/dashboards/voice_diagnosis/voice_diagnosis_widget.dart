@@ -256,6 +256,7 @@ class _VoiceDiagnosisWidgetState extends State<VoiceDiagnosisWidget> {
                               'gsk_sFNeVtQMXApPMVWGdyb3FY1ehSXYtYWLPz59Sqk',
                             ),
                             _model.recordedFileBytes,
+                            'pt',
                           );
                           safeSetState(() {
                             _model.textController?.text =

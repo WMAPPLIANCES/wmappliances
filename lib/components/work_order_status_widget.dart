@@ -54,6 +54,10 @@ class _WorkOrderStatusWidgetState extends State<WorkOrderStatusWidget> {
         padding: EdgeInsetsDirectional.fromSTEB(36.0, 64.0, 36.0, 64.0),
         child: Container(
           width: double.infinity,
+          constraints: BoxConstraints(
+            maxWidth: 600.0,
+            maxHeight: 600.0,
+          ),
           decoration: BoxDecoration(
             color: FlutterFlowTheme.of(context).secondaryBackground,
             boxShadow: [
@@ -729,6 +733,8 @@ class _WorkOrderStatusWidgetState extends State<WorkOrderStatusWidget> {
                         } else {
                           Navigator.pop(context);
                         }
+
+                        safeSetState(() {});
 
                         safeSetState(() {});
                       },

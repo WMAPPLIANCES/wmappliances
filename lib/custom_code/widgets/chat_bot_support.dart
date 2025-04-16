@@ -10,7 +10,6 @@ import 'package:flutter/material.dart';
 // Begin custom widget code
 // DO NOT REMOVE OR MODIFY THE CODE ABOVE!
 
-import 'index.dart'; // Imports other custom widgets
 import 'package:flutter/foundation.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'dart:io';
@@ -19,6 +18,7 @@ import 'package:http/http.dart' as http;
 import 'package:file_picker/file_picker.dart';
 import 'dart:async';
 import 'dart:math';
+import 'package:flutter_sound/flutter_sound.dart';
 
 class ChatBotSupport extends StatefulWidget {
   const ChatBotSupport({
@@ -44,7 +44,8 @@ class ChatBotSupport extends StatefulWidget {
   State<ChatBotSupport> createState() => _ChatBotSupportState();
 }
 
-class _ChatBotSupportState extends State<ChatBotSupport> {
+class _ChatBotSupportState extends State<ChatBotSupport>
+    with TickerProviderStateMixin {
   // Controlador para o campo de texto
   final TextEditingController _textController = TextEditingController();
 
@@ -71,6 +72,15 @@ class _ChatBotSupportState extends State<ChatBotSupport> {
   Timer? _recordingTimer;
   int _recordingDuration = 0; // em segundos
 
+  // Remover a instância de Record e usar FlutterSoundRecorder
+  final _audioRecorder = FlutterSoundRecorder();
+  bool _isRecorderInitialized = false;
+  String? _audioPath;
+  String? _errorMessage;
+  bool _isTranscribing = false;
+
+  late AnimationController _pulseController;
+
   @override
   void initState() {
     super.initState();
@@ -80,12 +90,37 @@ class _ChatBotSupportState extends State<ChatBotSupport> {
     if (widget.chatInput != null && widget.chatInput!.isNotEmpty) {
       _textController.text = widget.chatInput!;
     }
+
+    _pulseController = AnimationController(
+      vsync: this,
+      duration: const Duration(seconds: 1),
+    )..repeat(reverse: true);
+
+    _initRecorder();
+  }
+
+  Future<void> _initRecorder() async {
+    try {
+      await _audioRecorder.openRecorder();
+      _isRecorderInitialized = true;
+    } catch (e) {
+      setState(() {
+        _errorMessage = 'Erro ao inicializar gravador: $e';
+      });
+    }
   }
 
   @override
   void dispose() {
     _textController.dispose();
     _recordingTimer?.cancel();
+    _pulseController.dispose();
+
+    // Fechar o gravador se estiver inicializado
+    if (_isRecorderInitialized) {
+      _audioRecorder.closeRecorder();
+    }
+
     super.dispose();
   }
 
@@ -257,31 +292,41 @@ class _ChatBotSupportState extends State<ChatBotSupport> {
   // Alternar gravação de áudio
   void _toggleRecording() {
     if (_isRecording) {
-      // Parar gravação
-      _recordingTimer?.cancel();
+      // Parar simulação de gravação e enviar
       _simulateSendAudio();
-
-      setState(() {
-        _isRecording = false;
-      });
     } else {
-      // Iniciar gravação
-      _recordingStartTime = DateTime.now();
-      _recordingDuration = 0;
-
-      _recordingTimer = Timer.periodic(const Duration(seconds: 1), (timer) {
-        setState(() {
-          _recordingDuration++;
-        });
-      });
-
+      // Iniciar simulação de gravação
       setState(() {
         _isRecording = true;
+        _recordingDuration = 0;
+        _recordingTimer = Timer.periodic(Duration(seconds: 1), (timer) {
+          setState(() {
+            _recordingDuration++;
+          });
+        });
       });
     }
   }
 
-  // Simulação de envio de áudio com dados base64 simulados
+  // Enviar áudio (em uma implementação real, você enviaria o arquivo)
+  Future<void> _sendAudioMessage(String audioBase64, int duration) async {
+    setState(() {
+      _messages.add(ChatMessage(
+        audioUrl: audioBase64,
+        isFromBot: false,
+        audioDuration: duration,
+      ));
+      _isLoading = true;
+    });
+
+    // Salvar no Supabase (em uma implementação real)
+    await _saveMessageToSupabase(audioBase64, 'audio');
+
+    // Enviar para webhook
+    await _sendMessageToWebhook(audioBase64, 'audio');
+  }
+
+  // Método para simular gravação de áudio
   Future<void> _simulateSendAudio() async {
     try {
       // Criar dados de áudio simulados mais realísticos (ruído branco)
@@ -355,21 +400,18 @@ class _ChatBotSupportState extends State<ChatBotSupport> {
       final audioDuration = seconds;
 
       setState(() {
-        _messages.add(ChatMessage(
-          audioUrl: base64WithHeader,
-          isFromBot: false,
-          audioDuration: audioDuration,
-        ));
-        _isLoading = true;
+        _isRecording = false;
+        _recordingDuration = 0;
       });
 
-      // Salvar no Supabase
-      await _saveMessageToSupabase(base64WithHeader, 'audio');
-
-      // Enviar para webhook
-      await _sendMessageToWebhook(base64WithHeader, 'audio');
+      // Enviar áudio simulado
+      _sendAudioMessage(base64WithHeader, audioDuration);
     } catch (e) {
-      _showError('Erro ao enviar áudio: $e');
+      setState(() {
+        _isRecording = false;
+        _recordingDuration = 0;
+      });
+      _showError('Erro ao simular envio de áudio: $e');
     }
   }
 

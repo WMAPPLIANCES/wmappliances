@@ -323,7 +323,10 @@ class _PagePartStockWidgetState extends State<PagePartStockWidget> {
                                                                           'dispatch') ||
                                                                       (FFAppState()
                                                                               .userRole ==
-                                                                          'office_manager'))
+                                                                          'officeManager') ||
+                                                                      (FFAppState()
+                                                                              .userRole ==
+                                                                          'partDepartment'))
                                                                     Row(
                                                                       mainAxisSize:
                                                                           MainAxisSize
@@ -605,7 +608,7 @@ class _PagePartStockWidgetState extends State<PagePartStockWidget> {
                                                                                 label: DefaultTextStyle.merge(
                                                                                   softWrap: true,
                                                                                   child: Visibility(
-                                                                                    visible: ((FFAppState().userRole == 'admin') && (FFAppState().userRole == 'dispatch') && (FFAppState().userRole == 'office_manager')) &&
+                                                                                    visible: ((FFAppState().userRole == 'admin') && (FFAppState().userRole == 'dispatch') && (FFAppState().userRole == 'officeManager') && (FFAppState().userRole == 'partDepartment')) &&
                                                                                         responsiveVisibility(
                                                                                           context: context,
                                                                                           phone: false,
@@ -931,7 +934,7 @@ class _PagePartStockWidgetState extends State<PagePartStockWidget> {
                                                                                   ),
                                                                                 ),
                                                                                 Visibility(
-                                                                                  visible: ((FFAppState().userRole == 'admin') || (FFAppState().userRole == 'dispatch') || (FFAppState().userRole == 'office_manager')) &&
+                                                                                  visible: ((FFAppState().userRole == 'admin') || (FFAppState().userRole == 'dispatch') || (FFAppState().userRole == 'officeManager') || (FFAppState().userRole == 'partDepartment')) &&
                                                                                       responsiveVisibility(
                                                                                         context: context,
                                                                                         phone: false,

@@ -12,6 +12,8 @@ import 'package:flutter/material.dart';
 
 import 'index.dart'; // Imports other custom widgets
 
+import 'index.dart'; // Imports other custom widgets
+
 /// Automatic FlutterFlow imports
 import 'index.dart'; // Imports other custom widgets
 
@@ -82,13 +84,19 @@ class ScheduleMapWidget extends StatefulWidget {
     this.officeLat,
     this.officeLng,
     this.officeMarkerUrl,
-    this.markerImageSize = 48.0,
+    this.markerImageSize = 22.0,
     this.markerBorderSize = 4.0,
     this.mapStyleJson, // Param opcional para estilo custom
     this.showLiveTracking = false,
     this.showNewWorkOrders = true,
     this.newWorkOrderMarkerUrl,
-    this.pollIntervalSeconds = 60,
+    this.pollIntervalSeconds = 600,
+    this.officeMarkerSize =
+        24.0, // Novo parâmetro para tamanho do marker do office
+    this.newWorkOrderMarkerSize =
+        24.0, // Novo parâmetro para tamanho do marker de novas ordens
+    this.customPinMarkerSize =
+        24.0, // Novo parâmetro para tamanho do pin_maker_url
   });
 
   /// Data para filtrar appointments do dia
@@ -122,6 +130,15 @@ class ScheduleMapWidget extends StatefulWidget {
 
   /// Intervalo para verificar novas work orders em segundos
   final int pollIntervalSeconds;
+
+  /// Tamanho do marker do office em pixels
+  final double officeMarkerSize;
+
+  /// Tamanho do marker de novas ordens de trabalho em pixels
+  final double newWorkOrderMarkerSize;
+
+  /// Tamanho do marker personalizado via pin_maker_url em pixels
+  final double customPinMarkerSize;
 
   @override
   State<ScheduleMapWidget> createState() => _ScheduleMapWidgetState();
@@ -367,7 +384,8 @@ class _ScheduleMapWidgetState extends State<ScheduleMapWidget> {
           icon = await _createCircularIcon(
             photoUrl: widget.officeMarkerUrl!,
             colorHex: '#FFFFFF',
-            size: 36,
+            size: widget.officeMarkerSize
+                .toInt(), // Usar o parâmetro officeMarkerSize
             borderSize: 3,
           );
         } catch (e) {
@@ -431,14 +449,33 @@ class _ScheduleMapWidgetState extends State<ScheduleMapWidget> {
         gmaps.BitmapDescriptor icon;
         try {
           if (pinMarkerUrl != null && pinMarkerUrl.isNotEmpty) {
-            // Usar a URL do pin da tabela
+            // Usar a URL do pin da tabela com redimensionamento personalizado
+            // Modificar o método de carregamento para usar o customPinMarkerSize
             final resp = await http.get(Uri.parse(pinMarkerUrl));
             if (resp.statusCode == 200) {
-              icon = gmaps.BitmapDescriptor.fromBytes(resp.bodyBytes);
+              if (kIsWeb) {
+                // Para web, usar bytes diretos
+                icon = gmaps.BitmapDescriptor.fromBytes(resp.bodyBytes);
+              } else {
+                // Para mobile, redimensionar explicitamente com tamanho personalizado
+                final codec = await ui.instantiateImageCodec(
+                  resp.bodyBytes,
+                  targetWidth: widget.customPinMarkerSize
+                      .toInt(), // Usar tamanho personalizado
+                  targetHeight: widget.customPinMarkerSize
+                      .toInt(), // Usar tamanho personalizado
+                );
+                final frame = await codec.getNextFrame();
+                final image = frame.image;
+
+                final data =
+                    await image.toByteData(format: ui.ImageByteFormat.png);
+                icon = gmaps.BitmapDescriptor.fromBytes(
+                    data!.buffer.asUint8List());
+              }
               print(
                   '✅ Successfully loaded custom pin for Work Order $workOrderId');
             } else {
-              // Fallback para o ícone padrão em caso de erro
               icon = await _createWorkOrderMarkerIcon();
               print('⚠️ Failed to load pin image, using default');
             }
@@ -1021,7 +1058,8 @@ class _ScheduleMapWidgetState extends State<ScheduleMapWidget> {
         icon = await _createCircularIcon(
           photoUrl: widget.officeMarkerUrl!,
           colorHex: '#FFFFFF',
-          size: 36,
+          size: widget.officeMarkerSize
+              .toInt(), // Usar o parâmetro officeMarkerSize
           borderSize: 3,
         );
       } catch (e) {
@@ -1553,7 +1591,7 @@ class _ScheduleMapWidgetState extends State<ScheduleMapWidget> {
     _workOrderPollingTimer = null;
   }
 
-// Modificar o método que carrega pins diretamente da URL para redimensionar para 36px
+// Modificar o método que carrega pins diretamente da URL para redimensionar
   Future<gmaps.BitmapDescriptor> _loadPinFromUrl(String url) async {
     try {
       print('🖼️ Loading pin image from: $url');
@@ -1562,7 +1600,16 @@ class _ScheduleMapWidgetState extends State<ScheduleMapWidget> {
       if (resp.statusCode == 200) {
         final bytes = resp.bodyBytes;
 
-        // Sempre redimensionar para 36px para manter consistência
+        // Verificar se é pin personalizado (pin_maker_url) ou padrão (newWorkOrderMarkerUrl)
+        final isCustomPin = url.contains('pin_maker_url') ||
+            !url.contains(
+                'pinNewJob.png'); // Lógica simplificada para diferenciar
+
+        final targetSize = isCustomPin
+            ? widget.customPinMarkerSize.toInt()
+            : widget.newWorkOrderMarkerSize.toInt();
+
+        // Redimensionar de acordo com o tipo de pin
         if (kIsWeb) {
           // Para web, usar bytes diretos (a plataforma web lida com o redimensionamento)
           return gmaps.BitmapDescriptor.fromBytes(bytes);
@@ -1570,8 +1617,8 @@ class _ScheduleMapWidgetState extends State<ScheduleMapWidget> {
           // Para mobile, redimensionar explicitamente
           final codec = await ui.instantiateImageCodec(
             bytes,
-            targetWidth: 36,
-            targetHeight: 36,
+            targetWidth: targetSize,
+            targetHeight: targetSize,
           );
           final frame = await codec.getNextFrame();
           final image = frame.image;
@@ -1967,7 +2014,7 @@ class _ScheduleMapWidgetState extends State<ScheduleMapWidget> {
           .from('work_orders')
           .select('*')
           .eq('work_order_status', 'New')
-          .limit(20);
+          .limit(30);
 
       // Exibir resultados em diálogo
       if (!mounted) return;

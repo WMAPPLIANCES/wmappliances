@@ -58,3 +58,6 @@ export '/stock_page/page_part_stock_mobile/page_part_stock_mobile_widget.dart'
 export '/list_all_jobs/list_all_jobs_widget.dart' show ListAllJobsWidget;
 export '/chat_bot_support/chat_bot_support_widget.dart'
     show ChatBotSupportWidget;
+export '/voice_diagnosis_n8n/voice_diagnosis_n8n_widget.dart'
+    show VoiceDiagnosisN8nWidget;
+export '/dashboards/payments/payments_widget.dart' show PaymentsWidget;
