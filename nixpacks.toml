@@ -1,11 +1,11 @@
 [phases.setup]
-nixPkgs = ["dart"]
+nixPkgs = ["dart", "flutter"]
 
 [phases.install]
-cmds = ["dart pub get"]
+cmds = ["flutter pub get"]
 
 [phases.build]
-cmds = ["dart compile exe bin/wm_app.dart"]
+cmds = ["flutter build web --release"]
 
 [start]
-cmd = "./bin/wm_app.exe"
+cmd = "cd build/web && dart pub global activate dhttpd && dhttpd --path=."
