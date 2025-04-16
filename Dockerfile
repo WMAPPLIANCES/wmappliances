@@ -13,6 +13,7 @@ RUN apt-get update && apt-get install -y \
     libglu1-mesa \
     openjdk-11-jdk \
     wget \
+    python3 \
     && rm -rf /var/lib/apt/lists/*
 
 # Definir variáveis de ambiente
@@ -30,15 +31,15 @@ WORKDIR /app
 # Copiar o código-fonte
 COPY . .
 
+# Tornar o script executável
+RUN chmod +x web-server-config.sh
+
 # Instalar dependências e compilar
 RUN flutter pub get
 RUN flutter build web --release
 
-# Expor porta e iniciar servidor web
+# Expor porta
 EXPOSE 8080
 
-# Instalar e iniciar um servidor web simples para servir os arquivos estáticos
-CMD cd build/web && \
-    dart pub global activate dhttpd && \
-    dhttpd --path=. --port=8080 || \
-    (apt-get update && apt-get install -y python3 && python3 -m http.server 8080)
+# Iniciar servidor web com suporte a rotas
+CMD ["./web-server-config.sh"]
