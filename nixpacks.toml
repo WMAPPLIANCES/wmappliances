@@ -1,5 +1,6 @@
 [phases.setup]
 nixPkgs = ["dart", "flutter"]
+aptPkgs = ["curl", "git", "unzip", "xz-utils", "libglu1-mesa"]
 
 [phases.install]
 cmds = ["flutter pub get"]
@@ -8,4 +9,4 @@ cmds = ["flutter pub get"]
 cmds = ["flutter build web --release"]
 
 [start]
-cmd = "cd build/web && dart pub global activate dhttpd && dhttpd --path=."
+cmd = "dart pub global activate dhttpd && dhttpd --path=./build/web --port=8080"
