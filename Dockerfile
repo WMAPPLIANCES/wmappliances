@@ -40,4 +40,5 @@ EXPOSE 8080
 # Instalar e iniciar um servidor web simples para servir os arquivos estáticos
 CMD cd build/web && \
     dart pub global activate dhttpd && \
-    dhttpd --path=. --port=8080
+    dhttpd --path=. --port=8080 || \
+    (apt-get update && apt-get install -y python3 && python3 -m http.server 8080)
