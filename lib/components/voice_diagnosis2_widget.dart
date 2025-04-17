@@ -731,7 +731,8 @@ class _VoiceDiagnosis2WidgetState extends State<VoiceDiagnosis2Widget> {
                             ),
                             Expanded(
                               child: FFButtonWidget(
-                                onPressed: (_model.textController.text == '')
+                                onPressed: ((_model.textController.text == '') &&
+                                        (_model.timeDropDown == ''))
                                     ? null
                                     : () async {
                                         await actions.n8nApiCallDiagnosis(
@@ -745,7 +746,7 @@ class _VoiceDiagnosis2WidgetState extends State<VoiceDiagnosis2Widget> {
                                           '',
                                           '',
                                           '',
-                                          '',
+                                          _model.dropDownTimeValue,
                                           '${_model.textController.text}',
                                           valueOrDefault<String>(
                                             widget.diagnosisId?.diagnosisId,
@@ -778,7 +779,7 @@ class _VoiceDiagnosis2WidgetState extends State<VoiceDiagnosis2Widget> {
                                             'estimate_time_to_repair':
                                                 valueOrDefault<int>(
                                               functions.convertStringToInt(
-                                                  _model.dropDownTimeValue!),
+                                                  _model.timeDropDown),
                                               0,
                                             ),
                                             'helper': _model.helper,

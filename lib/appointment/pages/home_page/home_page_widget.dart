@@ -1,6 +1,7 @@
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
+import '/custom_code/widgets/index.dart' as custom_widgets;
 import 'package:flutter/material.dart';
 import 'home_page_model.dart';
 export 'home_page_model.dart';
@@ -104,7 +105,16 @@ class _HomePageWidgetState extends State<HomePageWidget> {
               top: true,
               child: Column(
                 mainAxisSize: MainAxisSize.max,
-                children: [],
+                children: [
+                  Container(
+                    width: double.infinity,
+                    height: MediaQuery.sizeOf(context).height * 1.0,
+                    child: custom_widgets.BillingDashboard(
+                      width: double.infinity,
+                      height: MediaQuery.sizeOf(context).height * 1.0,
+                    ),
+                  ),
+                ],
               ),
             ),
           ),

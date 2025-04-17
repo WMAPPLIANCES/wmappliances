@@ -1078,6 +1078,95 @@ class FFAppState extends ChangeNotifier {
   void deleteAddApplianceWhUrl() {
     secureStorage.delete(key: 'ff_addApplianceWhUrl');
   }
+
+  DateTime? _invoiceDashboardStartDate;
+  DateTime? get invoiceDashboardStartDate => _invoiceDashboardStartDate;
+  set invoiceDashboardStartDate(DateTime? value) {
+    _invoiceDashboardStartDate = value;
+  }
+
+  DateTime? _invoiceDashboardEndDate;
+  DateTime? get invoiceDashboardEndDate => _invoiceDashboardEndDate;
+  set invoiceDashboardEndDate(DateTime? value) {
+    _invoiceDashboardEndDate = value;
+  }
+
+  String _invoiceDashboardSelectedStatus = '';
+  String get invoiceDashboardSelectedStatus => _invoiceDashboardSelectedStatus;
+  set invoiceDashboardSelectedStatus(String value) {
+    _invoiceDashboardSelectedStatus = value;
+  }
+
+  bool _invoiceDashboardShowOverdueOnly = false;
+  bool get invoiceDashboardShowOverdueOnly => _invoiceDashboardShowOverdueOnly;
+  set invoiceDashboardShowOverdueOnly(bool value) {
+    _invoiceDashboardShowOverdueOnly = value;
+  }
+
+  bool _invoiceDashboardShowLowRatingRisk = false;
+  bool get invoiceDashboardShowLowRatingRisk =>
+      _invoiceDashboardShowLowRatingRisk;
+  set invoiceDashboardShowLowRatingRisk(bool value) {
+    _invoiceDashboardShowLowRatingRisk = value;
+  }
+
+  List<dynamic> _billingDashboardData = [];
+  List<dynamic> get billingDashboardData => _billingDashboardData;
+  set billingDashboardData(List<dynamic> value) {
+    _billingDashboardData = value;
+  }
+
+  void addToBillingDashboardData(dynamic value) {
+    billingDashboardData.add(value);
+  }
+
+  void removeFromBillingDashboardData(dynamic value) {
+    billingDashboardData.remove(value);
+  }
+
+  void removeAtIndexFromBillingDashboardData(int index) {
+    billingDashboardData.removeAt(index);
+  }
+
+  void updateBillingDashboardDataAtIndex(
+    int index,
+    dynamic Function(dynamic) updateFn,
+  ) {
+    billingDashboardData[index] = updateFn(_billingDashboardData[index]);
+  }
+
+  void insertAtIndexInBillingDashboardData(int index, dynamic value) {
+    billingDashboardData.insert(index, value);
+  }
+
+  List<dynamic> _pendingActionsData = [];
+  List<dynamic> get pendingActionsData => _pendingActionsData;
+  set pendingActionsData(List<dynamic> value) {
+    _pendingActionsData = value;
+  }
+
+  void addToPendingActionsData(dynamic value) {
+    pendingActionsData.add(value);
+  }
+
+  void removeFromPendingActionsData(dynamic value) {
+    pendingActionsData.remove(value);
+  }
+
+  void removeAtIndexFromPendingActionsData(int index) {
+    pendingActionsData.removeAt(index);
+  }
+
+  void updatePendingActionsDataAtIndex(
+    int index,
+    dynamic Function(dynamic) updateFn,
+  ) {
+    pendingActionsData[index] = updateFn(_pendingActionsData[index]);
+  }
+
+  void insertAtIndexInPendingActionsData(int index, dynamic value) {
+    pendingActionsData.insert(index, value);
+  }
 }
 
 void _safeInit(Function() initializeField) {

@@ -87,9 +87,8 @@ class _PagePartStockWidgetState extends State<PagePartStockWidget> {
     return FutureBuilder<List<StockPartsRow>>(
       future: StockPartsTable().queryRows(
         queryFn: (q) => q
-            .or("part_name.ilike.${'%${_model.textController.text}%'}, part_number.ilike.${'%${_model.textController.text}%'}, compatible_model_number.ilike.${'%${_model.textController.text}%'}, details.ilike.${'%${_model.textController.text}%'}")
+            .or("part_name.ilike.${'%${_model.textController.text}%'}, part_number.ilike.${'%${_model.textController.text}%'}, compatible_model_number.ilike.${'%${_model.textController.text}%'}, details.ilike.${'%${_model.textController.text}%'}, stock_id.ilike.${'%${_model.textController.text}%'}")
             .order('created_at'),
-        limit: 100,
       ),
       builder: (context, snapshot) {
         // Customize what your widget looks like when it's loading.

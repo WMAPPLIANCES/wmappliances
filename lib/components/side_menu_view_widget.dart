@@ -702,6 +702,92 @@ class _SideMenuViewWidgetState extends State<SideMenuViewWidget> {
                                 () => _model.itenHoverHovered6 = false);
                           }),
                         ),
+                      if (FFAppState().userRole == 'admin')
+                        MouseRegion(
+                          opaque: false,
+                          cursor: MouseCursor.defer ?? MouseCursor.defer,
+                          child: InkWell(
+                            splashColor: Colors.transparent,
+                            focusColor: Colors.transparent,
+                            hoverColor: Colors.transparent,
+                            highlightColor: Colors.transparent,
+                            onTap: () async {
+                              context.pushNamed(
+                                BillingWidget.routeName,
+                                extra: <String, dynamic>{
+                                  kTransitionInfoKey: TransitionInfo(
+                                    hasTransition: true,
+                                    transitionType: PageTransitionType.fade,
+                                    duration: Duration(milliseconds: 0),
+                                  ),
+                                },
+                              );
+                            },
+                            child: Container(
+                              width: double.infinity,
+                              decoration: BoxDecoration(
+                                color: _model.itenHoverHovered7
+                                    ? FlutterFlowTheme.of(context).alternate
+                                    : Color(0x00000000),
+                                borderRadius: BorderRadius.circular(8.0),
+                              ),
+                              child: Padding(
+                                padding: EdgeInsetsDirectional.fromSTEB(
+                                    valueOrDefault<double>(
+                                      _model.paddingItem,
+                                      0.0,
+                                    ),
+                                    valueOrDefault<double>(
+                                      _model.paddingItem / 2,
+                                      0.0,
+                                    ),
+                                    valueOrDefault<double>(
+                                      _model.paddingItem,
+                                      0.0,
+                                    ),
+                                    valueOrDefault<double>(
+                                      _model.paddingItem / 2,
+                                      0.0,
+                                    )),
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    Icon(
+                                      Icons.payments_outlined,
+                                      color:
+                                          FlutterFlowTheme.of(context).primary,
+                                      size: 24.0,
+                                    ),
+                                    Expanded(
+                                      child: Row(
+                                        mainAxisSize: MainAxisSize.max,
+                                        children: [
+                                          Text(
+                                            'Billing',
+                                            style: FlutterFlowTheme.of(context)
+                                                .bodyLarge
+                                                .override(
+                                                  fontFamily: 'Manrope',
+                                                  letterSpacing: 0.0,
+                                                ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ].divide(SizedBox(width: _model.paddingItem)),
+                                ),
+                              ),
+                            ),
+                          ),
+                          onEnter: ((event) async {
+                            safeSetState(() => _model.itenHoverHovered7 = true);
+                          }),
+                          onExit: ((event) async {
+                            safeSetState(
+                                () => _model.itenHoverHovered7 = false);
+                          }),
+                        ),
                       if ((FFAppState().userRole == 'admin') ||
                           (FFAppState().userRole == 'officeManager') ||
                           (FFAppState().userRole == 'manager') ||
@@ -732,7 +818,7 @@ class _SideMenuViewWidgetState extends State<SideMenuViewWidget> {
                             child: Container(
                               width: double.infinity,
                               decoration: BoxDecoration(
-                                color: _model.itenHoverHovered7
+                                color: _model.itenHoverHovered8
                                     ? FlutterFlowTheme.of(context).alternate
                                     : Color(0x00000000),
                                 borderRadius: BorderRadius.circular(8.0),
@@ -787,11 +873,11 @@ class _SideMenuViewWidgetState extends State<SideMenuViewWidget> {
                             ),
                           ),
                           onEnter: ((event) async {
-                            safeSetState(() => _model.itenHoverHovered7 = true);
+                            safeSetState(() => _model.itenHoverHovered8 = true);
                           }),
                           onExit: ((event) async {
                             safeSetState(
-                                () => _model.itenHoverHovered7 = false);
+                                () => _model.itenHoverHovered8 = false);
                           }),
                         ),
                       if ((FFAppState().userRole == 'admin') ||
@@ -821,7 +907,7 @@ class _SideMenuViewWidgetState extends State<SideMenuViewWidget> {
                             child: Container(
                               width: double.infinity,
                               decoration: BoxDecoration(
-                                color: _model.itenHoverHovered8
+                                color: _model.itenHoverHovered9
                                     ? FlutterFlowTheme.of(context).alternate
                                     : Color(0x00000000),
                                 borderRadius: BorderRadius.circular(8.0),
@@ -899,11 +985,11 @@ class _SideMenuViewWidgetState extends State<SideMenuViewWidget> {
                             ),
                           ),
                           onEnter: ((event) async {
-                            safeSetState(() => _model.itenHoverHovered8 = true);
+                            safeSetState(() => _model.itenHoverHovered9 = true);
                           }),
                           onExit: ((event) async {
                             safeSetState(
-                                () => _model.itenHoverHovered8 = false);
+                                () => _model.itenHoverHovered9 = false);
                           }),
                         ),
                       Divider(
@@ -933,7 +1019,7 @@ class _SideMenuViewWidgetState extends State<SideMenuViewWidget> {
                           child: Container(
                             width: double.infinity,
                             decoration: BoxDecoration(
-                              color: _model.itenHoverHovered9
+                              color: _model.itenHoverHovered10
                                   ? FlutterFlowTheme.of(context).alternate
                                   : Color(0x00000000),
                               borderRadius: BorderRadius.circular(8.0),
@@ -987,10 +1073,10 @@ class _SideMenuViewWidgetState extends State<SideMenuViewWidget> {
                           ),
                         ),
                         onEnter: ((event) async {
-                          safeSetState(() => _model.itenHoverHovered9 = true);
+                          safeSetState(() => _model.itenHoverHovered10 = true);
                         }),
                         onExit: ((event) async {
-                          safeSetState(() => _model.itenHoverHovered9 = false);
+                          safeSetState(() => _model.itenHoverHovered10 = false);
                         }),
                       ),
                       MouseRegion(
@@ -1018,7 +1104,7 @@ class _SideMenuViewWidgetState extends State<SideMenuViewWidget> {
                             child: Container(
                               width: double.infinity,
                               decoration: BoxDecoration(
-                                color: _model.itenHoverHovered10
+                                color: _model.itenHoverHovered11
                                     ? FlutterFlowTheme.of(context).alternate
                                     : Color(0x00000000),
                                 borderRadius: BorderRadius.circular(8.0),
@@ -1096,10 +1182,10 @@ class _SideMenuViewWidgetState extends State<SideMenuViewWidget> {
                           ),
                         ),
                         onEnter: ((event) async {
-                          safeSetState(() => _model.itenHoverHovered10 = true);
+                          safeSetState(() => _model.itenHoverHovered11 = true);
                         }),
                         onExit: ((event) async {
-                          safeSetState(() => _model.itenHoverHovered10 = false);
+                          safeSetState(() => _model.itenHoverHovered11 = false);
                         }),
                       ),
                       Divider(
@@ -1133,7 +1219,7 @@ class _SideMenuViewWidgetState extends State<SideMenuViewWidget> {
                             child: Container(
                               width: double.infinity,
                               decoration: BoxDecoration(
-                                color: _model.itenHoverHovered11
+                                color: _model.itenHoverHovered12
                                     ? FlutterFlowTheme.of(context).alternate
                                     : Color(0x00000000),
                                 borderRadius: BorderRadius.circular(8.0),
@@ -1189,11 +1275,11 @@ class _SideMenuViewWidgetState extends State<SideMenuViewWidget> {
                           ),
                           onEnter: ((event) async {
                             safeSetState(
-                                () => _model.itenHoverHovered11 = true);
+                                () => _model.itenHoverHovered12 = true);
                           }),
                           onExit: ((event) async {
                             safeSetState(
-                                () => _model.itenHoverHovered11 = false);
+                                () => _model.itenHoverHovered12 = false);
                           }),
                         ),
                       Divider(
@@ -1224,7 +1310,7 @@ class _SideMenuViewWidgetState extends State<SideMenuViewWidget> {
                             child: Container(
                               width: double.infinity,
                               decoration: BoxDecoration(
-                                color: _model.itenHoverHovered12
+                                color: _model.itenHoverHovered13
                                     ? FlutterFlowTheme.of(context).alternate
                                     : Color(0x00000000),
                                 borderRadius: BorderRadius.circular(8.0),
@@ -1280,11 +1366,11 @@ class _SideMenuViewWidgetState extends State<SideMenuViewWidget> {
                           ),
                           onEnter: ((event) async {
                             safeSetState(
-                                () => _model.itenHoverHovered12 = true);
+                                () => _model.itenHoverHovered13 = true);
                           }),
                           onExit: ((event) async {
                             safeSetState(
-                                () => _model.itenHoverHovered12 = false);
+                                () => _model.itenHoverHovered13 = false);
                           }),
                         ),
                       Stack(
@@ -1404,7 +1490,7 @@ class _SideMenuViewWidgetState extends State<SideMenuViewWidget> {
                                 child: Container(
                                   width: double.infinity,
                                   decoration: BoxDecoration(
-                                    color: _model.itenHoverHovered13
+                                    color: _model.itenHoverHovered14
                                         ? FlutterFlowTheme.of(context).alternate
                                         : Color(0x00000000),
                                     borderRadius: BorderRadius.circular(8.0),
@@ -1463,11 +1549,11 @@ class _SideMenuViewWidgetState extends State<SideMenuViewWidget> {
                               ),
                               onEnter: ((event) async {
                                 safeSetState(
-                                    () => _model.itenHoverHovered13 = true);
+                                    () => _model.itenHoverHovered14 = true);
                               }),
                               onExit: ((event) async {
                                 safeSetState(
-                                    () => _model.itenHoverHovered13 = false);
+                                    () => _model.itenHoverHovered14 = false);
                               }),
                             ),
                         ],

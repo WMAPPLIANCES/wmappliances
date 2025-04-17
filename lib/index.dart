@@ -61,3 +61,4 @@ export '/chat_bot_support/chat_bot_support_widget.dart'
 export '/voice_diagnosis_n8n/voice_diagnosis_n8n_widget.dart'
     show VoiceDiagnosisN8nWidget;
 export '/dashboards/payments/payments_widget.dart' show PaymentsWidget;
+export '/dashboards/billing/billing_widget.dart' show BillingWidget;

@@ -26,3 +26,4 @@ export 'is_record.dart' show IsRecord;
 export 'payment_dashboard.dart' show PaymentDashboard;
 export 'apply_update.dart' show ApplyUpdate;
 export 'create_payment_form.dart' show CreatePaymentForm;
+export 'billing_dashboard.dart' show BillingDashboard;

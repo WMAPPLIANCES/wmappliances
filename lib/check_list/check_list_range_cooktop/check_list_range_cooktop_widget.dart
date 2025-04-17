@@ -1,5 +1,5 @@
 import '/backend/supabase/supabase.dart';
-import '/dashboards/voice_diagnosis/voice_diagnosis_widget.dart';
+import '/components/voice_diagnosis2_widget.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
@@ -1160,9 +1160,9 @@ class _CheckListRangeCooktopWidgetState
                                             height: MediaQuery.sizeOf(context)
                                                     .height *
                                                 1.0,
-                                            child: VoiceDiagnosisWidget(
-                                              diagnosisVoice:
-                                                  widget.diagnosisCheckList!,
+                                            child: VoiceDiagnosis2Widget(
+                                              diagnosisId:
+                                                  widget.diagnosisCheckList,
                                             ),
                                           ),
                                         ),

@@ -240,6 +240,8 @@ dynamic deserializeParam<T>(
             return PartsInstalledRow(data);
           case TechnicianEarningsRow:
             return TechnicianEarningsRow(data);
+          case VPendingActionsRow:
+            return VPendingActionsRow(data);
           case PayRatesRow:
             return PayRatesRow(data);
           case TechniciansSchedulesRow:
@@ -290,6 +292,8 @@ dynamic deserializeParam<T>(
             return WorkflowStatusTrackingRow(data);
           case N8nChatHistoriesRow:
             return N8nChatHistoriesRow(data);
+          case VBillingDashboardRow:
+            return VBillingDashboardRow(data);
           case WorkOrderChatsRow:
             return WorkOrderChatsRow(data);
           case UpdateRatesRow:

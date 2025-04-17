@@ -119,4 +119,29 @@ class WorkOrdersRow extends SupabaseDataRow {
       getListField<String>('model_number_image_list');
   set modelNumberImageList(List<String>? value) =>
       setListField<String>('model_number_image_list', value);
+
+  double? get totalBilledAmount => getField<double>('total_billed_amount');
+  set totalBilledAmount(double? value) =>
+      setField<double>('total_billed_amount', value);
+
+  bool? get billingAuthorized => getField<bool>('billing_authorized');
+  set billingAuthorized(bool? value) =>
+      setField<bool>('billing_authorized', value);
+
+  bool? get lowRatingRisk => getField<bool>('low_rating_risk');
+  set lowRatingRisk(bool? value) => setField<bool>('low_rating_risk', value);
+
+  DateTime? get billingDate => getField<DateTime>('billing_date');
+  set billingDate(DateTime? value) => setField<DateTime>('billing_date', value);
+
+  String? get paymentStatus => getField<String>('payment_status');
+  set paymentStatus(String? value) => setField<String>('payment_status', value);
+
+  DateTime? get paymentReceivedDate =>
+      getField<DateTime>('payment_received_date');
+  set paymentReceivedDate(DateTime? value) =>
+      setField<DateTime>('payment_received_date', value);
+
+  String? get notes => getField<String>('notes');
+  set notes(String? value) => setField<String>('notes', value);
 }

@@ -343,6 +343,11 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           name: PaymentsWidget.routeName,
           path: PaymentsWidget.routePath,
           builder: (context, params) => PaymentsWidget(),
+        ),
+        FFRoute(
+          name: BillingWidget.routeName,
+          path: BillingWidget.routePath,
+          builder: (context, params) => BillingWidget(),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
       observers: [routeObserver],

@@ -17,6 +17,8 @@ class VoiceDiagnosis2Model extends FlutterFlowModel<VoiceDiagnosis2Widget> {
 
   bool isRecording = false;
 
+  String timeDropDown = '0';
+
   ///  State fields for stateful widgets in this component.
 
   final formKey = GlobalKey<FormState>();

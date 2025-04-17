@@ -9,7 +9,7 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/flutter_flow/upload_data.dart';
-import '/stock_page/add_part_stock/add_part_stock_widget.dart';
+import '/stock_page/part_location_photo/part_location_photo_widget.dart';
 import '/stock_page/print_stock_parts/print_stock_parts_widget.dart';
 import 'dart:async';
 import '/flutter_flow/custom_functions.dart' as functions;
@@ -1793,7 +1793,7 @@ class _DashboardDispatchWidgetState extends State<DashboardDispatchWidget> {
                                                                                     padding: MediaQuery.viewInsetsOf(context),
                                                                                     child: Container(
                                                                                       height: MediaQuery.sizeOf(context).height * 1.0,
-                                                                                      child: AddPartStockWidget(),
+                                                                                      child: PartLocationPhotoWidget(),
                                                                                     ),
                                                                                   ),
                                                                                 ),
@@ -1801,16 +1801,13 @@ class _DashboardDispatchWidgetState extends State<DashboardDispatchWidget> {
                                                                             },
                                                                           ).then((value) =>
                                                                               safeSetState(() {}));
-
-                                                                          safeSetState(
-                                                                              () {});
                                                                         },
                                                                         text:
-                                                                            'Add Part',
+                                                                            'Scan Part',
                                                                         icon:
                                                                             Icon(
                                                                           Icons
-                                                                              .add,
+                                                                              .qr_code,
                                                                           size:
                                                                               15.0,
                                                                         ),

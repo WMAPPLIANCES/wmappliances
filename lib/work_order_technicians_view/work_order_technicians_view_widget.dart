@@ -3189,7 +3189,7 @@ class _WorkOrderTechniciansViewWidgetState
                                                                                                                 );
                                                                                                               },
                                                                                                             ).then((value) => safeSetState(() {}));
-                                                                                                          } else if (appliancesListItem.item == 'Washer M') {
+                                                                                                          } else if (appliancesListItem.item == 'Washer') {
                                                                                                             FFAppState().checkView1 = false;
                                                                                                             FFAppState().checkView2 = false;
                                                                                                             safeSetState(() {});
